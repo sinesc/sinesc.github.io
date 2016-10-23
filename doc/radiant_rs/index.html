@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="generator" content="rustdoc">
+    <meta name="description" content="API documentation for the Rust `radiant_rs` crate.">
+    <meta name="keywords" content="rust, rustlang, rust-lang, radiant_rs">
+
+    <title>radiant_rs - Rust</title>
+
+    <link rel="stylesheet" type="text/css" href="../rustdoc.css">
+    <link rel="stylesheet" type="text/css" href="../main.css">
+    
+
+    
+    
+</head>
+<body class="rustdoc">
+    <!--[if lte IE 8]>
+    <div class="warning">
+        This old browser is unsupported and will most likely display funky
+        things.
+    </div>
+    <![endif]-->
+
+    
+
+    <nav class="sidebar">
+        
+        <p class='location'></p><script>window.sidebarCurrent = {name: 'radiant_rs', ty: 'mod', relpath: '../'};</script>
+    </nav>
+
+    <nav class="sub">
+        <form class="search-form js-only">
+            <div class="search-container">
+                <input class="search-input" name="search"
+                       autocomplete="off"
+                       placeholder="Click or press ‘S’ to search, ‘?’ for more options…"
+                       type="search">
+            </div>
+        </form>
+    </nav>
+
+    <section id='main' class="content mod">
+<h1 class='fqn'><span class='in-band'>Crate <a class='mod' href=''>radiant_rs</a></span><span class='out-of-band'><span id='render-detail'>
+                   <a id="toggle-all-docs" href="javascript:void(0)" title="collapse all docs">
+                       [<span class='inner'>&#x2212;</span>]
+                   </a>
+               </span><a id='src-0' class='srclink' href='../src/radiant_rs/src/lib.rs.html#1-22' title='goto source code'>[src]</a></span></h1>
+<h2 id='modules' class='section-header'><a href="#modules">Modules</a></h2>
+<table>
+                       <tr class=' module-item'>
+                           <td><a class='mod' href='blendmodes/index.html'
+                                  title='radiant_rs::blendmodes'>blendmodes</a></td>
+                           <td class='docblock short'>
+                                <p>A set of predefined blendmodes for use with <code>Layer::set_blendmode()</code>.</p>
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='mod' href='utils/index.html'
+                                  title='radiant_rs::utils'>utils</a></td>
+                           <td class='docblock short'>
+                                <p>Various optional utility features.</p>
+                           </td>
+                       </tr></table><h2 id='structs' class='section-header'><a href="#structs">Structs</a></h2>
+<table>
+                       <tr class=' module-item'>
+                           <td><a class='struct' href='struct.BlendMode.html'
+                                  title='radiant_rs::BlendMode'>BlendMode</a></td>
+                           <td class='docblock short'>
+                                <p>A blendmode for use with <code>Layer::set_blendmode()</code>.
+See <a href="blendmodes/index.html">blendmodes</a> for a list of predefined modes.</p>
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='struct' href='struct.Color.html'
+                                  title='radiant_rs::Color'>Color</a></td>
+                           <td class='docblock short'>
+                                <p>A color value consisting of four floating point values for the color channels red, green, blue
+and alpha.</p>
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='struct' href='struct.Display.html'
+                                  title='radiant_rs::Display'>Display</a></td>
+                           <td class='docblock short'>
+                                <p>A target to render to, e.g. a window or full screen.</p>
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='struct' href='struct.DisplayInfo.html'
+                                  title='radiant_rs::DisplayInfo'>DisplayInfo</a></td>
+                           <td class='docblock short'>
+                                <p>A struct describing a <a href="struct.Display.html"><code>Display</code></a> to be created.</p>
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='struct' href='struct.Font.html'
+                                  title='radiant_rs::Font'>Font</a></td>
+                           <td class='docblock short'>
+                                <p>A font used for writing on a <a href="struct.Layer.html"><code>Layer</code></a>.</p>
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='struct' href='struct.FontInfo.html'
+                                  title='radiant_rs::FontInfo'>FontInfo</a></td>
+                           <td class='docblock short'>
+                                <p>A struct used to filter the result of <a href="struct.Font.html#method.query_specific"><code>Font::query_specific()</code></a>
+or to describe a <a href="struct.Font.html"><code>Font</code></a> to be created from a system font
+via <a href="struct.Font.html#method.from_info"><code>Font::from_info()</code></a>.</p>
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='struct' href='struct.Input.html'
+                                  title='radiant_rs::Input'>Input</a></td>
+                           <td class='docblock short'>
+                                <p>Basic keyboard and mouse support.</p>
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='struct' href='struct.Layer.html'
+                                  title='radiant_rs::Layer'>Layer</a></td>
+                           <td class='docblock short'>
+                                <p>A non-blocking, thread-safe drawing target.</p>
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='struct' href='struct.Mat4.html'
+                                  title='radiant_rs::Mat4'>Mat4</a></td>
+                           <td class='docblock short'>
+                                <p>A 4x4 matrix.</p>
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='struct' href='struct.Monitor.html'
+                                  title='radiant_rs::Monitor'>Monitor</a></td>
+                           <td class='docblock short'>
+                                <p>An individual monitor, returned from <a href="struct.Display.html#method.monitors"><code>Display::monitors()</code></a>.</p>
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='struct' href='struct.RenderContext.html'
+                                  title='radiant_rs::RenderContext'>RenderContext</a></td>
+                           <td class='docblock short'>
+                                <p>A thread-safe render-context.</p>
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='struct' href='struct.Renderer.html'
+                                  title='radiant_rs::Renderer'>Renderer</a></td>
+                           <td class='docblock short'>
+                                <p>A renderer is used to render <a href="struct.Layer.html"><code>Layer</code></a>s or <a href="struct.Scene.html"><code>Scene</code></a>s to the
+<a href="struct.Display.html"><code>Display</code></a>.</p>
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='struct' href='struct.Scene.html'
+                                  title='radiant_rs::Scene'>Scene</a></td>
+                           <td class='docblock short'>
+                                <p>[WIP] Poke with long stick. Wear gloves.</p>
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='struct' href='struct.Sprite.html'
+                                  title='radiant_rs::Sprite'>Sprite</a></td>
+                           <td class='docblock short'>
+                                <p>A sprite used for drawing on a <a href="struct.Layer.html"><code>Layer</code></a>.</p>
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='struct' href='struct.Vec2.html'
+                                  title='radiant_rs::Vec2'>Vec2</a></td>
+                           <td class='docblock short'>
+                                <p>A 2-dimensional vector.</p>
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='struct' href='struct.Vec3.html'
+                                  title='radiant_rs::Vec3'>Vec3</a></td>
+                           <td class='docblock short'>
+                                <p>A 3-dimensional vector.</p>
+                           </td>
+                       </tr></table><h2 id='enums' class='section-header'><a href="#enums">Enums</a></h2>
+<table>
+                       <tr class=' module-item'>
+                           <td><a class='enum' href='enum.ButtonState.html'
+                                  title='radiant_rs::ButtonState'>ButtonState</a></td>
+                           <td class='docblock short'>
+                                <p>The current state of a key or mousebutton.</p>
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='enum' href='enum.Operation.html'
+                                  title='radiant_rs::Operation'>Operation</a></td>
+                           <td class='docblock short'>
+                                
+                           </td>
+                       </tr></table><h2 id='traits' class='section-header'><a href="#traits">Traits</a></h2>
+<table>
+                       <tr class=' module-item'>
+                           <td><a class='trait' href='trait.VecType.html'
+                                  title='radiant_rs::VecType'>VecType</a></td>
+                           <td class='docblock short'>
+                                
+                           </td>
+                       </tr></table></section>
+    <section id='search' class="content hidden"></section>
+
+    <section class="footer"></section>
+
+    <aside id="help" class="hidden">
+        <div>
+            <h1 class="hidden">Help</h1>
+
+            <div class="shortcuts">
+                <h2>Keyboard Shortcuts</h2>
+
+                <dl>
+                    <dt>?</dt>
+                    <dd>Show this help dialog</dd>
+                    <dt>S</dt>
+                    <dd>Focus the search field</dd>
+                    <dt>&larrb;</dt>
+                    <dd>Move up in search results</dd>
+                    <dt>&rarrb;</dt>
+                    <dd>Move down in search results</dd>
+                    <dt>&#9166;</dt>
+                    <dd>Go to active search result</dd>
+                    <dt>+</dt>
+                    <dd>Collapse/expand all sections</dd>
+                </dl>
+            </div>
+
+            <div class="infos">
+                <h2>Search Tricks</h2>
+
+                <p>
+                    Prefix searches with a type followed by a colon (e.g.
+                    <code>fn:</code>) to restrict the search to a given type.
+                </p>
+
+                <p>
+                    Accepted types are: <code>fn</code>, <code>mod</code>,
+                    <code>struct</code>, <code>enum</code>,
+                    <code>trait</code>, <code>type</code>, <code>macro</code>,
+                    and <code>const</code>.
+                </p>
+
+                <p>
+                    Search functions by type signature (e.g.
+                    <code>vec -> usize</code> or <code>* -> vec</code>)
+                </p>
+            </div>
+        </div>
+    </aside>
+
+    
+
+    <script>
+        window.rootPath = "../";
+        window.currentCrate = "radiant_rs";
+        window.playgroundUrl = "";
+    </script>
+    <script src="../jquery.js"></script>
+    <script src="../main.js"></script>
+    
+    <script defer src="../search-index.js"></script>
+</body>
+</html>

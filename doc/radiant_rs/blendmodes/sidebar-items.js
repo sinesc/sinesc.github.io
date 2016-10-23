@@ -1,0 +1,1 @@
+initSidebarItems({"constant":[["ALPHA",""],["LIGHTEN",""],["MAX",""],["MIN",""],["OVERLAY",""]],"fn":[["alpha_const","sets the blend function for the layer (like alpha, but adds brightness value)"]]});
