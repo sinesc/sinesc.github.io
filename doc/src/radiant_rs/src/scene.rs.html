@@ -184,20 +184,43 @@
 <span id="140">140</span>
 <span id="141">141</span>
 <span id="142">142</span>
+<span id="143">143</span>
+<span id="144">144</span>
+<span id="145">145</span>
+<span id="146">146</span>
+<span id="147">147</span>
+<span id="148">148</span>
+<span id="149">149</span>
+<span id="150">150</span>
+<span id="151">151</span>
+<span id="152">152</span>
+<span id="153">153</span>
+<span id="154">154</span>
+<span id="155">155</span>
+<span id="156">156</span>
+<span id="157">157</span>
+<span id="158">158</span>
+<span id="159">159</span>
+<span id="160">160</span>
 </pre><pre class='rust '>
 <span class='kw'>use</span> <span class='ident'>prelude</span>::<span class='op'>*</span>;
-<span class='kw'>use</span> <span class='ident'>std</span>::<span class='ident'>cell</span>::<span class='ident'>UnsafeCell</span>;
 <span class='kw'>use</span> <span class='ident'>avec</span>::<span class='ident'>AVec</span>;
 <span class='kw'>use</span> <span class='ident'>color</span>::<span class='ident'>Color</span>;
 <span class='kw'>use</span> <span class='ident'>maths</span>::<span class='ident'>Mat4</span>;
-<span class='kw'>use</span> <span class='ident'>graphics</span>::{<span class='ident'>Renderer</span>, <span class='ident'>Layer</span>, <span class='ident'>Sprite</span>};
+<span class='kw'>use</span> <span class='ident'>graphics</span>::{<span class='ident'>Renderer</span>, <span class='ident'>RenderContext</span>, <span class='ident'>Layer</span>, <span class='ident'>Font</span>, <span class='ident'>Sprite</span>};
 <span class='kw'>use</span> <span class='ident'>BlendMode</span>;
 
 <span class='attribute'>#[<span class='ident'>derive</span>(<span class='ident'>Copy</span>, <span class='ident'>Clone</span>)]</span>
-<span class='kw'>pub</span> <span class='kw'>struct</span> <span class='ident'>OperationId</span>(<span class='ident'>u32</span>);
+<span class='kw'>pub</span> <span class='kw'>struct</span> <span class='ident'>OperationId</span>(<span class='ident'>usize</span>);
 
 <span class='attribute'>#[<span class='ident'>derive</span>(<span class='ident'>Copy</span>, <span class='ident'>Clone</span>)]</span>
 <span class='kw'>pub</span> <span class='kw'>struct</span> <span class='ident'>LayerId</span>(<span class='ident'>usize</span>);
+
+<span class='attribute'>#[<span class='ident'>derive</span>(<span class='ident'>Copy</span>, <span class='ident'>Clone</span>)]</span>
+<span class='kw'>pub</span> <span class='kw'>struct</span> <span class='ident'>SpriteId</span>(<span class='ident'>usize</span>);
+
+<span class='attribute'>#[<span class='ident'>derive</span>(<span class='ident'>Copy</span>, <span class='ident'>Clone</span>)]</span>
+<span class='kw'>pub</span> <span class='kw'>struct</span> <span class='ident'>FontId</span>(<span class='ident'>usize</span>);
 
 <span class='attribute'>#[<span class='ident'>derive</span>(<span class='ident'>Copy</span>, <span class='ident'>Clone</span>)]</span>
 <span class='kw'>pub</span> <span class='kw'>enum</span> <span class='ident'>Operation</span> {
@@ -217,35 +240,36 @@
 }
 
 <span class='doccomment'>/// [WIP] Poke with long stick. Wear gloves.</span>
-<span class='kw'>pub</span> <span class='kw'>struct</span> <span class='ident'>Scene</span> {
+<span class='kw'>pub</span> <span class='kw'>struct</span> <span class='ident'>Scene</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span><span class='op'>&gt;</span> {
     <span class='ident'>operations</span>      : <span class='ident'>AVec</span><span class='op'>&lt;</span><span class='ident'>Operation</span><span class='op'>&gt;</span>,
-    <span class='ident'>layers</span>          : <span class='ident'>UnsafeCell</span><span class='op'>&lt;</span><span class='ident'>Vec</span><span class='op'>&lt;</span><span class='ident'>Layer</span><span class='op'>&gt;&gt;</span>,
-    <span class='ident'>layer_id</span>        : <span class='ident'>Mutex</span><span class='op'>&lt;</span><span class='ident'>AtomicUsize</span><span class='op'>&gt;</span>,
-    <span class='ident'>dimensions</span>      : (<span class='ident'>u32</span>, <span class='ident'>u32</span>),
-    <span class='ident'>max_sprites</span>     : <span class='ident'>u32</span>,
+    <span class='ident'>layers</span>          : <span class='ident'>RwLock</span><span class='op'>&lt;</span><span class='ident'>Vec</span><span class='op'>&lt;</span><span class='ident'>Layer</span><span class='op'>&gt;&gt;</span>,
+    <span class='ident'>sprites</span>         : <span class='ident'>RwLock</span><span class='op'>&lt;</span><span class='ident'>Vec</span><span class='op'>&lt;</span><span class='ident'>Sprite</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span><span class='op'>&gt;&gt;</span><span class='op'>&gt;</span>,
+    <span class='ident'>fonts</span>           : <span class='ident'>RwLock</span><span class='op'>&lt;</span><span class='ident'>Vec</span><span class='op'>&lt;</span><span class='ident'>Font</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span><span class='op'>&gt;&gt;</span><span class='op'>&gt;</span>,
+    <span class='ident'>context</span>         : <span class='ident'>Arc</span><span class='op'>&lt;</span><span class='ident'>RenderContext</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span><span class='op'>&gt;&gt;</span>,
 }
 
-<span class='kw'>unsafe</span> <span class='kw'>impl</span> <span class='ident'>Send</span> <span class='kw'>for</span> <span class='ident'>Scene</span> { }
-<span class='kw'>unsafe</span> <span class='kw'>impl</span> <span class='ident'>Sync</span> <span class='kw'>for</span> <span class='ident'>Scene</span> { }
+<span class='kw'>unsafe</span> <span class='kw'>impl</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span><span class='op'>&gt;</span> <span class='ident'>Send</span> <span class='kw'>for</span> <span class='ident'>Scene</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span><span class='op'>&gt;</span> { }
+<span class='kw'>unsafe</span> <span class='kw'>impl</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span><span class='op'>&gt;</span> <span class='ident'>Sync</span> <span class='kw'>for</span> <span class='ident'>Scene</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span><span class='op'>&gt;</span> { }
 
-<span class='kw'>impl</span> <span class='ident'>Scene</span> {
-    <span class='doccomment'>/// create a new scene instance</span>
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>new</span>(<span class='ident'>max_sprites</span>: <span class='ident'>u32</span>, <span class='ident'>dimensions</span>: (<span class='ident'>u32</span>, <span class='ident'>u32</span>)) <span class='op'>-&gt;</span> <span class='ident'>Scene</span> {
+<span class='kw'>impl</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span><span class='op'>&gt;</span> <span class='ident'>Scene</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span><span class='op'>&gt;</span> {
+    <span class='doccomment'>/// Create a new scene instance.</span>
+    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>new</span>(<span class='ident'>context</span>: <span class='kw-2'>&amp;</span><span class='ident'>Arc</span><span class='op'>&lt;</span><span class='ident'>RenderContext</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span><span class='op'>&gt;&gt;</span>) <span class='op'>-&gt;</span> <span class='ident'>Scene</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span><span class='op'>&gt;</span> {
         <span class='ident'>Scene</span> {
             <span class='ident'>operations</span>  : <span class='ident'>AVec</span>::<span class='ident'>new</span>(<span class='number'>1024</span>),  <span class='comment'>// !todo</span>
-            <span class='ident'>layers</span>      : <span class='ident'>UnsafeCell</span>::<span class='ident'>new</span>(<span class='ident'>Vec</span>::<span class='ident'>new</span>()),
-            <span class='ident'>layer_id</span>    : <span class='ident'>Mutex</span>::<span class='ident'>new</span>(<span class='ident'>AtomicUsize</span>::<span class='ident'>new</span>(<span class='number'>0</span>)),
-            <span class='ident'>dimensions</span>  : <span class='ident'>dimensions</span>,
-            <span class='ident'>max_sprites</span> : <span class='ident'>max_sprites</span>,
+            <span class='ident'>layers</span>      : <span class='ident'>RwLock</span>::<span class='ident'>new</span>(<span class='ident'>Vec</span>::<span class='ident'>new</span>()),
+            <span class='ident'>sprites</span>     : <span class='ident'>RwLock</span>::<span class='ident'>new</span>(<span class='ident'>Vec</span>::<span class='ident'>new</span>()),
+            <span class='ident'>fonts</span>       : <span class='ident'>RwLock</span>::<span class='ident'>new</span>(<span class='ident'>Vec</span>::<span class='ident'>new</span>()),
+            <span class='ident'>context</span>     : <span class='ident'>context</span>.<span class='ident'>clone</span>(),
         }
     }
 
-    <span class='doccomment'>/// push a layer operation on the scene operation stack</span>
+    <span class='doccomment'>/// Push a layer operation on the scene operation stack.</span>
     <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>op</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>, <span class='ident'>op</span>: <span class='ident'>Operation</span>) <span class='op'>-&gt;</span> <span class='ident'>OperationId</span> {
         <span class='kw'>let</span> <span class='ident'>insert_position</span> <span class='op'>=</span> <span class='self'>self</span>.<span class='ident'>operations</span>.<span class='ident'>push</span>(<span class='ident'>op</span>);
         <span class='ident'>OperationId</span>(<span class='ident'>insert_position</span>)
     }
 
+    <span class='doccomment'>/// Push multiple operations on the scene operation stack.</span>
     <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>ops</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>, <span class='ident'>ops</span>: <span class='kw-2'>&amp;</span>[<span class='ident'>Operation</span>]) <span class='op'>-&gt;</span> <span class='kw-2'>&amp;</span><span class='self'>Self</span> {
         <span class='kw'>for</span> <span class='ident'>op</span> <span class='kw'>in</span> <span class='ident'>ops</span> {
             <span class='self'>self</span>.<span class='ident'>op</span>(<span class='op'>*</span><span class='ident'>op</span>);
@@ -253,55 +277,67 @@
         <span class='self'>self</span>
     }
 
-    <span class='doccomment'>/// clear operation stack</span>
+    <span class='doccomment'>/// Clear operation stack.</span>
     <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>clear</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='kw-2'>&amp;</span><span class='self'>Self</span> {
         <span class='self'>self</span>.<span class='ident'>operations</span>.<span class='ident'>clear</span>();
         <span class='self'>self</span>
     }
 
-    <span class='doccomment'>/// draws a sprite with given rotation and scaling onto given layer</span>
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>sprite_transformed</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>, <span class='ident'>layer_id</span>: <span class='ident'>LayerId</span>, <span class='ident'>sprite</span>: <span class='ident'>Sprite</span>, <span class='ident'>frame_id</span>: <span class='ident'>u32</span>, <span class='ident'>x</span>: <span class='ident'>f32</span>, <span class='ident'>y</span>: <span class='ident'>f32</span>, <span class='ident'>color</span>: <span class='ident'>Color</span>, <span class='ident'>rotation</span>: <span class='ident'>f32</span>, <span class='ident'>scale_x</span>: <span class='ident'>f32</span>, <span class='ident'>scale_y</span>: <span class='ident'>f32</span>) {
-        <span class='ident'>sprite</span>.<span class='ident'>draw_transformed</span>(<span class='self'>self</span>.<span class='ident'>layer</span>(<span class='ident'>layer_id</span>), <span class='ident'>frame_id</span>, <span class='ident'>x</span>, <span class='ident'>y</span>, <span class='ident'>color</span>, <span class='ident'>rotation</span>, <span class='ident'>scale_x</span>, <span class='ident'>scale_y</span>);
+    <span class='doccomment'>/// Draws a sprite with given rotation and scaling onto given layer.</span>
+    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>sprite_transformed</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>, <span class='ident'>layer_id</span>: <span class='ident'>LayerId</span>, <span class='ident'>sprite</span>: <span class='ident'>Sprite</span>, <span class='ident'>frame_id</span>: <span class='ident'>u32</span>, <span class='ident'>x</span>: <span class='ident'>f32</span>, <span class='ident'>y</span>: <span class='ident'>f32</span>, <span class='ident'>color</span>: <span class='ident'>Color</span>, <span class='ident'>rotation</span>: <span class='ident'>f32</span>, <span class='ident'>scale_x</span>: <span class='ident'>f32</span>, <span class='ident'>scale_y</span>: <span class='ident'>f32</span>) <span class='op'>-&gt;</span> <span class='kw-2'>&amp;</span><span class='self'>Self</span> {
+        <span class='kw'>let</span> <span class='ident'>layers</span> <span class='op'>=</span> <span class='self'>self</span>.<span class='ident'>layers</span>.<span class='ident'>read</span>().<span class='ident'>unwrap</span>();
+        <span class='ident'>sprite</span>.<span class='ident'>draw_transformed</span>(<span class='kw-2'>&amp;</span><span class='ident'>layers</span>[<span class='ident'>layer_id</span>.<span class='number'>0</span>], <span class='ident'>frame_id</span>, <span class='ident'>x</span>, <span class='ident'>y</span>, <span class='ident'>color</span>, <span class='ident'>rotation</span>, <span class='ident'>scale_x</span>, <span class='ident'>scale_y</span>);
+        <span class='self'>self</span>
     }
 
-    <span class='doccomment'>/// draws a sprite onto given layer</span>
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>sprite</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>, <span class='ident'>layer_id</span>: <span class='ident'>LayerId</span>, <span class='ident'>sprite</span>: <span class='ident'>Sprite</span>, <span class='ident'>frame_id</span>: <span class='ident'>u32</span>, <span class='ident'>x</span>: <span class='ident'>f32</span>, <span class='ident'>y</span>: <span class='ident'>f32</span>, <span class='ident'>color</span>: <span class='ident'>Color</span>) {
-        <span class='ident'>sprite</span>.<span class='ident'>draw</span>(<span class='self'>self</span>.<span class='ident'>layer</span>(<span class='ident'>layer_id</span>), <span class='ident'>frame_id</span>, <span class='ident'>x</span>, <span class='ident'>y</span>, <span class='ident'>color</span>);
+    <span class='doccomment'>/// Draws a sprite onto given layer.</span>
+    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>sprite</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>, <span class='ident'>layer_id</span>: <span class='ident'>LayerId</span>, <span class='ident'>sprite_id</span>: <span class='ident'>SpriteId</span>, <span class='ident'>frame_id</span>: <span class='ident'>u32</span>, <span class='ident'>x</span>: <span class='ident'>f32</span>, <span class='ident'>y</span>: <span class='ident'>f32</span>, <span class='ident'>color</span>: <span class='ident'>Color</span>) <span class='op'>-&gt;</span> <span class='kw-2'>&amp;</span><span class='self'>Self</span> {
+        <span class='kw'>let</span> <span class='ident'>layers</span> <span class='op'>=</span> <span class='self'>self</span>.<span class='ident'>layers</span>.<span class='ident'>read</span>().<span class='ident'>unwrap</span>();
+        <span class='kw'>let</span> <span class='ident'>sprites</span> <span class='op'>=</span> <span class='self'>self</span>.<span class='ident'>sprites</span>.<span class='ident'>read</span>().<span class='ident'>unwrap</span>();
+        <span class='ident'>sprites</span>[<span class='ident'>sprite_id</span>.<span class='number'>0</span>].<span class='ident'>draw</span>(<span class='kw-2'>&amp;</span><span class='ident'>layers</span>[<span class='ident'>layer_id</span>.<span class='number'>0</span>], <span class='ident'>frame_id</span>, <span class='ident'>x</span>, <span class='ident'>y</span>, <span class='ident'>color</span>);
+        <span class='self'>self</span>
     }
 
-    <span class='doccomment'>/// create and add a layer to the scene</span>
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>add_layer</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='ident'>LayerId</span> {
-        <span class='kw'>let</span> <span class='ident'>lock</span> <span class='op'>=</span> <span class='self'>self</span>.<span class='ident'>layer_id</span>.<span class='ident'>lock</span>().<span class='ident'>unwrap</span>();
-        <span class='kw'>let</span> <span class='ident'>layer_id</span> <span class='op'>=</span> <span class='ident'>lock</span>.<span class='ident'>deref</span>();
+    <span class='doccomment'>/// Draws a sprite onto given layer.</span>
+    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>write</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>, <span class='ident'>layer_id</span>: <span class='ident'>LayerId</span>, <span class='ident'>sprite</span>: <span class='ident'>Sprite</span>, <span class='ident'>frame_id</span>: <span class='ident'>u32</span>, <span class='ident'>x</span>: <span class='ident'>f32</span>, <span class='ident'>y</span>: <span class='ident'>f32</span>, <span class='ident'>color</span>: <span class='ident'>Color</span>) <span class='op'>-&gt;</span> <span class='kw-2'>&amp;</span><span class='self'>Self</span> {
+        <span class='kw'>let</span> <span class='ident'>layers</span> <span class='op'>=</span> <span class='self'>self</span>.<span class='ident'>layers</span>.<span class='ident'>read</span>().<span class='ident'>unwrap</span>();
+        <span class='ident'>sprite</span>.<span class='ident'>draw</span>(<span class='kw-2'>&amp;</span><span class='ident'>layers</span>[<span class='ident'>layer_id</span>.<span class='number'>0</span>], <span class='ident'>frame_id</span>, <span class='ident'>x</span>, <span class='ident'>y</span>, <span class='ident'>color</span>);
+        <span class='self'>self</span>
+    }
 
-        <span class='kw'>let</span> <span class='kw-2'>mut</span> <span class='ident'>layers</span> <span class='op'>=</span> <span class='self'>self</span>.<span class='ident'>layers</span>();
+    <span class='doccomment'>/// Create and add a layer to the scene.</span>
+    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>create_layer</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>, <span class='ident'>width</span>: <span class='ident'>u32</span>, <span class='ident'>height</span>: <span class='ident'>u32</span>) <span class='op'>-&gt;</span> <span class='ident'>LayerId</span> {
+        <span class='kw'>let</span> <span class='kw-2'>mut</span> <span class='ident'>layers</span> <span class='op'>=</span> <span class='self'>self</span>.<span class='ident'>layers</span>.<span class='ident'>write</span>().<span class='ident'>unwrap</span>();
         <span class='kw'>let</span> <span class='ident'>insert_position</span> <span class='op'>=</span> <span class='ident'>layers</span>.<span class='ident'>len</span>();
-        <span class='ident'>layers</span>.<span class='ident'>push</span>(<span class='ident'>Layer</span>::<span class='ident'>new</span>(<span class='self'>self</span>.<span class='ident'>max_sprites</span>, <span class='self'>self</span>.<span class='ident'>dimensions</span>));
-
-        <span class='ident'>layer_id</span>.<span class='ident'>fetch_add</span>(<span class='number'>1</span>, <span class='ident'>Ordering</span>::<span class='ident'>SeqCst</span>);
-        <span class='macro'>assert</span><span class='macro'>!</span>(<span class='ident'>layer_id</span>.<span class='ident'>load</span>(<span class='ident'>Ordering</span>::<span class='ident'>SeqCst</span>) <span class='op'>==</span> <span class='ident'>layers</span>.<span class='ident'>len</span>());
-
+        <span class='ident'>layers</span>.<span class='ident'>push</span>(<span class='ident'>Layer</span>::<span class='ident'>new</span>(<span class='ident'>width</span>, <span class='ident'>height</span>));
         <span class='ident'>LayerId</span>(<span class='ident'>insert_position</span>)
     }
 
-    <span class='doccomment'>/// returns an existing layer</span>
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>layer</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>, <span class='ident'>id</span>: <span class='ident'>LayerId</span>) <span class='op'>-&gt;</span> <span class='kw-2'>&amp;</span><span class='ident'>Layer</span> {
-        <span class='kw'>let</span> <span class='ident'>layers</span> <span class='op'>=</span> <span class='self'>self</span>.<span class='ident'>layers</span>();
-        <span class='kw-2'>&amp;</span><span class='ident'>layers</span>[<span class='ident'>id</span>.<span class='number'>0</span>]
+    <span class='doccomment'>/// Register a sprite for the scene.</span>
+    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>register_sprite</span>(<span class='self'>self</span>: <span class='kw-2'>&amp;</span><span class='self'>Self</span>, <span class='ident'>sprite</span>: <span class='ident'>Sprite</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span><span class='op'>&gt;</span>) <span class='op'>-&gt;</span> <span class='ident'>SpriteId</span> {
+        <span class='kw'>let</span> <span class='kw-2'>mut</span> <span class='ident'>sprites</span> <span class='op'>=</span> <span class='self'>self</span>.<span class='ident'>sprites</span>.<span class='ident'>write</span>().<span class='ident'>unwrap</span>();
+        <span class='kw'>let</span> <span class='ident'>insert_position</span> <span class='op'>=</span> <span class='ident'>sprites</span>.<span class='ident'>len</span>();
+        <span class='ident'>sprites</span>.<span class='ident'>push</span>(<span class='ident'>sprite</span>);
+        <span class='ident'>SpriteId</span>(<span class='ident'>insert_position</span>)
     }
 
-    <span class='doccomment'>/// returns mut reference to the layers vector</span>
-    <span class='kw'>fn</span> <span class='ident'>layers</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='ident'>Vec</span><span class='op'>&lt;</span><span class='ident'>Layer</span><span class='op'>&gt;</span> {
-        <span class='kw'>unsafe</span> { <span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='op'>*</span><span class='self'>self</span>.<span class='ident'>layers</span>.<span class='ident'>get</span>() }
+    <span class='doccomment'>/// Register a font for the scene.</span>
+    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>register_font</span>(<span class='self'>self</span>: <span class='kw-2'>&amp;</span><span class='self'>Self</span>, <span class='ident'>font</span>: <span class='ident'>Font</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span><span class='op'>&gt;</span>) <span class='op'>-&gt;</span> <span class='ident'>FontId</span> {
+        <span class='kw'>let</span> <span class='kw-2'>mut</span> <span class='ident'>fonts</span> <span class='op'>=</span> <span class='self'>self</span>.<span class='ident'>fonts</span>.<span class='ident'>write</span>().<span class='ident'>unwrap</span>();
+        <span class='kw'>let</span> <span class='ident'>insert_position</span> <span class='op'>=</span> <span class='ident'>fonts</span>.<span class='ident'>len</span>();
+        <span class='ident'>fonts</span>.<span class='ident'>push</span>(<span class='ident'>font</span>);
+        <span class='ident'>FontId</span>(<span class='ident'>insert_position</span>)
     }
+
+    <span class='comment'>// !todo how to deal with fonts &quot;with_xxx&quot; mechanics here?</span>
 }
 
-<span class='doccomment'>/// draw entire scene. as this function is required to be called from the thread that created this</span>
-<span class='doccomment'>/// instance, it&#39;s not available in the implementation. instead use renderer::draw_scene()</span>
+<span class='doccomment'>/// Draw entire scene. As this function is required to be called from the thread that created this</span>
+<span class='doccomment'>/// instance, it&#39;s not available in the implementation. Instead use renderer::draw_scene().</span>
 <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>draw</span>(<span class='ident'>this</span>: <span class='kw-2'>&amp;</span><span class='ident'>Scene</span>, <span class='ident'>renderer</span>: <span class='kw-2'>&amp;</span><span class='ident'>Renderer</span>) {
     <span class='kw'>let</span> <span class='ident'>operations_guard</span> <span class='op'>=</span> <span class='ident'>this</span>.<span class='ident'>operations</span>.<span class='ident'>get</span>();
     <span class='kw'>let</span> <span class='ident'>operations</span> <span class='op'>=</span> <span class='ident'>operations_guard</span>.<span class='ident'>deref</span>();
-    <span class='kw'>let</span> <span class='ident'>layers</span> <span class='op'>=</span> <span class='kw'>unsafe</span> { <span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='op'>*</span><span class='ident'>this</span>.<span class='ident'>layers</span>.<span class='ident'>get</span>() };
+    <span class='kw'>let</span> <span class='ident'>layers</span> <span class='op'>=</span> <span class='ident'>this</span>.<span class='ident'>layers</span>.<span class='ident'>read</span>().<span class='ident'>unwrap</span>();
 
     <span class='kw'>for</span> <span class='ident'>operation</span> <span class='kw'>in</span> <span class='ident'>operations</span> {
         <span class='kw'>match</span> <span class='op'>*</span><span class='ident'>operation</span> {
