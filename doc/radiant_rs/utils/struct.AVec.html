@@ -47,32 +47,34 @@
                    <a id="toggle-all-docs" href="javascript:void(0)" title="collapse all docs">
                        [<span class='inner'>&#x2212;</span>]
                    </a>
-               </span><a id='src-82' class='srclink' href='../../src/radiant_rs/src/avec.rs.html#74-79' title='goto source code'>[src]</a></span></h1>
+               </span><a id='src-1781' class='srclink' href='../../src/radiant_rs/src/misc/avec.rs.html#83-96' title='goto source code'>[src]</a></span></h1>
 <pre class='rust struct'>pub struct AVec&lt;T&gt; {
     // some fields omitted
-}</pre><div class='docblock'><p>Vector supporting multiple non-blocking writers and a single blocking reader.</p>
-</div><h2 id='methods'>Methods</h2><h3 class='impl'><span class='in-band'><code>impl&lt;T&gt; <a class='struct' href='../../radiant_rs/utils/struct.AVec.html' title='radiant_rs::utils::AVec'>AVec</a>&lt;T&gt; <span class='where'>where T: <a class='trait' href='https://doc.rust-lang.org/nightly/core/default/trait.Default.html' title='core::default::Default'>Default</a></span></code></span><span class='out-of-band'><div class='ghost'></div><a id='src-92' class='srclink' href='../../src/radiant_rs/src/avec.rs.html#84-154' title='goto source code'>[src]</a></span></h3>
-<div class='impl-items'><h4 id='method.new' class='method'><code>fn <a href='#method.new' class='fnname'>new</a>(capacity: <a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.u32.html'>u32</a>) -&gt; <a class='struct' href='../../radiant_rs/utils/struct.AVec.html' title='radiant_rs::utils::AVec'>AVec</a>&lt;T&gt;</code></h4>
-<div class='docblock'><p>Creates a new instance with given maximum capacity</p>
-</div><h4 id='method.push' class='method'><code>fn <a href='#method.push' class='fnname'>push</a>(&amp;self, value: T) -&gt; <a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.u32.html'>u32</a></code></h4>
-<div class='docblock'><p>Adds an element to the vector and returns the insert position. This function blocks get()
-and clear() until it returns.</p>
-</div><h4 id='method.map' class='method'><code>fn <a href='#method.map' class='fnname'>map</a>&lt;'a&gt;(&amp;'a self, size: <a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.u32.html'>u32</a>) -&gt; AVecMapGuard&lt;'a,&nbsp;T&gt;</code></h4>
-<div class='docblock'><p>Maps a slice of the vector for r/w access. This function blocks get()
-and clear() until the mapped result goes out of scope.</p>
-</div><h4 id='method.len' class='method'><code>fn <a href='#method.len' class='fnname'>len</a>(&amp;self) -&gt; <a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.usize.html'>usize</a></code></h4>
-<div class='docblock'><p>Returns the current length of the vector. This function blocks get()
-and clear() until it returns.</p>
-</div><h4 id='method.capacity' class='method'><code>fn <a href='#method.capacity' class='fnname'>capacity</a>(self: &amp;Self) -&gt; <a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.usize.html'>usize</a></code></h4>
-<div class='docblock'><p>Returns maximum capacity</p>
-</div><h4 id='method.clear' class='method'><code>fn <a href='#method.clear' class='fnname'>clear</a>(&amp;self)</code></h4>
-<div class='docblock'><p>Clear the vector. This function blocks until it returns.</p>
+}</pre><div class='docblock'><p>Vector supporting multiple non-overlapping writers or multiple readers. Blocks during resizes only.
+!todo panics on concurrent reads+writes</p>
+</div><h2 id='methods'>Methods</h2><h3 class='impl'><span class='in-band'><code>impl&lt;T&gt; <a class='struct' href='../../radiant_rs/utils/struct.AVec.html' title='radiant_rs::utils::AVec'>AVec</a>&lt;T&gt;</code></span><span class='out-of-band'><div class='ghost'></div><a id='src-1798' class='srclink' href='../../src/radiant_rs/src/misc/avec.rs.html#107-279' title='goto source code'>[src]</a></span></h3>
+<div class='impl-items'><h4 id='method.new' class='method'><code>fn <a href='#method.new' class='fnname'>new</a>(initial_capacity: <a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.usize.html'>usize</a>) -&gt; <a class='struct' href='../../radiant_rs/utils/struct.AVec.html' title='radiant_rs::utils::AVec'>AVec</a>&lt;T&gt;</code></h4>
+<div class='docblock'><p>Creates a new instance with given inital capacity</p>
+</div><h4 id='method.push' class='method'><code>fn <a href='#method.push' class='fnname'>push</a>(self: &amp;Self, value: T) -&gt; <a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.usize.html'>usize</a></code></h4>
+<div class='docblock'><p>Adds an element to the vector and returns the insert position.</p>
+</div><h4 id='method.map' class='method'><code>fn <a href='#method.map' class='fnname'>map</a>&lt;'a&gt;(&amp;'a self, size: <a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.usize.html'>usize</a>) -&gt; AVecMapGuard&lt;'a,&nbsp;T&gt;</code></h4>
+<div class='docblock'><p>Maps a slice of the vector for write access. Faster than individual pushes for size &gt; 2.</p>
+</div><h4 id='method.len' class='method'><code>fn <a href='#method.len' class='fnname'>len</a>(self: &amp;Self) -&gt; <a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.usize.html'>usize</a></code></h4>
+<div class='docblock'><p>Returns the current length of the vector.</p>
+</div><h4 id='method.grow' class='method'><code>fn <a href='#method.grow' class='fnname'>grow</a>(self: &amp;Self, required_capacity: <a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.usize.html'>usize</a>)</code></h4>
+<div class='docblock'><p>Grow vector by given number of elements.</p>
+</div><h4 id='method.clear' class='method'><code>fn <a href='#method.clear' class='fnname'>clear</a>(self: &amp;Self)</code></h4>
+<div class='docblock'><p>Clears the vector.</p>
 </div><h4 id='method.get' class='method'><code>fn <a href='#method.get' class='fnname'>get</a>&lt;'a&gt;(&amp;'a self) -&gt; AVecReadGuard&lt;'a,&nbsp;T&gt;</code></h4>
-<div class='docblock'><p>Maps the entire vector for read access. This function blocks until the mapped result
-goes out of scope.</p>
-</div></div><h2 id='implementations'>Trait Implementations</h2><h3 class='impl'><span class='in-band'><code>impl&lt;T&gt; <a class='trait' href='https://doc.rust-lang.org/nightly/core/marker/trait.Sync.html' title='core::marker::Sync'>Sync</a> for <a class='struct' href='../../radiant_rs/utils/struct.AVec.html' title='radiant_rs::utils::AVec'>AVec</a>&lt;T&gt;</code></span><span class='out-of-band'><div class='ghost'></div><a id='src-88' class='srclink' href='../../src/radiant_rs/src/avec.rs.html#81' title='goto source code'>[src]</a></span></h3>
-<div class='impl-items'></div><h3 class='impl'><span class='in-band'><code>impl&lt;T&gt; <a class='trait' href='https://doc.rust-lang.org/nightly/core/marker/trait.Send.html' title='core::marker::Send'>Send</a> for <a class='struct' href='../../radiant_rs/utils/struct.AVec.html' title='radiant_rs::utils::AVec'>AVec</a>&lt;T&gt;</code></span><span class='out-of-band'><div class='ghost'></div><a id='src-90' class='srclink' href='../../src/radiant_rs/src/avec.rs.html#82' title='goto source code'>[src]</a></span></h3>
-<div class='impl-items'></div></section>
+<div class='docblock'><p>Maps the entire vector for read access.</p>
+</div><h4 id='method.capacity' class='method'><code>fn <a href='#method.capacity' class='fnname'>capacity</a>(self: &amp;Self) -&gt; <a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.usize.html'>usize</a></code></h4>
+<div class='docblock'><p>Returns current capacity. The vector will reallocate once this is exceeded.</p>
+</div></div><h2 id='implementations'>Trait Implementations</h2><h3 class='impl'><span class='in-band'><code>impl&lt;T&gt; <a class='trait' href='https://doc.rust-lang.org/nightly/core/marker/trait.Sync.html' title='core::marker::Sync'>Sync</a> for <a class='struct' href='../../radiant_rs/utils/struct.AVec.html' title='radiant_rs::utils::AVec'>AVec</a>&lt;T&gt;</code></span><span class='out-of-band'><div class='ghost'></div><a id='src-1789' class='srclink' href='../../src/radiant_rs/src/misc/avec.rs.html#98' title='goto source code'>[src]</a></span></h3>
+<div class='impl-items'></div><h3 class='impl'><span class='in-band'><code>impl&lt;T&gt; <a class='trait' href='https://doc.rust-lang.org/nightly/core/marker/trait.Send.html' title='core::marker::Send'>Send</a> for <a class='struct' href='../../radiant_rs/utils/struct.AVec.html' title='radiant_rs::utils::AVec'>AVec</a>&lt;T&gt;</code></span><span class='out-of-band'><div class='ghost'></div><a id='src-1791' class='srclink' href='../../src/radiant_rs/src/misc/avec.rs.html#99' title='goto source code'>[src]</a></span></h3>
+<div class='impl-items'></div><h3 class='impl'><span class='in-band'><code>impl&lt;'a,&nbsp;T&gt; <a class='trait' href='https://doc.rust-lang.org/nightly/core/ops/trait.Drop.html' title='core::ops::Drop'>Drop</a> for <a class='struct' href='../../radiant_rs/utils/struct.AVec.html' title='radiant_rs::utils::AVec'>AVec</a>&lt;T&gt;</code></span><span class='out-of-band'><div class='ghost'></div><a id='src-1793' class='srclink' href='../../src/radiant_rs/src/misc/avec.rs.html#101-105' title='goto source code'>[src]</a></span></h3>
+<div class='impl-items'><h4 id='method.drop' class='method'><code>fn <a href='https://doc.rust-lang.org/nightly/core/ops/trait.Drop.html#tymethod.drop' class='fnname'>drop</a>(&amp;mut self)</code></h4>
+<div class='docblock'><p>A method called when the value goes out of scope. <a href="https://doc.rust-lang.org/nightly/core/ops/trait.Drop.html#tymethod.drop">Read more</a></p>
+</div></div></section>
     <section id='search' class="content hidden"></section>
 
     <section class="footer"></section>

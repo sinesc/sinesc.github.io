@@ -58,11 +58,6 @@
 <span id="14">14</span>
 <span id="15">15</span>
 <span id="16">16</span>
-<span id="17">17</span>
-<span id="18">18</span>
-<span id="19">19</span>
-<span id="20">20</span>
-<span id="21">21</span>
 </pre><pre class='rust '>
 <span class='attribute'>#[<span class='ident'>macro_use</span>]</span> <span class='kw'>extern</span> <span class='kw'>crate</span> <span class='ident'>glium</span>;
 <span class='kw'>extern</span> <span class='kw'>crate</span> <span class='ident'>image</span>;
@@ -74,17 +69,12 @@
 <span class='kw'>extern</span> <span class='kw'>crate</span> <span class='ident'>font_loader</span>;
 
 <span class='kw'>mod</span> <span class='ident'>prelude</span>;
-<span class='kw'>mod</span> <span class='ident'>avec</span>;
-<span class='kw'>mod</span> <span class='ident'>color</span>;
 <span class='kw'>mod</span> <span class='ident'>graphics</span>;
 <span class='kw'>mod</span> <span class='ident'>maths</span>;
-<span class='kw'>mod</span> <span class='ident'>scene</span>;
+<span class='kw'>mod</span> <span class='ident'>misc</span>;
 
-<span class='kw'>pub</span> <span class='kw'>use</span> <span class='ident'>graphics</span>::{<span class='ident'>BlendMode</span>, <span class='ident'>blendmodes</span>, <span class='ident'>Display</span>, <span class='ident'>DisplayInfo</span>, <span class='ident'>Monitor</span>, <span class='ident'>Layer</span>, <span class='ident'>Renderer</span>, <span class='ident'>RenderContext</span>, <span class='ident'>Sprite</span>, <span class='ident'>Font</span>, <span class='ident'>FontInfo</span>, <span class='ident'>Input</span>, <span class='ident'>ButtonState</span>};
-<span class='kw'>pub</span> <span class='kw'>use</span> <span class='ident'>maths</span>::{<span class='ident'>Mat4</span>, <span class='ident'>Vec2</span>, <span class='ident'>Vec3</span>, <span class='ident'>VecType</span>};
-<span class='kw'>pub</span> <span class='kw'>use</span> <span class='ident'>color</span>::<span class='ident'>Color</span>;
-
-<span class='kw'>pub</span> <span class='kw'>mod</span> <span class='ident'>utils</span>;
+<span class='kw'>mod</span> <span class='ident'>public</span>;
+<span class='kw'>pub</span> <span class='kw'>use</span> <span class='ident'>public</span>::<span class='op'>*</span>;
 </pre>
 </section>
     <section id='search' class="content hidden"></section>
