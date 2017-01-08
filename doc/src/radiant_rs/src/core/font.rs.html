@@ -350,9 +350,12 @@
 <span id="306">306</span>
 <span id="307">307</span>
 <span id="308">308</span>
+<span id="309">309</span>
+<span id="310">310</span>
+<span id="311">311</span>
 </pre><pre class='rust '>
 <span class='kw'>use</span> <span class='ident'>prelude</span>::<span class='op'>*</span>;
-<span class='kw'>use</span> <span class='ident'>core</span>::{<span class='ident'>layer</span>, <span class='ident'>Layer</span>, <span class='ident'>Point</span>, <span class='ident'>Rect</span>, <span class='ident'>RenderContext</span>};
+<span class='kw'>use</span> <span class='ident'>core</span>::{<span class='ident'>layer</span>, <span class='ident'>Layer</span>, <span class='ident'>Point</span>, <span class='ident'>Rect</span>, <span class='ident'>rendercontext</span>, <span class='ident'>RenderContext</span>};
 <span class='kw'>use</span> <span class='ident'>Color</span>;
 <span class='kw'>use</span> <span class='ident'>rusttype</span>;
 <span class='kw'>use</span> <span class='ident'>glium</span>;
@@ -471,18 +474,18 @@
 <span class='doccomment'>/// to each font object. Instead of modifying these properties, you can clone a new font</span>
 <span class='doccomment'>/// with modified values using [`Font::with_color()`](struct.Font.html#method.with_color) and/or [`Font::with_size()`](struct.Font.html#method.with_size).</span>
 <span class='attribute'>#[<span class='ident'>derive</span>(<span class='ident'>Clone</span>)]</span>
-<span class='kw'>pub</span> <span class='kw'>struct</span> <span class='ident'>Font</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span><span class='op'>&gt;</span> {
-    <span class='ident'>font</span>    : <span class='ident'>Arc</span><span class='op'>&lt;</span><span class='ident'>rusttype</span>::<span class='ident'>Font</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span><span class='op'>&gt;&gt;</span>,
+<span class='kw'>pub</span> <span class='kw'>struct</span> <span class='ident'>Font</span> {
+    <span class='ident'>data</span>    : <span class='ident'>Vec</span><span class='op'>&lt;</span><span class='ident'>u8</span><span class='op'>&gt;</span>,
     <span class='ident'>font_id</span> : <span class='ident'>usize</span>,
     <span class='ident'>size</span>    : <span class='ident'>f32</span>,
     <span class='ident'>color</span>   : <span class='ident'>Color</span>,
-    <span class='ident'>context</span> : <span class='ident'>RenderContext</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span><span class='op'>&gt;</span>,
+    <span class='ident'>context</span> : <span class='ident'>RenderContext</span>,
 }
 
-<span class='kw'>impl</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span><span class='op'>&gt;</span> <span class='ident'>Font</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span><span class='op'>&gt;</span> {
+<span class='kw'>impl</span> <span class='ident'>Font</span> {
 
     <span class='doccomment'>/// Creates a font instance from a file</span>
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>from_file</span><span class='op'>&lt;</span><span class='lifetime'>&#39;b</span><span class='op'>&gt;</span>(<span class='ident'>context</span>: <span class='kw-2'>&amp;</span><span class='ident'>RenderContext</span><span class='op'>&lt;</span><span class='lifetime'>&#39;b</span><span class='op'>&gt;</span>, <span class='ident'>file</span>: <span class='kw-2'>&amp;</span><span class='ident'>str</span>) <span class='op'>-&gt;</span> <span class='ident'>Font</span><span class='op'>&lt;</span><span class='lifetime'>&#39;b</span><span class='op'>&gt;</span> {
+    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>from_file</span>(<span class='ident'>context</span>: <span class='kw-2'>&amp;</span><span class='ident'>RenderContext</span>, <span class='ident'>file</span>: <span class='kw-2'>&amp;</span><span class='ident'>str</span>) <span class='op'>-&gt;</span> <span class='ident'>Font</span> {
         <span class='kw'>let</span> <span class='kw-2'>mut</span> <span class='ident'>f</span> <span class='op'>=</span> <span class='ident'>File</span>::<span class='ident'>open</span>(<span class='ident'>Path</span>::<span class='ident'>new</span>(<span class='ident'>file</span>)).<span class='ident'>unwrap</span>();
         <span class='kw'>let</span> <span class='kw-2'>mut</span> <span class='ident'>font_data</span> <span class='op'>=</span> <span class='ident'>Vec</span>::<span class='ident'>new</span>();
         <span class='ident'>f</span>.<span class='ident'>read_to_end</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='ident'>font_data</span>).<span class='ident'>unwrap</span>();
@@ -490,7 +493,7 @@
     }
 
     <span class='doccomment'>/// Creates a new font instance from given FontInfo struct</span>
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>from_info</span><span class='op'>&lt;</span><span class='lifetime'>&#39;b</span><span class='op'>&gt;</span>(<span class='ident'>context</span>: <span class='kw-2'>&amp;</span><span class='ident'>RenderContext</span><span class='op'>&lt;</span><span class='lifetime'>&#39;b</span><span class='op'>&gt;</span>, <span class='ident'>info</span>: <span class='ident'>FontInfo</span>) <span class='op'>-&gt;</span> <span class='ident'>Font</span><span class='op'>&lt;</span><span class='lifetime'>&#39;b</span><span class='op'>&gt;</span> {
+    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>from_info</span>(<span class='ident'>context</span>: <span class='kw-2'>&amp;</span><span class='ident'>RenderContext</span>, <span class='ident'>info</span>: <span class='ident'>FontInfo</span>) <span class='op'>-&gt;</span> <span class='ident'>Font</span> {
         <span class='kw'>let</span> (<span class='ident'>font_data</span>, _) <span class='op'>=</span> <span class='ident'>system_fonts</span>::<span class='ident'>get</span>(<span class='kw-2'>&amp;</span><span class='ident'>build_property</span>(<span class='kw-2'>&amp;</span><span class='ident'>info</span>)).<span class='ident'>unwrap</span>();
         <span class='ident'>create_font</span>(<span class='ident'>context</span>, <span class='ident'>font_data</span>, <span class='ident'>info</span>.<span class='ident'>size</span>)
     }
@@ -506,33 +509,33 @@
     }
 
     <span class='doccomment'>/// Returns a new font instance with given size</span>
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>with_size</span>(<span class='self'>self</span>: <span class='kw-2'>&amp;</span><span class='self'>Self</span>, <span class='ident'>size</span>: <span class='ident'>f32</span>) <span class='op'>-&gt;</span> <span class='ident'>Font</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span><span class='op'>&gt;</span> {
+    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>with_size</span>(<span class='self'>self</span>: <span class='kw-2'>&amp;</span><span class='self'>Self</span>, <span class='ident'>size</span>: <span class='ident'>f32</span>) <span class='op'>-&gt;</span> <span class='ident'>Font</span> {
         <span class='kw'>let</span> <span class='kw-2'>mut</span> <span class='ident'>font</span> <span class='op'>=</span> (<span class='op'>*</span><span class='self'>self</span>).<span class='ident'>clone</span>();
         <span class='ident'>font</span>.<span class='ident'>size</span> <span class='op'>=</span> <span class='ident'>size</span>;
         <span class='ident'>font</span>
     }
 
     <span class='doccomment'>/// Returns a new font instance with given color</span>
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>with_color</span>(<span class='self'>self</span>: <span class='kw-2'>&amp;</span><span class='self'>Self</span>, <span class='ident'>color</span>: <span class='ident'>Color</span>) <span class='op'>-&gt;</span> <span class='ident'>Font</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span><span class='op'>&gt;</span> {
+    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>with_color</span>(<span class='self'>self</span>: <span class='kw-2'>&amp;</span><span class='self'>Self</span>, <span class='ident'>color</span>: <span class='ident'>Color</span>) <span class='op'>-&gt;</span> <span class='ident'>Font</span> {
         <span class='kw'>let</span> <span class='kw-2'>mut</span> <span class='ident'>font</span> <span class='op'>=</span> (<span class='op'>*</span><span class='self'>self</span>).<span class='ident'>clone</span>();
         <span class='ident'>font</span>.<span class='ident'>color</span> <span class='op'>=</span> <span class='ident'>color</span>;
         <span class='ident'>font</span>
     }
 
     <span class='doccomment'>/// Write to given layer</span>
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>write</span>(<span class='self'>self</span>: <span class='kw-2'>&amp;</span><span class='self'>Self</span>, <span class='ident'>layer</span>: <span class='kw-2'>&amp;</span><span class='ident'>Layer</span>, <span class='ident'>text</span>: <span class='kw-2'>&amp;</span><span class='ident'>str</span>, <span class='ident'>x</span>: <span class='ident'>f32</span>, <span class='ident'>y</span>: <span class='ident'>f32</span>) <span class='op'>-&gt;</span> <span class='kw-2'>&amp;</span><span class='ident'>Font</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span><span class='op'>&gt;</span> {
+    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>write</span>(<span class='self'>self</span>: <span class='kw-2'>&amp;</span><span class='self'>Self</span>, <span class='ident'>layer</span>: <span class='kw-2'>&amp;</span><span class='ident'>Layer</span>, <span class='ident'>text</span>: <span class='kw-2'>&amp;</span><span class='ident'>str</span>, <span class='ident'>x</span>: <span class='ident'>f32</span>, <span class='ident'>y</span>: <span class='ident'>f32</span>) <span class='op'>-&gt;</span> <span class='kw-2'>&amp;</span><span class='ident'>Font</span> {
         <span class='ident'>write</span>(<span class='self'>self</span>, <span class='ident'>layer</span>, <span class='ident'>text</span>, <span class='ident'>x</span>, <span class='ident'>y</span>, <span class='number'>0.0</span>, <span class='kw-2'>&amp;</span><span class='self'>self</span>.<span class='ident'>color</span>, <span class='number'>0.0</span>, <span class='number'>1.0</span>, <span class='number'>1.0</span>);
         <span class='self'>self</span>
     }
 
     <span class='doccomment'>/// Write to given layer. Breaks lines after max_width pixels.</span>
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>write_wrapped</span>(<span class='self'>self</span>: <span class='kw-2'>&amp;</span><span class='self'>Self</span>, <span class='ident'>layer</span>: <span class='kw-2'>&amp;</span><span class='ident'>Layer</span>, <span class='ident'>text</span>: <span class='kw-2'>&amp;</span><span class='ident'>str</span>, <span class='ident'>x</span>: <span class='ident'>f32</span>, <span class='ident'>y</span>: <span class='ident'>f32</span>, <span class='ident'>max_width</span>: <span class='ident'>f32</span>) <span class='op'>-&gt;</span> <span class='kw-2'>&amp;</span><span class='ident'>Font</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span><span class='op'>&gt;</span> {
+    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>write_wrapped</span>(<span class='self'>self</span>: <span class='kw-2'>&amp;</span><span class='self'>Self</span>, <span class='ident'>layer</span>: <span class='kw-2'>&amp;</span><span class='ident'>Layer</span>, <span class='ident'>text</span>: <span class='kw-2'>&amp;</span><span class='ident'>str</span>, <span class='ident'>x</span>: <span class='ident'>f32</span>, <span class='ident'>y</span>: <span class='ident'>f32</span>, <span class='ident'>max_width</span>: <span class='ident'>f32</span>) <span class='op'>-&gt;</span> <span class='kw-2'>&amp;</span><span class='ident'>Font</span> {
         <span class='ident'>write</span>(<span class='self'>self</span>, <span class='ident'>layer</span>, <span class='ident'>text</span>, <span class='ident'>x</span>, <span class='ident'>y</span>, <span class='ident'>max_width</span>, <span class='kw-2'>&amp;</span><span class='self'>self</span>.<span class='ident'>color</span>, <span class='number'>0.0</span>, <span class='number'>1.0</span>, <span class='number'>1.0</span>);
         <span class='self'>self</span>
     }
 
     <span class='doccomment'>/// Write to given layer. Breaks lines after max_width pixels and applies given rotation and scaling.</span>
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>write_transformed</span>(<span class='self'>self</span>: <span class='kw-2'>&amp;</span><span class='self'>Self</span>, <span class='ident'>layer</span>: <span class='kw-2'>&amp;</span><span class='ident'>Layer</span>, <span class='ident'>text</span>: <span class='kw-2'>&amp;</span><span class='ident'>str</span>, <span class='ident'>x</span>: <span class='ident'>f32</span>, <span class='ident'>y</span>: <span class='ident'>f32</span>, <span class='ident'>max_width</span>: <span class='ident'>f32</span>, <span class='ident'>rotation</span>: <span class='ident'>f32</span>, <span class='ident'>scale_x</span>: <span class='ident'>f32</span>, <span class='ident'>scale_y</span>: <span class='ident'>f32</span>) <span class='op'>-&gt;</span> <span class='kw-2'>&amp;</span><span class='ident'>Font</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span><span class='op'>&gt;</span> {
+    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>write_transformed</span>(<span class='self'>self</span>: <span class='kw-2'>&amp;</span><span class='self'>Self</span>, <span class='ident'>layer</span>: <span class='kw-2'>&amp;</span><span class='ident'>Layer</span>, <span class='ident'>text</span>: <span class='kw-2'>&amp;</span><span class='ident'>str</span>, <span class='ident'>x</span>: <span class='ident'>f32</span>, <span class='ident'>y</span>: <span class='ident'>f32</span>, <span class='ident'>max_width</span>: <span class='ident'>f32</span>, <span class='ident'>rotation</span>: <span class='ident'>f32</span>, <span class='ident'>scale_x</span>: <span class='ident'>f32</span>, <span class='ident'>scale_y</span>: <span class='ident'>f32</span>) <span class='op'>-&gt;</span> <span class='kw-2'>&amp;</span><span class='ident'>Font</span> {
         <span class='ident'>write</span>(<span class='self'>self</span>, <span class='ident'>layer</span>, <span class='ident'>text</span>, <span class='ident'>x</span>, <span class='ident'>y</span>, <span class='ident'>max_width</span>, <span class='kw-2'>&amp;</span><span class='self'>self</span>.<span class='ident'>color</span>, <span class='ident'>rotation</span>, <span class='ident'>scale_x</span>, <span class='ident'>scale_y</span>);
         <span class='self'>self</span>
     }
@@ -555,9 +558,9 @@
 }
 
 <span class='doccomment'>/// creates a new unique font</span>
-<span class='kw'>fn</span> <span class='ident'>create_font</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span><span class='op'>&gt;</span>(<span class='ident'>context</span>: <span class='kw-2'>&amp;</span><span class='ident'>RenderContext</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span><span class='op'>&gt;</span>, <span class='ident'>font_data</span>: <span class='ident'>Vec</span><span class='op'>&lt;</span><span class='ident'>u8</span><span class='op'>&gt;</span>, <span class='ident'>size</span>: <span class='ident'>f32</span>) <span class='op'>-&gt;</span> <span class='ident'>Font</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span><span class='op'>&gt;</span> {
+<span class='kw'>fn</span> <span class='ident'>create_font</span>(<span class='ident'>context</span>: <span class='kw-2'>&amp;</span><span class='ident'>RenderContext</span>, <span class='ident'>font_data</span>: <span class='ident'>Vec</span><span class='op'>&lt;</span><span class='ident'>u8</span><span class='op'>&gt;</span>, <span class='ident'>size</span>: <span class='ident'>f32</span>) <span class='op'>-&gt;</span> <span class='ident'>Font</span> {
     <span class='ident'>Font</span> {
-        <span class='ident'>font</span>    : <span class='ident'>Arc</span>::<span class='ident'>new</span>(<span class='ident'>rusttype</span>::<span class='ident'>FontCollection</span>::<span class='ident'>from_bytes</span>(<span class='ident'>font_data</span>).<span class='ident'>into_font</span>().<span class='ident'>unwrap</span>()),
+        <span class='ident'>data</span>    : <span class='ident'>font_data</span>,
         <span class='ident'>font_id</span> : <span class='ident'>FONT_COUNTER</span>.<span class='ident'>fetch_add</span>(<span class='number'>1</span>, <span class='ident'>Ordering</span>::<span class='ident'>Relaxed</span>),
         <span class='ident'>size</span>    : <span class='ident'>size</span>,
         <span class='ident'>color</span>   : <span class='ident'>Color</span>::<span class='ident'>white</span>(),
@@ -568,9 +571,12 @@
 <span class='doccomment'>/// write text to given layer using given font</span>
 <span class='kw'>fn</span> <span class='ident'>write</span>(<span class='ident'>font</span>: <span class='kw-2'>&amp;</span><span class='ident'>Font</span>, <span class='ident'>layer</span>: <span class='kw-2'>&amp;</span><span class='ident'>Layer</span>, <span class='ident'>text</span>: <span class='kw-2'>&amp;</span><span class='ident'>str</span>, <span class='ident'>x</span>: <span class='ident'>f32</span>, <span class='ident'>y</span>: <span class='ident'>f32</span>, <span class='ident'>max_width</span>: <span class='ident'>f32</span>, <span class='ident'>color</span>: <span class='kw-2'>&amp;</span><span class='ident'>Color</span>, <span class='ident'>rotation</span>: <span class='ident'>f32</span>, <span class='ident'>scale_x</span>: <span class='ident'>f32</span>, <span class='ident'>scale_y</span>: <span class='ident'>f32</span>) {
 
+    <span class='comment'>// !todo probably expensive, but rusttype is completely opaque. would be nice to be able to store Font::info outside of a &quot;may or may not own&quot; container</span>
+    <span class='kw'>let</span> <span class='ident'>rt_font</span> <span class='op'>=</span> <span class='ident'>rusttype</span>::<span class='ident'>FontCollection</span>::<span class='ident'>from_bytes</span>(<span class='kw-2'>&amp;</span><span class='ident'>font</span>.<span class='ident'>data</span>[..]).<span class='ident'>into_font</span>().<span class='ident'>unwrap</span>();
+
     <span class='kw'>let</span> <span class='ident'>bucket_id</span> <span class='op'>=</span> <span class='number'>0</span>;
-    <span class='kw'>let</span> <span class='ident'>glyphs</span> <span class='op'>=</span> <span class='ident'>layout_paragraph</span>(<span class='kw-2'>&amp;</span><span class='ident'>font</span>.<span class='ident'>font</span>, <span class='ident'>rusttype</span>::<span class='ident'>Scale</span>::<span class='ident'>uniform</span>(<span class='ident'>font</span>.<span class='ident'>size</span>), <span class='ident'>max_width</span>, <span class='kw-2'>&amp;</span><span class='ident'>text</span>);
-    <span class='kw'>let</span> <span class='ident'>context</span> <span class='op'>=</span> <span class='ident'>font</span>.<span class='ident'>context</span>.<span class='ident'>lock</span>();
+    <span class='kw'>let</span> <span class='ident'>glyphs</span> <span class='op'>=</span> <span class='ident'>layout_paragraph</span>(<span class='kw-2'>&amp;</span><span class='ident'>rt_font</span>, <span class='ident'>rusttype</span>::<span class='ident'>Scale</span>::<span class='ident'>uniform</span>(<span class='ident'>font</span>.<span class='ident'>size</span>), <span class='ident'>max_width</span>, <span class='kw-2'>&amp;</span><span class='ident'>text</span>);
+    <span class='kw'>let</span> <span class='ident'>context</span> <span class='op'>=</span> <span class='ident'>rendercontext</span>::<span class='ident'>lock</span>(<span class='kw-2'>&amp;</span><span class='ident'>font</span>.<span class='ident'>context</span>);
 
     <span class='ident'>context</span>.<span class='ident'>font_cache</span>.<span class='ident'>queue</span>(<span class='ident'>font</span>.<span class='ident'>font_id</span>, <span class='kw-2'>&amp;</span><span class='ident'>glyphs</span>);
 
@@ -716,11 +722,9 @@
     <script>
         window.rootPath = "../../../../";
         window.currentCrate = "radiant_rs";
-        window.playgroundUrl = "";
     </script>
     <script src="../../../../jquery.js"></script>
     <script src="../../../../main.js"></script>
-    
     <script defer src="../../../../search-index.js"></script>
 </body>
 </html>

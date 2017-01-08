@@ -347,17 +347,17 @@
 }
 
 <span class='doccomment'>/// A container for layers, sprites and fonts intended to simplify usage.</span>
-<span class='kw'>pub</span> <span class='kw'>struct</span> <span class='ident'>Scene</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span><span class='op'>&gt;</span> {
+<span class='kw'>pub</span> <span class='kw'>struct</span> <span class='ident'>Scene</span> {
     <span class='ident'>operations</span>      : <span class='ident'>AVec</span><span class='op'>&lt;</span><span class='ident'>Op</span><span class='op'>&gt;</span>,
     <span class='ident'>layers</span>          : <span class='ident'>AVec</span><span class='op'>&lt;</span><span class='ident'>Layer</span><span class='op'>&gt;</span>,
-    <span class='ident'>sprites</span>         : <span class='ident'>AVec</span><span class='op'>&lt;</span><span class='ident'>Sprite</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span><span class='op'>&gt;&gt;</span>,
-    <span class='ident'>fonts</span>           : <span class='ident'>AVec</span><span class='op'>&lt;</span><span class='ident'>Font</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span><span class='op'>&gt;&gt;</span>,
-    <span class='ident'>context</span>         : <span class='ident'>RenderContext</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span><span class='op'>&gt;</span>,
+    <span class='ident'>sprites</span>         : <span class='ident'>AVec</span><span class='op'>&lt;</span><span class='ident'>Sprite</span><span class='op'>&gt;</span>,
+    <span class='ident'>fonts</span>           : <span class='ident'>AVec</span><span class='op'>&lt;</span><span class='ident'>Font</span><span class='op'>&gt;</span>,
+    <span class='ident'>context</span>         : <span class='ident'>RenderContext</span>,
 }
 
-<span class='kw'>impl</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span><span class='op'>&gt;</span> <span class='ident'>Scene</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span><span class='op'>&gt;</span> {
+<span class='kw'>impl</span> <span class='ident'>Scene</span> {
     <span class='doccomment'>/// Create a new scene instance.</span>
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>new</span>(<span class='ident'>context</span>: <span class='kw-2'>&amp;</span><span class='ident'>RenderContext</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span><span class='op'>&gt;</span>) <span class='op'>-&gt;</span> <span class='ident'>Scene</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span><span class='op'>&gt;</span> {
+    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>new</span>(<span class='ident'>context</span>: <span class='kw-2'>&amp;</span><span class='ident'>RenderContext</span>) <span class='op'>-&gt;</span> <span class='self'>Self</span> {
         <span class='ident'>Scene</span> {
             <span class='ident'>operations</span>  : <span class='ident'>AVec</span>::<span class='ident'>new</span>(<span class='number'>1024</span>),
             <span class='ident'>layers</span>      : <span class='ident'>AVec</span>::<span class='ident'>new</span>(<span class='number'>64</span>),
@@ -411,25 +411,25 @@
         <span class='self'>self</span>
     }
 
-    <span class='doccomment'>/// Create and add a layer to the scene.</span>
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>create_layer</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>, <span class='ident'>width</span>: <span class='ident'>u32</span>, <span class='ident'>height</span>: <span class='ident'>u32</span>) <span class='op'>-&gt;</span> <span class='ident'>LayerId</span> {
+    <span class='doccomment'>/// Create and register a layer to the scene.</span>
+    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>register_layer</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>, <span class='ident'>width</span>: <span class='ident'>u32</span>, <span class='ident'>height</span>: <span class='ident'>u32</span>) <span class='op'>-&gt;</span> <span class='ident'>LayerId</span> {
         <span class='kw'>let</span> <span class='ident'>insert_position</span> <span class='op'>=</span> <span class='self'>self</span>.<span class='ident'>layers</span>.<span class='ident'>push</span>(<span class='ident'>Layer</span>::<span class='ident'>new</span>(<span class='ident'>width</span>, <span class='ident'>height</span>));
         <span class='ident'>LayerId</span>(<span class='ident'>insert_position</span>)
     }
 
-    <span class='doccomment'>/// Create and add a sprite to the scene</span>
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>create_sprite_from_file</span>(<span class='self'>self</span>: <span class='kw-2'>&amp;</span><span class='self'>Self</span>, <span class='ident'>file</span>: <span class='kw-2'>&amp;</span><span class='ident'>str</span>) <span class='op'>-&gt;</span> <span class='ident'>SpriteId</span> {
+    <span class='doccomment'>/// Create and register a sprite to the scene</span>
+    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>register_sprite_from_file</span>(<span class='self'>self</span>: <span class='kw-2'>&amp;</span><span class='self'>Self</span>, <span class='ident'>file</span>: <span class='kw-2'>&amp;</span><span class='ident'>str</span>) <span class='op'>-&gt;</span> <span class='ident'>SpriteId</span> {
         <span class='kw'>let</span> <span class='ident'>sprite</span> <span class='op'>=</span> <span class='ident'>Sprite</span>::<span class='ident'>from_file</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>.<span class='ident'>context</span>, <span class='ident'>file</span>);
         <span class='ident'>SpriteId</span>(<span class='self'>self</span>.<span class='ident'>sprites</span>.<span class='ident'>push</span>(<span class='ident'>sprite</span>))
     }
 
     <span class='doccomment'>/// Register a sprite for the scene.</span>
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>register_sprite</span>(<span class='self'>self</span>: <span class='kw-2'>&amp;</span><span class='self'>Self</span>, <span class='ident'>sprite</span>: <span class='ident'>Sprite</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span><span class='op'>&gt;</span>) <span class='op'>-&gt;</span> <span class='ident'>SpriteId</span> {
+    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>register_sprite</span>(<span class='self'>self</span>: <span class='kw-2'>&amp;</span><span class='self'>Self</span>, <span class='ident'>sprite</span>: <span class='ident'>Sprite</span>) <span class='op'>-&gt;</span> <span class='ident'>SpriteId</span> {
         <span class='ident'>SpriteId</span>(<span class='self'>self</span>.<span class='ident'>sprites</span>.<span class='ident'>push</span>(<span class='ident'>sprite</span>))
     }
 
     <span class='doccomment'>/// Register a font for the scene.</span>
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>register_font</span>(<span class='self'>self</span>: <span class='kw-2'>&amp;</span><span class='self'>Self</span>, <span class='ident'>font</span>: <span class='ident'>Font</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span><span class='op'>&gt;</span>) <span class='op'>-&gt;</span> <span class='ident'>FontId</span> {
+    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>register_font</span>(<span class='self'>self</span>: <span class='kw-2'>&amp;</span><span class='self'>Self</span>, <span class='ident'>font</span>: <span class='ident'>Font</span>) <span class='op'>-&gt;</span> <span class='ident'>FontId</span> {
         <span class='kw'>let</span> <span class='ident'>insert_position</span> <span class='op'>=</span> <span class='self'>self</span>.<span class='ident'>fonts</span>.<span class='ident'>push</span>(<span class='ident'>font</span>);
         <span class='ident'>FontId</span>(<span class='ident'>insert_position</span>)
     }
@@ -572,11 +572,9 @@
     <script>
         window.rootPath = "../../../../";
         window.currentCrate = "radiant_rs";
-        window.playgroundUrl = "";
     </script>
     <script src="../../../../jquery.js"></script>
     <script src="../../../../main.js"></script>
-    
     <script defer src="../../../../search-index.js"></script>
 </body>
 </html>

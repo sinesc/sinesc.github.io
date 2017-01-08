@@ -244,14 +244,20 @@
 <span id="200">200</span>
 <span id="201">201</span>
 <span id="202">202</span>
+<span id="203">203</span>
+<span id="204">204</span>
+<span id="205">205</span>
+<span id="206">206</span>
+<span id="207">207</span>
+<span id="208">208</span>
+<span id="209">209</span>
 </pre><pre class='rust '>
 <span class='kw'>use</span> <span class='ident'>prelude</span>::<span class='op'>*</span>;
-<span class='kw'>use</span> <span class='ident'>core</span>::{<span class='ident'>renderer</span>, <span class='ident'>layer</span>, <span class='ident'>Layer</span>, <span class='ident'>Point</span>, <span class='ident'>Rect</span>, <span class='ident'>RenderContext</span>};
+<span class='kw'>use</span> <span class='ident'>core</span>::{<span class='ident'>renderer</span>, <span class='ident'>layer</span>, <span class='ident'>Layer</span>, <span class='ident'>Point</span>, <span class='ident'>Rect</span>, <span class='ident'>rendercontext</span>, <span class='ident'>RenderContext</span>, <span class='ident'>RenderContextTexture</span>};
 <span class='kw'>use</span> <span class='ident'>Color</span>;
 <span class='kw'>use</span> <span class='ident'>image</span>;
 <span class='kw'>use</span> <span class='ident'>image</span>::<span class='ident'>GenericImage</span>;
 <span class='kw'>use</span> <span class='ident'>regex</span>::<span class='ident'>Regex</span>;
-<span class='kw'>use</span> <span class='ident'>glium</span>;
 
 <span class='doccomment'>/// A sprite used for drawing on a [`Layer`](struct.Layer.html).</span>
 <span class='doccomment'>///</span>
@@ -259,7 +265,7 @@
 <span class='doccomment'>/// dimensions, [`Sprite::from_file()`](#method.from_file) expects sprite sheet file names to</span>
 <span class='doccomment'>/// follow a specific pattern. (Future versions will add more configurable means to load sprites.)</span>
 <span class='attribute'>#[<span class='ident'>derive</span>(<span class='ident'>Clone</span>)]</span>
-<span class='kw'>pub</span> <span class='kw'>struct</span> <span class='ident'>Sprite</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span><span class='op'>&gt;</span> {
+<span class='kw'>pub</span> <span class='kw'>struct</span> <span class='ident'>Sprite</span> {
     <span class='doccomment'>/// Defines the sprite origin. Defaults to (0.5, 0.5), meaning that the center of the</span>
     <span class='doccomment'>/// sprite would be drawn at the coordinates given to [`Sprite::draw()`](#method.draw). Likewise, (0.0, 0.0)</span>
     <span class='doccomment'>/// would mean that the sprite&#39;s top left corner would be drawn at the given coordinates.</span>
@@ -271,7 +277,7 @@
     <span class='ident'>texture_id</span>      : <span class='ident'>u32</span>,
     <span class='ident'>u_max</span>           : <span class='ident'>f32</span>,
     <span class='ident'>v_max</span>           : <span class='ident'>f32</span>,
-    <span class='ident'>context</span>         : <span class='ident'>RenderContext</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span><span class='op'>&gt;</span>,
+    <span class='ident'>context</span>         : <span class='ident'>RenderContext</span>,
 }
 
 <span class='attribute'>#[<span class='ident'>derive</span>(<span class='ident'>Copy</span>, <span class='ident'>Clone</span>, <span class='ident'>PartialEq</span>)]</span>
@@ -282,18 +288,18 @@
 
 <span class='kw'>struct</span> <span class='ident'>FrameParameters</span> (<span class='ident'>u32</span>, <span class='ident'>u32</span>, <span class='ident'>u32</span>, <span class='ident'>SpriteLayout</span>);
 
-<span class='kw'>impl</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span><span class='op'>&gt;</span> <span class='ident'>Sprite</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span><span class='op'>&gt;</span> {
+<span class='kw'>impl</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span><span class='op'>&gt;</span> <span class='ident'>Sprite</span> {
 
     <span class='doccomment'>/// Creates a new sprite texture</span>
     <span class='doccomment'>///</span>
     <span class='doccomment'>/// The given filename is epected to end on _&lt;width&gt;x&lt;height&gt;x&lt;frames&gt;.&lt;extension&gt;, e.g. asteroid_64x64x24.png.</span>
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>from_file</span>(<span class='ident'>context</span>: <span class='kw-2'>&amp;</span><span class='ident'>RenderContext</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span><span class='op'>&gt;</span>, <span class='ident'>file</span>: <span class='kw-2'>&amp;</span><span class='ident'>str</span>) <span class='op'>-&gt;</span> <span class='ident'>Sprite</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span><span class='op'>&gt;</span> {
+    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>from_file</span>(<span class='ident'>context</span>: <span class='kw-2'>&amp;</span><span class='ident'>RenderContext</span>, <span class='ident'>file</span>: <span class='kw-2'>&amp;</span><span class='ident'>str</span>) <span class='op'>-&gt;</span> <span class='ident'>Sprite</span> {
 
         <span class='kw'>let</span> (<span class='ident'>bucket_id</span>, <span class='ident'>texture_size</span>, <span class='ident'>frame_width</span>, <span class='ident'>frame_height</span>, <span class='ident'>raw_frames</span>) <span class='op'>=</span> <span class='ident'>load_spritesheet</span>(<span class='ident'>file</span>);
         <span class='kw'>let</span> <span class='ident'>num_frames</span> <span class='op'>=</span> <span class='ident'>raw_frames</span>.<span class='ident'>len</span>() <span class='kw'>as</span> <span class='ident'>u32</span>;
-        <span class='kw'>let</span> <span class='ident'>texture_id</span> <span class='op'>=</span> <span class='ident'>context</span>.<span class='ident'>lock</span>().<span class='ident'>store_frames</span>(<span class='ident'>bucket_id</span>, <span class='ident'>raw_frames</span>);
+        <span class='kw'>let</span> <span class='ident'>texture_id</span> <span class='op'>=</span> <span class='ident'>rendercontext</span>::<span class='ident'>lock</span>(<span class='ident'>context</span>).<span class='ident'>store_frames</span>(<span class='ident'>bucket_id</span>, <span class='ident'>raw_frames</span>);
 
-        <span class='ident'>Sprite</span>::<span class='op'>&lt;</span><span class='lifetime'>&#39;a</span><span class='op'>&gt;</span> {
+        <span class='ident'>Sprite</span> {
             <span class='ident'>width</span>       : <span class='ident'>frame_width</span> <span class='kw'>as</span> <span class='ident'>f32</span>,
             <span class='ident'>height</span>      : <span class='ident'>frame_height</span> <span class='kw'>as</span> <span class='ident'>f32</span>,
             <span class='ident'>num_frames</span>  : <span class='ident'>num_frames</span>,
@@ -363,7 +369,7 @@
 }
 
 <span class='doccomment'>/// loads a spritesheet and returns a vector of frames</span>
-<span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>load_spritesheet</span><span class='op'>&lt;</span><span class='lifetime'>&#39;b</span><span class='op'>&gt;</span>(<span class='ident'>file</span>: <span class='kw-2'>&amp;</span><span class='ident'>str</span>) <span class='op'>-&gt;</span> (<span class='ident'>u32</span>, <span class='ident'>u32</span>, <span class='ident'>u32</span>, <span class='ident'>u32</span>, <span class='ident'>Vec</span><span class='op'>&lt;</span><span class='ident'>glium</span>::<span class='ident'>texture</span>::<span class='ident'>RawImage2d</span><span class='op'>&lt;</span><span class='lifetime'>&#39;b</span>, <span class='ident'>u8</span><span class='op'>&gt;&gt;</span>) {
+<span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>load_spritesheet</span><span class='op'>&lt;</span><span class='lifetime'>&#39;b</span><span class='op'>&gt;</span>(<span class='ident'>file</span>: <span class='kw-2'>&amp;</span><span class='ident'>str</span>) <span class='op'>-&gt;</span> (<span class='ident'>u32</span>, <span class='ident'>u32</span>, <span class='ident'>u32</span>, <span class='ident'>u32</span>, <span class='ident'>Vec</span><span class='op'>&lt;</span><span class='ident'>RenderContextTexture</span><span class='op'>&gt;</span>) {
 
     <span class='comment'>// load image file</span>
 
@@ -377,7 +383,7 @@
     <span class='kw'>let</span> <span class='ident'>FrameParameters</span>(<span class='ident'>frame_width</span>, <span class='ident'>frame_height</span>, <span class='ident'>frame_count</span>, _) <span class='op'>=</span> <span class='ident'>frame_parameters</span>;
     <span class='kw'>let</span> (<span class='ident'>bucket_id</span>, <span class='ident'>pad_size</span>) <span class='op'>=</span> <span class='ident'>renderer</span>::<span class='ident'>bucket_info</span>(<span class='ident'>frame_width</span>, <span class='ident'>frame_height</span>);
 
-    <span class='kw'>let</span> <span class='kw-2'>mut</span> <span class='ident'>raw_frames</span> <span class='op'>=</span> <span class='ident'>Vec</span>::<span class='op'>&lt;</span><span class='ident'>glium</span>::<span class='ident'>texture</span>::<span class='ident'>RawImage2d</span><span class='op'>&lt;</span><span class='lifetime'>&#39;b</span>, <span class='ident'>u8</span><span class='op'>&gt;&gt;</span>::<span class='ident'>new</span>();
+    <span class='kw'>let</span> <span class='kw-2'>mut</span> <span class='ident'>raw_frames</span> <span class='op'>=</span> <span class='ident'>Vec</span>::<span class='ident'>new</span>();
 
     <span class='kw'>for</span> <span class='ident'>frame_id</span> <span class='kw'>in</span> <span class='number'>0</span>..<span class='ident'>frame_count</span> {
         <span class='ident'>raw_frames</span>.<span class='ident'>push</span>(<span class='ident'>build_frame_texture</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='ident'>image</span>, <span class='ident'>image_dimensions</span>, <span class='kw-2'>&amp;</span><span class='ident'>frame_parameters</span>, <span class='ident'>frame_id</span>, <span class='ident'>pad_size</span>));
@@ -411,7 +417,7 @@
 <span class='doccomment'>/// constructs a RawFrame for a single frame of a spritesheet</span>
 <span class='doccomment'>///</span>
 <span class='doccomment'>/// if neccessary, pads the image up to the next power of two</span>
-<span class='kw'>fn</span> <span class='ident'>build_frame_texture</span><span class='op'>&lt;</span><span class='lifetime'>&#39;b</span><span class='op'>&gt;</span>(<span class='ident'>image</span>: <span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='ident'>image</span>::<span class='ident'>DynamicImage</span>, <span class='ident'>image_dimensions</span>: (<span class='ident'>u32</span>, <span class='ident'>u32</span>), <span class='ident'>frame_parameters</span>: <span class='kw-2'>&amp;</span><span class='ident'>FrameParameters</span>, <span class='ident'>frame_id</span>: <span class='ident'>u32</span>, <span class='ident'>pad_size</span>: <span class='ident'>u32</span>) <span class='op'>-&gt;</span> <span class='ident'>glium</span>::<span class='ident'>texture</span>::<span class='ident'>RawImage2d</span><span class='op'>&lt;</span><span class='lifetime'>&#39;b</span>, <span class='ident'>u8</span><span class='op'>&gt;</span> {
+<span class='kw'>fn</span> <span class='ident'>build_frame_texture</span><span class='op'>&lt;</span><span class='lifetime'>&#39;b</span><span class='op'>&gt;</span>(<span class='ident'>image</span>: <span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='ident'>image</span>::<span class='ident'>DynamicImage</span>, <span class='ident'>image_dimensions</span>: (<span class='ident'>u32</span>, <span class='ident'>u32</span>), <span class='ident'>frame_parameters</span>: <span class='kw-2'>&amp;</span><span class='ident'>FrameParameters</span>, <span class='ident'>frame_id</span>: <span class='ident'>u32</span>, <span class='ident'>pad_size</span>: <span class='ident'>u32</span>) <span class='op'>-&gt;</span> <span class='ident'>RenderContextTexture</span> {
 
     <span class='kw'>let</span> <span class='ident'>FrameParameters</span>(<span class='ident'>frame_width</span>, <span class='ident'>frame_height</span>, _, _) <span class='op'>=</span> <span class='op'>*</span><span class='ident'>frame_parameters</span>;
     <span class='kw'>let</span> (<span class='ident'>x</span>, <span class='ident'>y</span>) <span class='op'>=</span> <span class='ident'>get_frame_coordinates</span>(<span class='ident'>image_dimensions</span>, <span class='ident'>frame_parameters</span>, <span class='ident'>frame_id</span>);
@@ -422,12 +428,20 @@
         <span class='comment'>// pad image if it doesn&#39;t match an available texture array size</span>
         <span class='kw'>let</span> <span class='kw-2'>mut</span> <span class='ident'>dest</span> <span class='op'>=</span> <span class='ident'>image</span>::<span class='ident'>DynamicImage</span>::<span class='ident'>new_rgba8</span>(<span class='ident'>pad_size</span>, <span class='ident'>pad_size</span>);
         <span class='ident'>dest</span>.<span class='ident'>copy_from</span>(<span class='kw-2'>&amp;</span><span class='ident'>subimage</span>, <span class='number'>0</span>, <span class='number'>0</span>);
-        <span class='ident'>glium</span>::<span class='ident'>texture</span>::<span class='ident'>RawImage2d</span>::<span class='ident'>from_raw_rgba</span>(<span class='ident'>dest</span>.<span class='ident'>to_rgba</span>().<span class='ident'>into_raw</span>(), (<span class='ident'>pad_size</span>, <span class='ident'>pad_size</span>))
+        <span class='ident'>RenderContextTexture</span> {
+            <span class='ident'>data</span>: <span class='ident'>dest</span>.<span class='ident'>to_rgba</span>().<span class='ident'>into_raw</span>(),
+            <span class='ident'>width</span>: <span class='ident'>pad_size</span>,
+            <span class='ident'>height</span>: <span class='ident'>pad_size</span>,
+        }
 
     } <span class='kw'>else</span> {
 
         <span class='comment'>// perfect fit</span>
-        <span class='ident'>glium</span>::<span class='ident'>texture</span>::<span class='ident'>RawImage2d</span>::<span class='ident'>from_raw_rgba</span>(<span class='ident'>subimage</span>.<span class='ident'>to_rgba</span>().<span class='ident'>into_raw</span>(), (<span class='ident'>frame_width</span>, <span class='ident'>frame_height</span>))
+        <span class='ident'>RenderContextTexture</span> {
+            <span class='ident'>data</span>: <span class='ident'>subimage</span>.<span class='ident'>to_rgba</span>().<span class='ident'>into_raw</span>(),
+            <span class='ident'>width</span>: <span class='ident'>frame_width</span>,
+            <span class='ident'>height</span>: <span class='ident'>frame_height</span>,
+        }
     }
 }
 
@@ -504,11 +518,9 @@
     <script>
         window.rootPath = "../../../../";
         window.currentCrate = "radiant_rs";
-        window.playgroundUrl = "";
     </script>
     <script src="../../../../jquery.js"></script>
     <script src="../../../../main.js"></script>
-    
     <script defer src="../../../../search-index.js"></script>
 </body>
 </html>

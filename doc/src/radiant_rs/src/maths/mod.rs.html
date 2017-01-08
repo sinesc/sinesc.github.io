@@ -84,23 +84,23 @@
 
 <span class='kw'>use</span> <span class='ident'>prelude</span>::<span class='op'>*</span>;
 
-<span class='kw'>pub</span> <span class='kw'>trait</span> <span class='ident'>VecType</span><span class='op'>&lt;</span><span class='ident'>T</span>: <span class='ident'>Copy</span> <span class='op'>+</span> <span class='ident'>fmt</span>::<span class='ident'>Display</span> <span class='op'>+</span> <span class='ident'>Float</span><span class='op'>&gt;</span> {
+<span class='kw'>pub</span> <span class='kw'>trait</span> <span class='ident'>VecType</span><span class='op'>&lt;</span><span class='ident'>T</span>: <span class='ident'>Copy</span> <span class='op'>+</span> <span class='ident'>fmt</span>::<span class='ident'>Debug</span> <span class='op'>+</span> <span class='ident'>Float</span><span class='op'>&gt;</span> {
     <span class='kw'>fn</span> <span class='ident'>as_vec3</span>(<span class='self'>self</span>: <span class='kw-2'>&amp;</span><span class='self'>Self</span>, <span class='ident'>neutral</span>: <span class='ident'>T</span>) <span class='op'>-&gt;</span> <span class='ident'>Vec3</span><span class='op'>&lt;</span><span class='ident'>T</span><span class='op'>&gt;</span>;
 }
 
-<span class='kw'>impl</span><span class='op'>&lt;</span><span class='ident'>T</span>: <span class='ident'>Copy</span> <span class='op'>+</span> <span class='ident'>fmt</span>::<span class='ident'>Display</span> <span class='op'>+</span> <span class='ident'>Float</span><span class='op'>&gt;</span> <span class='ident'>VecType</span><span class='op'>&lt;</span><span class='ident'>T</span><span class='op'>&gt;</span> <span class='kw'>for</span> (<span class='ident'>T</span>, <span class='ident'>T</span>, <span class='ident'>T</span>) {
+<span class='kw'>impl</span><span class='op'>&lt;</span><span class='ident'>T</span>: <span class='ident'>Copy</span> <span class='op'>+</span> <span class='ident'>fmt</span>::<span class='ident'>Debug</span> <span class='op'>+</span> <span class='ident'>Float</span><span class='op'>&gt;</span> <span class='ident'>VecType</span><span class='op'>&lt;</span><span class='ident'>T</span><span class='op'>&gt;</span> <span class='kw'>for</span> (<span class='ident'>T</span>, <span class='ident'>T</span>, <span class='ident'>T</span>) {
     <span class='kw'>fn</span> <span class='ident'>as_vec3</span>(<span class='self'>self</span>: <span class='kw-2'>&amp;</span><span class='self'>Self</span>, _: <span class='ident'>T</span>) <span class='op'>-&gt;</span> <span class='ident'>Vec3</span><span class='op'>&lt;</span><span class='ident'>T</span><span class='op'>&gt;</span> {
         <span class='ident'>Vec3</span>::<span class='op'>&lt;</span><span class='ident'>T</span><span class='op'>&gt;</span>(<span class='self'>self</span>.<span class='number'>0</span>, <span class='self'>self</span>.<span class='number'>1</span>, <span class='self'>self</span>.<span class='number'>2</span>)
     }
 }
 
-<span class='kw'>impl</span><span class='op'>&lt;</span><span class='ident'>T</span>: <span class='ident'>Copy</span> <span class='op'>+</span> <span class='ident'>fmt</span>::<span class='ident'>Display</span> <span class='op'>+</span> <span class='ident'>Float</span><span class='op'>&gt;</span> <span class='ident'>VecType</span><span class='op'>&lt;</span><span class='ident'>T</span><span class='op'>&gt;</span> <span class='kw'>for</span> (<span class='ident'>T</span>, <span class='ident'>T</span>) {
+<span class='kw'>impl</span><span class='op'>&lt;</span><span class='ident'>T</span>: <span class='ident'>Copy</span> <span class='op'>+</span> <span class='ident'>fmt</span>::<span class='ident'>Debug</span> <span class='op'>+</span> <span class='ident'>Float</span><span class='op'>&gt;</span> <span class='ident'>VecType</span><span class='op'>&lt;</span><span class='ident'>T</span><span class='op'>&gt;</span> <span class='kw'>for</span> (<span class='ident'>T</span>, <span class='ident'>T</span>) {
     <span class='kw'>fn</span> <span class='ident'>as_vec3</span>(<span class='self'>self</span>: <span class='kw-2'>&amp;</span><span class='self'>Self</span>, <span class='ident'>neutral</span>: <span class='ident'>T</span>) <span class='op'>-&gt;</span> <span class='ident'>Vec3</span><span class='op'>&lt;</span><span class='ident'>T</span><span class='op'>&gt;</span> {
         <span class='ident'>Vec3</span>::<span class='op'>&lt;</span><span class='ident'>T</span><span class='op'>&gt;</span>(<span class='self'>self</span>.<span class='number'>0</span>, <span class='self'>self</span>.<span class='number'>1</span>, <span class='ident'>neutral</span>)
     }
 }
 
-<span class='kw'>impl</span><span class='op'>&lt;</span><span class='ident'>T</span>: <span class='ident'>Copy</span> <span class='op'>+</span> <span class='ident'>fmt</span>::<span class='ident'>Display</span> <span class='op'>+</span> <span class='ident'>Float</span><span class='op'>&gt;</span> <span class='ident'>VecType</span><span class='op'>&lt;</span><span class='ident'>T</span><span class='op'>&gt;</span> <span class='kw'>for</span> <span class='ident'>T</span> {
+<span class='kw'>impl</span><span class='op'>&lt;</span><span class='ident'>T</span>: <span class='ident'>Copy</span> <span class='op'>+</span> <span class='ident'>fmt</span>::<span class='ident'>Debug</span> <span class='op'>+</span> <span class='ident'>Float</span><span class='op'>&gt;</span> <span class='ident'>VecType</span><span class='op'>&lt;</span><span class='ident'>T</span><span class='op'>&gt;</span> <span class='kw'>for</span> <span class='ident'>T</span> {
     <span class='kw'>fn</span> <span class='ident'>as_vec3</span>(<span class='self'>self</span>: <span class='kw-2'>&amp;</span><span class='self'>Self</span>, _: <span class='ident'>T</span>) <span class='op'>-&gt;</span> <span class='ident'>Vec3</span><span class='op'>&lt;</span><span class='ident'>T</span><span class='op'>&gt;</span> {
         <span class='ident'>Vec3</span>::<span class='op'>&lt;</span><span class='ident'>T</span><span class='op'>&gt;</span>(<span class='op'>*</span><span class='self'>self</span>, <span class='op'>*</span><span class='self'>self</span>, <span class='op'>*</span><span class='self'>self</span>)
     }
@@ -162,11 +162,9 @@
     <script>
         window.rootPath = "../../../../";
         window.currentCrate = "radiant_rs";
-        window.playgroundUrl = "";
     </script>
     <script src="../../../../jquery.js"></script>
     <script src="../../../../main.js"></script>
-    
     <script defer src="../../../../search-index.js"></script>
 </body>
 </html>

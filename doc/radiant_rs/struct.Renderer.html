@@ -47,10 +47,8 @@
                    <a id="toggle-all-docs" href="javascript:void(0)" title="collapse all docs">
                        [<span class='inner'>&#x2212;</span>]
                    </a>
-               </span><a id='src-391' class='srclink' href='../src/radiant_rs/src/core/renderer.rs.html#16-19' title='goto source code'>[src]</a></span></h1>
-<pre class='rust struct'>pub struct Renderer&lt;'a&gt; {
-    // some fields omitted
-}</pre><div class='docblock'><p>A renderer is used to render <a href="struct.Layer.html"><code>Layer</code></a>s or <a href="struct.Scene.html"><code>Scene</code></a>s to the
+               </span><a id='src-1349' class='srclink' href='../src/radiant_rs/src/core/renderer.rs.html#16-18' title='goto source code'>[src]</a></span></h1>
+<pre class='rust struct'>pub struct Renderer { /* fields omitted */ }</pre><div class='docblock'><p>A renderer is used to render <a href="struct.Layer.html"><code>Layer</code></a>s or <a href="struct.Scene.html"><code>Scene</code></a>s to the
 <a href="struct.Display.html"><code>Display</code></a>.</p>
 
 <p>The renderer itself is not thread-safe. Instead, draw or write onto layers (from any one or
@@ -59,27 +57,27 @@ drawing.</p>
 
 <p>Alternatively to directly drawing on layers, <a href="struct.Scene.html"><code>Scene</code></a> provides a higher
 level abstraction.</p>
-</div><h2 id='methods'>Methods</h2><h3 class='impl'><span class='in-band'><code>impl&lt;'a&gt; <a class='struct' href='../radiant_rs/struct.Renderer.html' title='radiant_rs::Renderer'>Renderer</a>&lt;'a&gt;</code></span><span class='out-of-band'><div class='ghost'></div><a id='src-395' class='srclink' href='../src/radiant_rs/src/core/renderer.rs.html#21-122' title='goto source code'>[src]</a></span></h3>
-<div class='impl-items'><h4 id='method.new' class='method'><code>fn <a href='#method.new' class='fnname'>new</a>(display: &amp;<a class='struct' href='../radiant_rs/struct.Display.html' title='radiant_rs::Display'>Display</a>) -&gt; Self</code></h4>
+</div><h2 id='methods'>Methods</h2><h3 class='impl'><span class='in-band'><code>impl&lt;'a&gt; <a class='struct' href='../radiant_rs/struct.Renderer.html' title='radiant_rs::Renderer'>Renderer</a></code></span><span class='out-of-band'><div class='ghost'></div><a id='src-261' class='srclink' href='../src/radiant_rs/src/core/renderer.rs.html#20-121' title='goto source code'>[src]</a></span></h3>
+<div class='impl-items'><h4 id='method.new' class='method'><span id='new.v' class='invisible'><code>fn <a href='#method.new' class='fnname'>new</a>(display: &amp;<a class='struct' href='../radiant_rs/struct.Display.html' title='radiant_rs::Display'>Display</a>) -&gt; Self</code></span></h4>
 <div class='docblock'><p>Returns a new renderer instance.</p>
-</div><h4 id='method.context' class='method'><code>fn <a href='#method.context' class='fnname'>context</a>(&amp;self) -&gt; <a class='struct' href='../radiant_rs/struct.RenderContext.html' title='radiant_rs::RenderContext'>RenderContext</a>&lt;'a&gt;</code></h4>
+</div><h4 id='method.context' class='method'><span id='context.v' class='invisible'><code>fn <a href='#method.context' class='fnname'>context</a>(&amp;self) -&gt; <a class='struct' href='../radiant_rs/struct.RenderContext.html' title='radiant_rs::RenderContext'>RenderContext</a></code></span></h4>
 <div class='docblock'><p>Returns a reference to the renderers&#39; context. The <a href="struct.RenderContext"><code>RenderContext</code></a>
 is thread-safe and required by <a href="struct.Font"><code>Font</code></a> and <a href="struct.Sprite"><code>Sprite</code></a> to
 create new instances.</p>
-</div><h4 id='method.prepare_target' class='method'><code>fn <a href='#method.prepare_target' class='fnname'>prepare_target</a>(&amp;self)</code></h4>
+</div><h4 id='method.prepare_target' class='method'><span id='prepare_target.v' class='invisible'><code>fn <a href='#method.prepare_target' class='fnname'>prepare_target</a>(&amp;self)</code></span></h4>
 <div class='docblock'><p>Prepares a new target for drawing without clearing it.</p>
-</div><h4 id='method.clear_target' class='method'><code>fn <a href='#method.clear_target' class='fnname'>clear_target</a>(&amp;self, color: <a class='struct' href='../radiant_rs/struct.Color.html' title='radiant_rs::Color'>Color</a>)</code></h4>
+</div><h4 id='method.clear_target' class='method'><span id='clear_target.v' class='invisible'><code>fn <a href='#method.clear_target' class='fnname'>clear_target</a>(&amp;self, color: <a class='struct' href='../radiant_rs/struct.Color.html' title='radiant_rs::Color'>Color</a>)</code></span></h4>
 <div class='docblock'><p>Prepares a new target and clears it with given color.</p>
-</div><h4 id='method.swap_target' class='method'><code>fn <a href='#method.swap_target' class='fnname'>swap_target</a>(&amp;self)</code></h4>
+</div><h4 id='method.swap_target' class='method'><span id='swap_target.v' class='invisible'><code>fn <a href='#method.swap_target' class='fnname'>swap_target</a>(&amp;self)</code></span></h4>
 <div class='docblock'><p>Finishes drawing and swaps the drawing target to front.</p>
-</div><h4 id='method.draw_scene' class='method'><code>fn <a href='#method.draw_scene' class='fnname'>draw_scene</a>(&amp;self, scene: &amp;<a class='struct' href='../radiant_rs/scene/struct.Scene.html' title='radiant_rs::scene::Scene'>Scene</a>, per_frame_multiplier: <a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.f32.html'>f32</a>) -&gt; &amp;Self</code></h4>
+</div><h4 id='method.draw_scene' class='method'><span id='draw_scene.v' class='invisible'><code>fn <a href='#method.draw_scene' class='fnname'>draw_scene</a>(&amp;self, scene: &amp;<a class='struct' href='../radiant_rs/scene/struct.Scene.html' title='radiant_rs::scene::Scene'>Scene</a>, per_frame_multiplier: <a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.f32.html'>f32</a>) -&gt; &amp;Self</code></span></h4>
 <div class='docblock'><p>Draws given scene.</p>
-</div><h4 id='method.draw_layer' class='method'><code>fn <a href='#method.draw_layer' class='fnname'>draw_layer</a>(&amp;self, layer: &amp;<a class='struct' href='../radiant_rs/struct.Layer.html' title='radiant_rs::Layer'>Layer</a>) -&gt; &amp;Self</code></h4>
+</div><h4 id='method.draw_layer' class='method'><span id='draw_layer.v' class='invisible'><code>fn <a href='#method.draw_layer' class='fnname'>draw_layer</a>(&amp;self, layer: &amp;<a class='struct' href='../radiant_rs/struct.Layer.html' title='radiant_rs::Layer'>Layer</a>) -&gt; &amp;Self</code></span></h4>
 <div class='docblock'><p>Draws given layer.</p>
-</div></div><h2 id='implementations'>Trait Implementations</h2><h3 class='impl'><span class='in-band'><code>impl&lt;'a&gt; <a class='trait' href='https://doc.rust-lang.org/nightly/core/clone/trait.Clone.html' title='core::clone::Clone'>Clone</a> for <a class='struct' href='../radiant_rs/struct.Renderer.html' title='radiant_rs::Renderer'>Renderer</a>&lt;'a&gt;</code></span><span class='out-of-band'><div class='ghost'></div><a id='src-385' class='srclink' href='../src/radiant_rs/src/core/renderer.rs.html#15' title='goto source code'>[src]</a></span></h3>
-<div class='impl-items'><h4 id='method.clone' class='method'><code>fn <a href='https://doc.rust-lang.org/nightly/core/clone/trait.Clone.html#tymethod.clone' class='fnname'>clone</a>(&amp;self) -&gt; <a class='struct' href='../radiant_rs/struct.Renderer.html' title='radiant_rs::Renderer'>Renderer</a>&lt;'a&gt;</code></h4>
+</div></div><h2 id='implementations'>Trait Implementations</h2><h3 class='impl'><span class='in-band'><code>impl <a class='trait' href='https://doc.rust-lang.org/nightly/core/clone/trait.Clone.html' title='core::clone::Clone'>Clone</a> for <a class='struct' href='../radiant_rs/struct.Renderer.html' title='radiant_rs::Renderer'>Renderer</a></code></span><span class='out-of-band'><div class='ghost'></div><a id='src-1351' class='srclink' href='../src/radiant_rs/src/core/renderer.rs.html#15' title='goto source code'>[src]</a></span></h3>
+<div class='impl-items'><h4 id='method.clone' class='method'><span id='clone.v' class='invisible'><code>fn <a href='https://doc.rust-lang.org/nightly/core/clone/trait.Clone.html#tymethod.clone' class='fnname'>clone</a>(&amp;self) -&gt; <a class='struct' href='../radiant_rs/struct.Renderer.html' title='radiant_rs::Renderer'>Renderer</a></code></span></h4>
 <div class='docblock'><p>Returns a copy of the value. <a href="https://doc.rust-lang.org/nightly/core/clone/trait.Clone.html#tymethod.clone">Read more</a></p>
-</div><h4 id='method.clone_from' class='method'><code>fn <a href='https://doc.rust-lang.org/nightly/core/clone/trait.Clone.html#method.clone_from' class='fnname'>clone_from</a>(&amp;mut self, source: &amp;Self)</code><div class='since' title='Stable since Rust version 1.0.0'>1.0.0</div></h4>
+</div><h4 id='method.clone_from' class='method'><span id='clone_from.v' class='invisible'><code>fn <a href='https://doc.rust-lang.org/nightly/core/clone/trait.Clone.html#method.clone_from' class='fnname'>clone_from</a>(&amp;mut self, source: &amp;Self)</code><div class='since' title='Stable since Rust version 1.0.0'>1.0.0</div></span></h4>
 <div class='docblock'><p>Performs copy-assignment from <code>source</code>. <a href="https://doc.rust-lang.org/nightly/core/clone/trait.Clone.html#method.clone_from">Read more</a></p>
 </div></div></section>
     <section id='search' class="content hidden"></section>
@@ -137,11 +135,9 @@ create new instances.</p>
     <script>
         window.rootPath = "../";
         window.currentCrate = "radiant_rs";
-        window.playgroundUrl = "";
     </script>
     <script src="../jquery.js"></script>
     <script src="../main.js"></script>
-    
     <script defer src="../search-index.js"></script>
 </body>
 </html>

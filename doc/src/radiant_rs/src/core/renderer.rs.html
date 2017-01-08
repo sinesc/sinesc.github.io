@@ -177,7 +177,7 @@
 <span class='kw'>use</span> <span class='ident'>prelude</span>::<span class='op'>*</span>;
 <span class='kw'>use</span> <span class='ident'>glium</span>;
 <span class='kw'>use</span> <span class='ident'>glium</span>::<span class='ident'>Surface</span>;
-<span class='kw'>use</span> <span class='ident'>core</span>::{<span class='ident'>Display</span>, <span class='ident'>RenderContext</span>, <span class='ident'>RenderContextData</span>, <span class='ident'>layer</span>, <span class='ident'>Layer</span>, <span class='ident'>blendmode</span>, <span class='ident'>scene</span>, <span class='ident'>Color</span>};
+<span class='kw'>use</span> <span class='ident'>core</span>::{<span class='ident'>Display</span>, <span class='ident'>rendercontext</span>, <span class='ident'>RenderContext</span>, <span class='ident'>RenderContextData</span>, <span class='ident'>layer</span>, <span class='ident'>Layer</span>, <span class='ident'>blendmode</span>, <span class='ident'>scene</span>, <span class='ident'>Color</span>, <span class='ident'>display</span>};
 
 <span class='doccomment'>/// A renderer is used to render [`Layer`](struct.Layer.html)s or [`Scene`](struct.Scene.html)s to the</span>
 <span class='doccomment'>/// [`Display`](struct.Display.html).</span>
@@ -189,49 +189,47 @@
 <span class='doccomment'>/// Alternatively to directly drawing on layers, [`Scene`](struct.Scene.html) provides a higher</span>
 <span class='doccomment'>/// level abstraction.</span>
 <span class='attribute'>#[<span class='ident'>derive</span>(<span class='ident'>Clone</span>)]</span>
-<span class='kw'>pub</span> <span class='kw'>struct</span> <span class='ident'>Renderer</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span><span class='op'>&gt;</span> {
-    <span class='ident'>capacity</span>    : <span class='ident'>usize</span>,
-    <span class='ident'>context</span>     : <span class='ident'>RenderContext</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span><span class='op'>&gt;</span>,
+<span class='kw'>pub</span> <span class='kw'>struct</span> <span class='ident'>Renderer</span> {
+    <span class='ident'>context</span>: <span class='ident'>RenderContext</span>,
 }
 
-<span class='kw'>impl</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span><span class='op'>&gt;</span> <span class='ident'>Renderer</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span><span class='op'>&gt;</span> {
+<span class='kw'>impl</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span><span class='op'>&gt;</span> <span class='ident'>Renderer</span> {
 
     <span class='doccomment'>/// Returns a new renderer instance.</span>
     <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>new</span>(<span class='ident'>display</span>: <span class='kw-2'>&amp;</span><span class='ident'>Display</span>) <span class='op'>-&gt;</span> <span class='self'>Self</span> {
 
-        <span class='kw'>let</span> <span class='ident'>context_data</span> <span class='op'>=</span> <span class='ident'>RenderContextData</span>::<span class='ident'>new</span>(<span class='ident'>display</span>, <span class='number'>1024</span>);  <span class='comment'>// todo: &quot;1024&quot; add some sort of configurable?</span>
+        <span class='kw'>let</span> <span class='ident'>context_data</span> <span class='op'>=</span> <span class='ident'>RenderContextData</span>::<span class='ident'>new</span>(<span class='ident'>display</span>, <span class='ident'>rendercontext</span>::<span class='ident'>INITIAL_CAPACITY</span>);
 
         <span class='ident'>Renderer</span> {
-            <span class='ident'>capacity</span>: <span class='number'>1024</span>,
-            <span class='ident'>context</span> : <span class='ident'>RenderContext</span>::<span class='ident'>new</span>(<span class='ident'>context_data</span>),
+            <span class='ident'>context</span>: <span class='ident'>rendercontext</span>::<span class='ident'>new</span>(<span class='ident'>context_data</span>),
         }
     }
 
     <span class='doccomment'>/// Returns a reference to the renderers&#39; context. The [`RenderContext`](struct.RenderContext)</span>
     <span class='doccomment'>/// is thread-safe and required by [`Font`](struct.Font) and [`Sprite`](struct.Sprite) to</span>
     <span class='doccomment'>/// create new instances.</span>
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>context</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='ident'>RenderContext</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span><span class='op'>&gt;</span> {
+    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>context</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='ident'>RenderContext</span> {
         <span class='self'>self</span>.<span class='ident'>context</span>.<span class='ident'>clone</span>()
     }
 
     <span class='doccomment'>/// Prepares a new target for drawing without clearing it.</span>
     <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>prepare_target</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>) {
-        <span class='kw'>let</span> <span class='kw-2'>mut</span> <span class='ident'>context</span> <span class='op'>=</span> <span class='self'>self</span>.<span class='ident'>context</span>.<span class='ident'>lock</span>();
-        <span class='ident'>context</span>.<span class='ident'>target</span> <span class='op'>=</span> <span class='prelude-val'>Some</span>(<span class='ident'>context</span>.<span class='ident'>display</span>.<span class='ident'>handle</span>.<span class='ident'>draw</span>());
+        <span class='kw'>let</span> <span class='kw-2'>mut</span> <span class='ident'>context</span> <span class='op'>=</span> <span class='ident'>rendercontext</span>::<span class='ident'>lock</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>.<span class='ident'>context</span>);
+        <span class='ident'>context</span>.<span class='ident'>target</span> <span class='op'>=</span> <span class='prelude-val'>Some</span>(<span class='ident'>display</span>::<span class='ident'>handle</span>(<span class='kw-2'>&amp;</span><span class='ident'>context</span>.<span class='ident'>display</span>).<span class='ident'>draw</span>());
     }
 
     <span class='doccomment'>/// Prepares a new target and clears it with given color.</span>
     <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>clear_target</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>, <span class='ident'>color</span>: <span class='ident'>Color</span>) {
-        <span class='kw'>let</span> <span class='kw-2'>mut</span> <span class='ident'>context</span> <span class='op'>=</span> <span class='self'>self</span>.<span class='ident'>context</span>.<span class='ident'>lock</span>();
+        <span class='kw'>let</span> <span class='kw-2'>mut</span> <span class='ident'>context</span> <span class='op'>=</span> <span class='ident'>rendercontext</span>::<span class='ident'>lock</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>.<span class='ident'>context</span>);
         <span class='kw'>let</span> (<span class='ident'>r</span>, <span class='ident'>g</span>, <span class='ident'>b</span>, <span class='ident'>a</span>) <span class='op'>=</span> <span class='ident'>color</span>.<span class='ident'>as_tuple</span>();
-        <span class='kw'>let</span> <span class='kw-2'>mut</span> <span class='ident'>target</span> <span class='op'>=</span> <span class='ident'>context</span>.<span class='ident'>display</span>.<span class='ident'>handle</span>.<span class='ident'>draw</span>();
+        <span class='kw'>let</span> <span class='kw-2'>mut</span> <span class='ident'>target</span> <span class='op'>=</span> <span class='ident'>display</span>::<span class='ident'>handle</span>(<span class='kw-2'>&amp;</span><span class='ident'>context</span>.<span class='ident'>display</span>).<span class='ident'>draw</span>();
         <span class='ident'>target</span>.<span class='ident'>clear_color</span>(<span class='ident'>r</span>, <span class='ident'>g</span>, <span class='ident'>b</span>, <span class='ident'>a</span>);
         <span class='ident'>context</span>.<span class='ident'>target</span> <span class='op'>=</span> <span class='prelude-val'>Some</span>(<span class='ident'>target</span>);
     }
 
     <span class='doccomment'>/// Finishes drawing and swaps the drawing target to front.</span>
     <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>swap_target</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>) {
-        <span class='kw'>let</span> <span class='kw-2'>mut</span> <span class='ident'>context</span> <span class='op'>=</span> <span class='self'>self</span>.<span class='ident'>context</span>.<span class='ident'>lock</span>();
+        <span class='kw'>let</span> <span class='kw-2'>mut</span> <span class='ident'>context</span> <span class='op'>=</span> <span class='ident'>rendercontext</span>::<span class='ident'>lock</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>.<span class='ident'>context</span>);
         <span class='ident'>context</span>.<span class='ident'>target</span>.<span class='ident'>take</span>().<span class='ident'>unwrap</span>().<span class='ident'>finish</span>().<span class='ident'>unwrap</span>();
     }
 <span class='comment'>/*
@@ -252,7 +250,7 @@
 
         <span class='comment'>// open context</span>
 
-        <span class='kw'>let</span> <span class='kw-2'>mut</span> <span class='ident'>context</span> <span class='op'>=</span> <span class='self'>self</span>.<span class='ident'>context</span>.<span class='ident'>lock</span>();
+        <span class='kw'>let</span> <span class='kw-2'>mut</span> <span class='ident'>context</span> <span class='op'>=</span> <span class='ident'>rendercontext</span>::<span class='ident'>lock</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>.<span class='ident'>context</span>);
         <span class='kw'>let</span> <span class='kw-2'>mut</span> <span class='ident'>context</span> <span class='op'>=</span> <span class='ident'>context</span>.<span class='ident'>deref_mut</span>();
 
         <span class='comment'>// update sprite texture arrays, font texture and vertex buffer as required</span>
@@ -273,10 +271,11 @@
                 <span class='ident'>model_matrix</span>    : <span class='op'>*</span><span class='ident'>layer</span>.<span class='ident'>model_matrix</span>().<span class='ident'>deref_mut</span>(),
                 <span class='ident'>global_color</span>    : <span class='op'>*</span><span class='ident'>layer</span>.<span class='ident'>color</span>().<span class='ident'>deref_mut</span>(),
                 <span class='ident'>font_cache</span>      : <span class='ident'>context</span>.<span class='ident'>font_texture</span>.<span class='ident'>sampled</span>().<span class='ident'>magnify_filter</span>(<span class='ident'>glium</span>::<span class='ident'>uniforms</span>::<span class='ident'>MagnifySamplerFilter</span>::<span class='ident'>Nearest</span>),
-                <span class='ident'>tex1</span>            : <span class='kw-2'>&amp;</span><span class='ident'>context</span>.<span class='ident'>tex_array</span>[<span class='number'>1</span>].<span class='ident'>data</span>,
-                <span class='ident'>tex2</span>            : <span class='kw-2'>&amp;</span><span class='ident'>context</span>.<span class='ident'>tex_array</span>[<span class='number'>2</span>].<span class='ident'>data</span>,
-                <span class='ident'>tex3</span>            : <span class='kw-2'>&amp;</span><span class='ident'>context</span>.<span class='ident'>tex_array</span>[<span class='number'>3</span>].<span class='ident'>data</span>,
-                <span class='ident'>tex4</span>            : <span class='kw-2'>&amp;</span><span class='ident'>context</span>.<span class='ident'>tex_array</span>[<span class='number'>4</span>].<span class='ident'>data</span>,
+                <span class='ident'>tex1</span>            : <span class='kw-2'>&amp;</span><span class='ident'>context</span>.<span class='ident'>tex_array</span>[<span class='number'>1</span>].<span class='ident'>data</span>,   <span class='comment'>// 32</span>
+                <span class='ident'>tex2</span>            : <span class='kw-2'>&amp;</span><span class='ident'>context</span>.<span class='ident'>tex_array</span>[<span class='number'>2</span>].<span class='ident'>data</span>,   <span class='comment'>// 64</span>
+                <span class='ident'>tex3</span>            : <span class='kw-2'>&amp;</span><span class='ident'>context</span>.<span class='ident'>tex_array</span>[<span class='number'>3</span>].<span class='ident'>data</span>,   <span class='comment'>// 128</span>
+                <span class='ident'>tex4</span>            : <span class='kw-2'>&amp;</span><span class='ident'>context</span>.<span class='ident'>tex_array</span>[<span class='number'>4</span>].<span class='ident'>data</span>,   <span class='comment'>// 256</span>
+                <span class='ident'>tex5</span>            : <span class='kw-2'>&amp;</span><span class='ident'>context</span>.<span class='ident'>tex_array</span>[<span class='number'>5</span>].<span class='ident'>data</span>,   <span class='comment'>// 512</span>
             };
 
             <span class='comment'>// set up draw parameters for given blend options</span>
@@ -303,6 +302,7 @@
     <span class='kw'>let</span> <span class='ident'>size</span> <span class='op'>=</span> <span class='number'>2u32</span>.<span class='ident'>pow</span>(<span class='ident'>ln2</span>);
     <span class='comment'>// skip first five sizes 1x1 to 16x16, use id 0 for font-cache</span>
     <span class='kw'>let</span> <span class='ident'>bucket_id</span> <span class='op'>=</span> <span class='ident'>cmp</span>::<span class='ident'>max</span>(<span class='number'>0</span>, <span class='ident'>ln2</span> <span class='op'>-</span> <span class='number'>4</span> <span class='op'>+</span> <span class='number'>1</span>);
+    <span class='macro'>assert</span><span class='macro'>!</span>(<span class='ident'>bucket_id</span> <span class='op'>&lt;</span> <span class='ident'>rendercontext</span>::<span class='ident'>NUM_BUCKETS</span> <span class='kw'>as</span> <span class='ident'>u32</span>, <span class='string'>&quot;texture size exceeded configured maximum&quot;</span>);
     (<span class='ident'>bucket_id</span>, <span class='ident'>size</span>)
 }
 </pre>
@@ -362,11 +362,9 @@
     <script>
         window.rootPath = "../../../../";
         window.currentCrate = "radiant_rs";
-        window.playgroundUrl = "";
     </script>
     <script src="../../../../jquery.js"></script>
     <script src="../../../../main.js"></script>
-    
     <script defer src="../../../../search-index.js"></script>
 </body>
 </html>
