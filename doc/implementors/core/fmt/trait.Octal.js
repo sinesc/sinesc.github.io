@@ -1,5 +1,5 @@
 (function() {var implementors = {};
-implementors["radiant_rs"] = [];
+implementors["radiant_rs"] = ["impl <a class='trait' href='https://doc.rust-lang.org/nightly/core/fmt/trait.Octal.html' title='core::fmt::Octal'>Octal</a> for BigUint","impl <a class='trait' href='https://doc.rust-lang.org/nightly/core/fmt/trait.Octal.html' title='core::fmt::Octal'>Octal</a> for BigInt",];
 
             if (window.register_implementors) {
                 window.register_implementors(implementors);

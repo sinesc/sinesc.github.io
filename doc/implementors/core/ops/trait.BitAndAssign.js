@@ -1,5 +1,5 @@
 (function() {var implementors = {};
-implementors["radiant_rs"] = [];
+implementors["radiant_rs"] = ["impl <a class='trait' href='https://doc.rust-lang.org/nightly/core/ops/trait.BitAndAssign.html' title='core::ops::BitAndAssign'>BitAndAssign</a>&lt;Transformations&gt; for Transformations",];
 
             if (window.register_implementors) {
                 window.register_implementors(implementors);

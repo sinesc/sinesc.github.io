@@ -1,5 +1,5 @@
 (function() {var implementors = {};
-implementors["radiant_rs"] = [];
+implementors["radiant_rs"] = ["impl <a class='trait' href='https://doc.rust-lang.org/nightly/core/fmt/trait.Binary.html' title='core::fmt::Binary'>Binary</a> for BigUint","impl <a class='trait' href='https://doc.rust-lang.org/nightly/core/fmt/trait.Binary.html' title='core::fmt::Binary'>Binary</a> for BigInt",];
 
             if (window.register_implementors) {
                 window.register_implementors(implementors);
