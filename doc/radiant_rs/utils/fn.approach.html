@@ -4,10 +4,10 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="generator" content="rustdoc">
-    <meta name="description" content="API documentation for the Rust `mainloop` fn in crate `radiant_rs`.">
-    <meta name="keywords" content="rust, rustlang, rust-lang, mainloop">
+    <meta name="description" content="API documentation for the Rust `approach` fn in crate `radiant_rs`.">
+    <meta name="keywords" content="rust, rustlang, rust-lang, approach">
 
-    <title>radiant_rs::utils::mainloop - Rust</title>
+    <title>radiant_rs::utils::approach - Rust</title>
 
     <link rel="stylesheet" type="text/css" href="../../rustdoc.css">
     <link rel="stylesheet" type="text/css" href="../../main.css">
@@ -28,7 +28,7 @@
 
     <nav class="sidebar">
         
-        <p class='location'><a href='../index.html'>radiant_rs</a>::<wbr><a href='index.html'>utils</a></p><script>window.sidebarCurrent = {name: 'mainloop', ty: 'fn', relpath: ''};</script><script defer src="sidebar-items.js"></script>
+        <p class='location'><a href='../index.html'>radiant_rs</a>::<wbr><a href='index.html'>utils</a></p><script>window.sidebarCurrent = {name: 'approach', ty: 'fn', relpath: ''};</script><script defer src="sidebar-items.js"></script>
     </nav>
 
     <nav class="sub">
@@ -43,14 +43,12 @@
     </nav>
 
     <section id='main' class="content fn">
-<h1 class='fqn'><span class='in-band'>Function <a href='../index.html'>radiant_rs</a>::<wbr><a href='index.html'>utils</a>::<wbr><a class='fn' href=''>mainloop</a></span><span class='out-of-band'><span id='render-detail'>
+<h1 class='fqn'><span class='in-band'>Function <a href='../index.html'>radiant_rs</a>::<wbr><a href='index.html'>utils</a>::<wbr><a class='fn' href=''>approach</a></span><span class='out-of-band'><span id='render-detail'>
                    <a id="toggle-all-docs" href="javascript:void(0)" title="collapse all docs">
                        [<span class='inner'>&#x2212;</span>]
                    </a>
-               </span><a id='src-1467' class='srclink' href='../../src/radiant_rs/src/misc/loops.rs.html#18-75' title='goto source code'>[src]</a></span></h1>
-<pre class='rust fn'>pub fn mainloop&lt;F, G&gt;(interval: <a class='struct' href='https://doc.rust-lang.org/nightly/std/time/duration/struct.Duration.html' title='std::time::duration::Duration'>Duration</a>, state_callback: F, render_callback: G) <span class='where'>where F: <a class='trait' href='https://doc.rust-lang.org/nightly/core/ops/trait.FnMut.html' title='core::ops::FnMut'>FnMut</a>(LoopState) -&gt; <a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.bool.html'>bool</a>, G: <a class='trait' href='https://doc.rust-lang.org/nightly/core/ops/trait.FnMut.html' title='core::ops::FnMut'>FnMut</a>(LoopState) -&gt; <a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.bool.html'>bool</a></span></pre><div class='docblock'><p>Main loop helper function. Provides callbacks for game state changes and rendering. Calls
-state_callback multiple times if the actual render_callback call interval exceeds the given interval.
-Both callbacks receive a LoopState object containing frame delta and fps data.</p>
+               </span><a id='src-1523' class='srclink' href='../../src/radiant_rs/src/misc/mod.rs.html#9-15' title='goto source code'>[src]</a></span></h1>
+<pre class='rust fn'>pub fn approach&lt;T, S&gt;(source_value: &amp;mut T, target_value: T, rate_of_change: S) <span class='where'>where T: FromPrimitive + ToPrimitive + <a class='trait' href='https://doc.rust-lang.org/nightly/core/clone/trait.Clone.html' title='core::clone::Clone'>Clone</a>, S: ToPrimitive</span></pre><div class='docblock'><p>Mutates source_value to approach target_value at the rate_of_change</p>
 </div></section>
     <section id='search' class="content hidden"></section>
 
