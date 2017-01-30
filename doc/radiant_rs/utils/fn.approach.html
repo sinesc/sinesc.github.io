@@ -47,8 +47,8 @@
                    <a id="toggle-all-docs" href="javascript:void(0)" title="collapse all docs">
                        [<span class='inner'>&#x2212;</span>]
                    </a>
-               </span><a id='src-1523' class='srclink' href='../../src/radiant_rs/src/misc/mod.rs.html#9-15' title='goto source code'>[src]</a></span></h1>
-<pre class='rust fn'>pub fn approach&lt;T, S&gt;(source_value: &amp;mut T, target_value: T, rate_of_change: S) <span class='where'>where T: FromPrimitive + ToPrimitive + <a class='trait' href='https://doc.rust-lang.org/nightly/core/clone/trait.Clone.html' title='core::clone::Clone'>Clone</a>, S: ToPrimitive</span></pre><div class='docblock'><p>Mutates source_value to approach target_value at the rate_of_change</p>
+               </span><a id='src-1639' class='srclink' href='../../src/radiant_rs/src/misc/mod.rs.html#12-16' title='goto source code'>[src]</a></span></h1>
+<pre class='rust fn'>pub fn approach&lt;T, S&gt;(source_value: &amp;mut T, target_value: T, rate_of_change: S) <span class='where'>where T: <a class='trait' href='https://doc.rust-lang.org/nightly/core/ops/trait.Add.html' title='core::ops::Add'>Add</a> + <a class='trait' href='https://doc.rust-lang.org/nightly/core/ops/trait.Mul.html' title='core::ops::Mul'>Mul</a>&lt;S&gt; + <a class='trait' href='https://doc.rust-lang.org/nightly/core/convert/trait.From.html' title='core::convert::From'>From</a>&lt;T::Output::Output&gt; + <a class='trait' href='https://doc.rust-lang.org/nightly/core/marker/trait.Copy.html' title='core::marker::Copy'>Copy</a>, S: Float, T::Output: <a class='trait' href='https://doc.rust-lang.org/nightly/core/ops/trait.Add.html' title='core::ops::Add'>Add</a></span></pre><div class='docblock'><p>Mutates source_value to approach target_value at the rate_of_change.</p>
 </div></section>
     <section id='search' class="content hidden"></section>
 

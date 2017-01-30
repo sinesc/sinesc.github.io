@@ -47,13 +47,15 @@
                    <a id="toggle-all-docs" href="javascript:void(0)" title="collapse all docs">
                        [<span class='inner'>&#x2212;</span>]
                    </a>
-               </span><a id='src-1444' class='srclink' href='../src/radiant_rs/src/maths/mod.rs.html#13-15' title='goto source code'>[src]</a></span></h1>
+               </span><a id='src-1535' class='srclink' href='../src/radiant_rs/src/maths/mod.rs.html#41-44' title='goto source code'>[src]</a></span></h1>
 <pre class='rust trait'>pub trait VecType&lt;T:&nbsp;<a class='trait' href='https://doc.rust-lang.org/nightly/core/marker/trait.Copy.html' title='core::marker::Copy'>Copy</a> + <a class='trait' href='https://doc.rust-lang.org/nightly/core/fmt/trait.Debug.html' title='core::fmt::Debug'>Debug</a> + Float&gt; {
     fn <a href='#tymethod.as_vec3' class='fnname'>as_vec3</a>(self: &amp;Self, neutral: T) -&gt; <a class='struct' href='../radiant_rs/struct.Vec3.html' title='radiant_rs::Vec3'>Vec3</a>&lt;T&gt;;
-}</pre>
+}</pre><div class='docblock'><p>Trait for values that can be converted to a vector.</p>
+</div>
             <h2 id='required-methods'>Required Methods</h2>
             <div class='methods'>
-        <h3 id='tymethod.as_vec3' class='method stab '><span id='as_vec3.v' class='invisible'><code>fn <a href='#tymethod.as_vec3' class='fnname'>as_vec3</a>(self: &amp;Self, neutral: T) -&gt; <a class='struct' href='../radiant_rs/struct.Vec3.html' title='radiant_rs::Vec3'>Vec3</a>&lt;T&gt;</code></span></h3></div>
+        <h3 id='tymethod.as_vec3' class='method stab '><span id='as_vec3.v' class='invisible'><code>fn <a href='#tymethod.as_vec3' class='fnname'>as_vec3</a>(self: &amp;Self, neutral: T) -&gt; <a class='struct' href='../radiant_rs/struct.Vec3.html' title='radiant_rs::Vec3'>Vec3</a>&lt;T&gt;</code></span></h3><div class='docblock'><p>Returns the given value as a Vec3</p>
+</div></div>
         <h2 id='implementors'>Implementors</h2>
         <ul class='item-list' id='implementors-list'>
     <li><code>impl&lt;T&gt; VecType&lt;T&gt; for <a class='struct' href='../radiant_rs/struct.Vec2.html' title='radiant_rs::Vec2'>Vec2</a>&lt;T&gt; <span class='where'>where T: <a class='trait' href='https://doc.rust-lang.org/nightly/core/fmt/trait.Debug.html' title='core::fmt::Debug'>Debug</a> + Float</span></code></li>

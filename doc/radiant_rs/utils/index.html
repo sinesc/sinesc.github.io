@@ -47,10 +47,17 @@
                    <a id="toggle-all-docs" href="javascript:void(0)" title="collapse all docs">
                        [<span class='inner'>&#x2212;</span>]
                    </a>
-               </span><a id='src-1534' class='srclink' href='../../src/radiant_rs/src/public.rs.html#4-7' title='goto source code'>[src]</a></span></h1>
+               </span><a id='src-1656' class='srclink' href='../../src/radiant_rs/src/public.rs.html#11-14' title='goto source code'>[src]</a></span></h1>
 <div class='docblock'><p>Optional utility features.</p>
 </div><h2 id='structs' class='section-header'><a href="#structs">Structs</a></h2>
 <table>
+                       <tr class=' module-item'>
+                           <td><a class='struct' href='struct.Periodic.html'
+                                  title='radiant_rs::utils::Periodic'>Periodic</a></td>
+                           <td class='docblock-short'>
+                                <p>A generic interval, testable for elapsation. !todo Is that even a word?</p>
+                           </td>
+                       </tr>
                        <tr class=' module-item'>
                            <td><a class='struct' href='struct.Rng.html'
                                   title='radiant_rs::utils::Rng'>Rng</a></td>
@@ -65,7 +72,7 @@ random numbers.</p>
                            <td><a class='fn' href='fn.approach.html'
                                   title='radiant_rs::utils::approach'>approach</a></td>
                            <td class='docblock-short'>
-                                <p>Mutates source_value to approach target_value at the rate_of_change</p>
+                                <p>Mutates source_value to approach target_value at the rate_of_change.</p>
                            </td>
                        </tr>
                        <tr class=' module-item'>
@@ -75,6 +82,20 @@ random numbers.</p>
                                 <p>Main loop helper function. Provides callbacks for game state changes and rendering. Calls
 state_callback multiple times if the actual render_callback call interval exceeds the given interval.
 Both callbacks receive a LoopState object containing frame delta and fps data.</p>
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='fn' href='fn.max.html'
+                                  title='radiant_rs::utils::max'>max</a></td>
+                           <td class='docblock-short'>
+                                <p>Returns the greater of the two given values, ignoring edge-cases like NaN.</p>
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='fn' href='fn.min.html'
+                                  title='radiant_rs::utils::min'>min</a></td>
+                           <td class='docblock-short'>
+                                <p>Returns the smaller of the two given values, ignoring edge-cases like NaN.</p>
                            </td>
                        </tr>
                        <tr class=' module-item'>
