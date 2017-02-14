@@ -13,7 +13,7 @@
     <link rel="stylesheet" type="text/css" href="../main.css">
     
 
-    
+    <link rel="shortcut icon" href="https://sinesc.github.io/images/radiant-favicon.png">
     
 </head>
 <body class="rustdoc">
@@ -27,7 +27,7 @@
     
 
     <nav class="sidebar">
-        
+        <a href='../radiant_rs/index.html'><img src='https://sinesc.github.io/images/radiant-logo.png' alt='logo' width='100'></a>
         <p class='location'><a href='index.html'>radiant_rs</a></p><script>window.sidebarCurrent = {name: 'Renderer', ty: 'struct', relpath: ''};</script><script defer src="sidebar-items.js"></script>
     </nav>
 
@@ -66,7 +66,7 @@ is thread-safe and required by <a href="struct.Font.html"><code>Font</code></a> 
 create new instances.</p>
 </div><h4 id='method.set_target' class='method'><span id='set_target.v' class='invisible'><code>fn <a href='#method.set_target' class='fnname'>set_target</a>&lt;T&gt;(self: &amp;Self, target: &amp;T) <span class='where'>where T: RenderTarget</span></code></span></h4>
 <div class='docblock'><p>Sets a new rendering target. Valid targets are the display and textures.</p>
-</div><h4 id='method.clear' class='method'><span id='clear.v' class='invisible'><code>fn <a href='#method.clear' class='fnname'>clear</a>(self: &amp;Self, color: &amp;<a class='struct' href='../radiant_rs/struct.Color.html' title='radiant_rs::Color'>Color</a>)</code></span></h4>
+</div><h4 id='method.clear' class='method'><span id='clear.v' class='invisible'><code>fn <a href='#method.clear' class='fnname'>clear</a>(self: &amp;Self, color: <a class='struct' href='../radiant_rs/struct.Color.html' title='radiant_rs::Color'>Color</a>)</code></span></h4>
 <div class='docblock'><p>Clears the current target.</p>
 </div><h4 id='method.draw_scene' class='method'><span id='draw_scene.v' class='invisible'><code>fn <a href='#method.draw_scene' class='fnname'>draw_scene</a>(self: &amp;Self, scene: &amp;<a class='struct' href='../radiant_rs/scene/struct.Scene.html' title='radiant_rs::scene::Scene'>Scene</a>, per_frame_multiplier: <a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.f32.html'>f32</a>) -&gt; &amp;Self</code></span></h4>
 <div class='docblock'><p>Draws given scene to the current target..</p>

@@ -13,7 +13,7 @@
     <link rel="stylesheet" type="text/css" href="../main.css">
     
 
-    
+    <link rel="shortcut icon" href="https://sinesc.github.io/images/radiant-favicon.png">
     
 </head>
 <body class="rustdoc">
@@ -27,7 +27,7 @@
     
 
     <nav class="sidebar">
-        
+        <a href='../radiant_rs/index.html'><img src='https://sinesc.github.io/images/radiant-logo.png' alt='logo' width='100'></a>
         <p class='location'></p><script>window.sidebarCurrent = {name: 'radiant_rs', ty: 'mod', relpath: '../'};</script>
     </nav>
 
@@ -47,12 +47,12 @@
                    <a id="toggle-all-docs" href="javascript:void(0)" title="collapse all docs">
                        [<span class='inner'>&#x2212;</span>]
                    </a>
-               </span><a class='srclink' href='../src/radiant_rs/lib.rs.html#1-101' title='goto source code'>[src]</a></span></h1>
-<div class='docblock'><p>Very easy to use, thread-safe Rust sprite rendering engine.</p>
+               </span><a class='srclink' href='../src/radiant_rs/lib.rs.html#1-104' title='goto source code'>[src]</a></span></h1>
+<div class='docblock'><p>Thread-safe Rust sprite rendering engine with an easy to use API and custom shader support.</p>
 
 <p>To view the reference, scroll down or collapse this block using the [-] to the left.</p>
 
-<p><strong>This is work-in-progress. The API is incomplete and will likely still change somewhat.</strong></p>
+<p><strong>This is work-in-progress. Parts of the API are incomplete and will likely still change somewhat.</strong></p>
 
 <h1 id='examples' class='section-header'><a href='#examples'>Examples</a></h1>
 <p>The examples folder contains multiple small examples. They can be run via <code>cargo run --example &lt;example name&gt;</code>, e.g.</p>
@@ -73,12 +73,12 @@
 <li>Consider clearing the layer and goto 6. Or maybe simply change some layer properties and redraw it starting a step 7.</li>
 </ol>
 
-<h1 id='rendering-from-multiple-threads' class='section-header'><a href='#rendering-from-multiple-threads'>Rendering from multiple threads</a></h1>
+<h1 id='drawing-from-multiple-threads' class='section-header'><a href='#drawing-from-multiple-threads'>Drawing from multiple threads</a></h1>
 <ol>
-<li>Stick fonts, sprites, and layers or scenes into <code>Arc</code>s.</li>
+<li>Wrap fonts, sprites, and layers or scenes in <code>Arc</code>s.</li>
 <li>Clone the <code>Arc</code>s for each thread that needs their contents. The rendercontext can be cloned directly.</li>
 <li>Move the clones into the thread.</li>
-<li>Draw onto your layers, load sprites etc. from however many threads you like. Layers are non-blocking for drawing operations,
+<li>Draw onto your layers, load sprites etc. from any thread(s). Layers are non-blocking for drawing operations,
 blocking for other manipulations (e.g. matrix modification).</li>
 <li>Perform steps 7-10 from the above list in the thread that created the <code>Renderer</code>; both it and <code>Display</code> do not implement <code>Send</code>.</li>
 </ol>
