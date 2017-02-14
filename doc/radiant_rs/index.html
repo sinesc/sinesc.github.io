@@ -47,8 +47,89 @@
                    <a id="toggle-all-docs" href="javascript:void(0)" title="collapse all docs">
                        [<span class='inner'>&#x2212;</span>]
                    </a>
-               </span><a id='src-0' class='srclink' href='../src/radiant_rs/src/lib.rs.html#1-18' title='goto source code'>[src]</a></span></h1>
-<h2 id='modules' class='section-header'><a href="#modules">Modules</a></h2>
+               </span><a class='srclink' href='../src/radiant_rs/lib.rs.html#1-101' title='goto source code'>[src]</a></span></h1>
+<div class='docblock'><p>Very easy to use, thread-safe Rust sprite rendering engine.</p>
+
+<p>To view the reference, scroll down or collapse this block using the [-] to the left.</p>
+
+<p><strong>This is work-in-progress. The API is incomplete and will likely still change somewhat.</strong></p>
+
+<h1 id='examples' class='section-header'><a href='#examples'>Examples</a></h1>
+<p>The examples folder contains multiple small examples. They can be run via <code>cargo run --example &lt;example name&gt;</code>, e.g.</p>
+
+<p><code>cargo run --example blobs</code> to run blobs.rs</p>
+
+<h1 id='basic-rendering' class='section-header'><a href='#basic-rendering'>Basic rendering</a></h1>
+<ol>
+<li>Create a <a href="struct.Display.html">display</a> with <code>Display::new()</code>. This represents the window/screen.</li>
+<li>Create a <a href="struct.Renderer.html">renderer</a> with <code>Renderer::new()</code>. It is used to draw to rendertargets like the display.</li>
+<li>Grab a context from the renderer using the <code>context()</code> method. It is required for resource loading.</li>
+<li>Load <a href="struct.Sprite.html">sprites</a> or <a href="struct.Font.html">fonts</a> using e.g. <code>Font::from_file()</code> or <code>Sprite::from_file()</code>.</li>
+<li>Create as many drawing <a href="struct.Layer.html">layers</a> as you need using <code>Layer::new()</code>.</li>
+<li>Draw to the layer using the <code>Font::write()</code> or <code>Sprite::draw()</code> methods.</li>
+<li>Prepare a new frame and clear it using <code>Display::clear_frame()</code>. (If you don&#39;t want to clear, use <code>Display::prepare_frame()</code> instead.)</li>
+<li>Draw the contents of your layers to the display using <code>Renderer::draw_layer()</code>.</li>
+<li>Make the frame visible via <code>Display::swap_frame()</code>.</li>
+<li>Consider clearing the layer and goto 6. Or maybe simply change some layer properties and redraw it starting a step 7.</li>
+</ol>
+
+<h1 id='rendering-from-multiple-threads' class='section-header'><a href='#rendering-from-multiple-threads'>Rendering from multiple threads</a></h1>
+<ol>
+<li>Stick fonts, sprites, and layers or scenes into <code>Arc</code>s.</li>
+<li>Clone the <code>Arc</code>s for each thread that needs their contents. The rendercontext can be cloned directly.</li>
+<li>Move the clones into the thread.</li>
+<li>Draw onto your layers, load sprites etc. from however many threads you like. Layers are non-blocking for drawing operations,
+blocking for other manipulations (e.g. matrix modification).</li>
+<li>Perform steps 7-10 from the above list in the thread that created the <code>Renderer</code>; both it and <code>Display</code> do not implement <code>Send</code>.</li>
+</ol>
+
+<h1 id='sprite-sheets' class='section-header'><a href='#sprite-sheets'>Sprite-sheets</a></h1>
+<p>Currently sprite-sheets are required to be sheets of one or more either horizontally or vertically aligned sprite frames. Each frame
+can have multiple components aligned orthogonally to the frames. Components could be the sprite&#39;s color image, a light or distortion
+map for the shader etc.</p>
+
+<p>Filenames are required to express the sprite format, e.g. <code>battery_lightmapped_128x128x15x2</code> would be 15 frames of a 128x128 sprite using
+two components. This is a scaled version of how it could look. The Color component is in the top row, a lightmap component in the bottom
+row:</p>
+
+<p><img src="https://sinesc.github.io/images/spritesheet.png" alt="Spritesheet" title="Spritesheet"></p>
+
+<h1 id='custom-shaders' class='section-header'><a href='#custom-shaders'>Custom shaders</a></h1>
+<p>Radiant supports the use of custom fragment shaders. When you create a program, a tiny wrapper is injected into the source to
+make it compatible with the different internal shader programs used by the library. Instead of <code>texture()</code> you would then use <code>sheet()</code> to
+retrieve data from the current texture, etc. (This is required as the texture might come from a sampler or sampler array.)</p>
+
+<p>Available inputs:</p>
+
+<ul>
+<li><code>uniform mat4 u_view</code> The view matrix if applicable, otherwise the identity.</li>
+<li><code>uniform mat4 u_model</code> The model matrix if applicable, otherwise the identity.</li>
+<li><code>in vec2 v_tex_coords</code> Texture coordinates.</li>
+<li><code>in vec4 v_color</code> Color multiplier. For layers this is sprite color * layer color.</li>
+</ul>
+
+<p>Wrappers:</p>
+
+<ul>
+<li><code>vec2 sheetSize()</code> Retrieves the dimensions of the texture. Replaces <code>textureSize()</code>.</li>
+<li><code>vec4 sheet(in vec2 texture_coords)</code> Retrieves texels from the texture. Replaces <code>texture()</code></li>
+<li>!todo add other texture*.</li>
+</ul>
+
+<p>Example: (This is the default shader used by radiant.)</p>
+
+<pre class='rust rust-example-rendered'>
+<span class='attribute'>#<span class='ident'>version</span> <span class='number'>140</span>
+
+<span class='kw'>in</span> <span class='ident'>vec2</span> <span class='ident'>v_tex_coords</span>;
+<span class='kw'>in</span> <span class='ident'>vec4</span> <span class='ident'>v_color</span>;
+
+<span class='ident'>out</span> <span class='ident'>vec4</span> <span class='ident'>f_color</span>;
+
+<span class='ident'>void</span> <span class='ident'>main</span>() {
+    <span class='ident'>f_color</span> <span class='op'>=</span> <span class='ident'>sheet</span>(<span class='ident'>v_tex_coords</span>) <span class='op'>*</span> <span class='ident'>v_color</span>;
+}</pre>
+</div><h2 id='modules' class='section-header'><a href="#modules">Modules</a></h2>
 <table>
                        <tr class=' module-item'>
                            <td><a class='mod' href='blendmodes/index.html'
@@ -175,6 +256,13 @@ via <a href="struct.Font.html#method.from_info"><code>Font::from_info()</code></
                            </td>
                        </tr>
                        <tr class=' module-item'>
+                           <td><a class='struct' href='struct.Program.html'
+                                  title='radiant_rs::Program'>Program</a></td>
+                           <td class='docblock-short'>
+                                <p>A shader program and its uniforms.</p>
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
                            <td><a class='struct' href='struct.Rect.html'
                                   title='radiant_rs::Rect'>Rect</a></td>
                            <td class='docblock-short'>
@@ -192,7 +280,7 @@ via <a href="struct.Font.html#method.from_info"><code>Font::from_info()</code></
                            <td><a class='struct' href='struct.Renderer.html'
                                   title='radiant_rs::Renderer'>Renderer</a></td>
                            <td class='docblock-short'>
-                                <p>A renderer is used to render <a href="struct.Layer.html"><code>Layer</code></a>s or <a href="struct.Scene.html"><code>Scene</code></a>s to the
+                                <p>A renderer is used to render <a href="struct.Layer.html"><code>Layer</code></a>s or <a href="scene/struct.Scene.html"><code>Scene</code></a>s to the
 <a href="struct.Display.html"><code>Display</code></a>.</p>
                            </td>
                        </tr>
@@ -201,6 +289,13 @@ via <a href="struct.Font.html#method.from_info"><code>Font::from_info()</code></
                                   title='radiant_rs::Sprite'>Sprite</a></td>
                            <td class='docblock-short'>
                                 <p>A sprite used for drawing on a <a href="struct.Layer.html"><code>Layer</code></a>.</p>
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='struct' href='struct.Texture.html'
+                                  title='radiant_rs::Texture'>Texture</a></td>
+                           <td class='docblock-short'>
+                                <p>A texture.</p>
                            </td>
                        </tr>
                        <tr class=' module-item'>
@@ -231,8 +326,43 @@ via <a href="struct.Font.html#method.from_info"><code>Font::from_info()</code></
                            <td class='docblock-short'>
                                 <p>The current state of a key or mousebutton.</p>
                            </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='enum' href='enum.TextureFilter.html'
+                                  title='radiant_rs::TextureFilter'>TextureFilter</a></td>
+                           <td class='docblock-short'>
+                                <p>Texture minify- or magnify filtering function.</p>
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='enum' href='enum.TextureWrap.html'
+                                  title='radiant_rs::TextureWrap'>TextureWrap</a></td>
+                           <td class='docblock-short'>
+                                <p>Texture wrapping function.</p>
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='enum' href='enum.Uniform.html'
+                                  title='radiant_rs::Uniform'>Uniform</a></td>
+                           <td class='docblock-short'>
+                                <p>A uniform value.</p>
+                           </td>
                        </tr></table><h2 id='traits' class='section-header'><a href="#traits">Traits</a></h2>
 <table>
+                       <tr class=' module-item'>
+                           <td><a class='trait' href='trait.AsUniform.html'
+                                  title='radiant_rs::AsUniform'>AsUniform</a></td>
+                           <td class='docblock-short'>
+                                <p>A value usable as a uniform.</p>
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='trait' href='trait.Postprocessor.html'
+                                  title='radiant_rs::Postprocessor'>Postprocessor</a></td>
+                           <td class='docblock-short'>
+                                <p>A custom postprocessor.</p>
+                           </td>
+                       </tr>
                        <tr class=' module-item'>
                            <td><a class='trait' href='trait.VecType.html'
                                   title='radiant_rs::VecType'>VecType</a></td>

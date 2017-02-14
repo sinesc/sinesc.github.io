@@ -47,9 +47,9 @@
                    <a id="toggle-all-docs" href="javascript:void(0)" title="collapse all docs">
                        [<span class='inner'>&#x2212;</span>]
                    </a>
-               </span><a id='src-1686' class='srclink' href='../src/radiant_rs/src/core/display.rs.html#36-39' title='goto source code'>[src]</a></span></h1>
+               </span><a class='srclink' href='../src/radiant_rs/core/display.rs.html#42-46' title='goto source code'>[src]</a></span></h1>
 <pre class='rust struct'>pub struct Display { /* fields omitted */ }</pre><div class='docblock'><p>A target to render to, e.g. a window or full screen.</p>
-</div><h2 id='methods'>Methods</h2><h3 class='impl'><span class='in-band'><code>impl <a class='struct' href='../radiant_rs/struct.Display.html' title='radiant_rs::Display'>Display</a></code></span><span class='out-of-band'><div class='ghost'></div><a id='src-62' class='srclink' href='../src/radiant_rs/src/core/display.rs.html#49-249' title='goto source code'>[src]</a></span></h3>
+</div><h2 id='methods'>Methods</h2><h3 class='impl'><span class='in-band'><code>impl <a class='struct' href='../radiant_rs/struct.Display.html' title='radiant_rs::Display'>Display</a></code></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../src/radiant_rs/core/display.rs.html#48-280' title='goto source code'>[src]</a></span></h3>
 <div class='impl-items'><h4 id='method.new' class='method'><span id='new.v' class='invisible'><code>fn <a href='#method.new' class='fnname'>new</a>(descriptor: <a class='struct' href='../radiant_rs/struct.DisplayInfo.html' title='radiant_rs::DisplayInfo'>DisplayInfo</a>) -&gt; <a class='struct' href='../radiant_rs/struct.Display.html' title='radiant_rs::Display'>Display</a></code></span></h4>
 <div class='docblock'><p>Creates a new instance from given <a href="struct.DisplayInfo.html"><code>DisplayInfo</code></a>.</p>
 </div><h4 id='method.set_title' class='method'><span id='set_title.v' class='invisible'><code>fn <a href='#method.set_title' class='fnname'>set_title</a>(self: &amp;Self, title: &amp;<a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.str.html'>str</a>)</code></span></h4>
@@ -58,6 +58,12 @@
 <div class='docblock'><p>Makes the previously hidden window visible.</p>
 </div><h4 id='method.hide' class='method'><span id='hide.v' class='invisible'><code>fn <a href='#method.hide' class='fnname'>hide</a>(self: &amp;Self)</code></span></h4>
 <div class='docblock'><p>Hides the window.</p>
+</div><h4 id='method.prepare_frame' class='method'><span id='prepare_frame.v' class='invisible'><code>fn <a href='#method.prepare_frame' class='fnname'>prepare_frame</a>(self: &amp;Self)</code></span></h4>
+<div class='docblock'><p>Prepares a frame for rendering.</p>
+</div><h4 id='method.clear_frame' class='method'><span id='clear_frame.v' class='invisible'><code>fn <a href='#method.clear_frame' class='fnname'>clear_frame</a>(self: &amp;Self, color: <a class='struct' href='../radiant_rs/struct.Color.html' title='radiant_rs::Color'>Color</a>)</code></span></h4>
+<div class='docblock'><p>Prepares a frame for rendering and clears it.</p>
+</div><h4 id='method.swap_frame' class='method'><span id='swap_frame.v' class='invisible'><code>fn <a href='#method.swap_frame' class='fnname'>swap_frame</a>(self: &amp;Self)</code></span></h4>
+<div class='docblock'><p>Swaps current drawing frame with visible frame.</p>
 </div><h4 id='method.grab_cursor' class='method'><span id='grab_cursor.v' class='invisible'><code>fn <a href='#method.grab_cursor' class='fnname'>grab_cursor</a>(self: &amp;Self)</code></span></h4>
 <div class='docblock'><p>Enables cursor grab mode. While in this mode, the mouse cursor will be hidden and
 constrained to the window. Additionally, <a href="struct.Input.html"><code>Input</code></a> will be able to
@@ -82,7 +88,7 @@ restored once it regains focus.</p>
 <a href="struct.Input.html"><code>Input</code></a> for basic keyboard and mouse support.</p>
 </div><h4 id='method.was_closed' class='method'><span id='was_closed.v' class='invisible'><code>fn <a href='#method.was_closed' class='fnname'>was_closed</a>(self: &amp;Self) -&gt; <a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.bool.html'>bool</a></code></span></h4>
 <div class='docblock'><p>Returns true once after the attached window was closed</p>
-</div></div><h2 id='implementations'>Trait Implementations</h2><h3 class='impl'><span class='in-band'><code>impl <a class='trait' href='https://doc.rust-lang.org/nightly/core/clone/trait.Clone.html' title='core::clone::Clone'>Clone</a> for <a class='struct' href='../radiant_rs/struct.Display.html' title='radiant_rs::Display'>Display</a></code></span><span class='out-of-band'><div class='ghost'></div><a id='src-1689' class='srclink' href='../src/radiant_rs/src/core/display.rs.html#35' title='goto source code'>[src]</a></span></h3>
+</div></div><h2 id='implementations'>Trait Implementations</h2><h3 class='impl'><span class='in-band'><code>impl <a class='trait' href='https://doc.rust-lang.org/nightly/core/clone/trait.Clone.html' title='core::clone::Clone'>Clone</a> for <a class='struct' href='../radiant_rs/struct.Display.html' title='radiant_rs::Display'>Display</a></code></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../src/radiant_rs/core/display.rs.html#41' title='goto source code'>[src]</a></span></h3>
 <div class='impl-items'><h4 id='method.clone' class='method'><span id='clone.v' class='invisible'><code>fn <a href='https://doc.rust-lang.org/nightly/core/clone/trait.Clone.html#tymethod.clone' class='fnname'>clone</a>(&amp;self) -&gt; <a class='struct' href='../radiant_rs/struct.Display.html' title='radiant_rs::Display'>Display</a></code></span></h4>
 <div class='docblock'><p>Returns a copy of the value. <a href="https://doc.rust-lang.org/nightly/core/clone/trait.Clone.html#tymethod.clone">Read more</a></p>
 </div><h4 id='method.clone_from' class='method'><span id='clone_from.v' class='invisible'><code>fn <a href='https://doc.rust-lang.org/nightly/core/clone/trait.Clone.html#method.clone_from' class='fnname'>clone_from</a>(&amp;mut self, source: &amp;Self)</code><div class='since' title='Stable since Rust version 1.0.0'>1.0.0</div></span></h4>
