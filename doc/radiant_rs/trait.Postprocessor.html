@@ -47,11 +47,12 @@
                    <a id="toggle-all-docs" href="javascript:void(0)" title="collapse all docs">
                        [<span class='inner'>&#x2212;</span>]
                    </a>
-               </span><a class='srclink' href='../src/radiant_rs/core/mod.rs.html#90-97' title='goto source code'>[src]</a></span></h1>
+               </span><a class='srclink' href='../src/radiant_rs/core/postprocessor/mod.rs.html#14-22' title='goto source code'>[src]</a></span></h1>
 <pre class='rust trait'>pub trait Postprocessor {
     fn <a href='#tymethod.target' class='fnname'>target</a>(self: &amp;mut Self) -&gt; &amp;<a class='struct' href='../radiant_rs/struct.Texture.html' title='radiant_rs::Texture'>Texture</a>;
-    fn <a href='#tymethod.process' class='fnname'>process</a>(self: &amp;mut Self, renderer: &amp;<a class='struct' href='../radiant_rs/struct.Renderer.html' title='radiant_rs::Renderer'>Renderer</a>);
-    fn <a href='#tymethod.draw' class='fnname'>draw</a>(self: &amp;mut Self, renderer: &amp;<a class='struct' href='../radiant_rs/struct.Renderer.html' title='radiant_rs::Renderer'>Renderer</a>);
+    fn <a href='#tymethod.draw' class='fnname'>draw</a>(self: &amp;mut Self, renderer: &amp;<a class='struct' href='../radiant_rs/struct.Renderer.html' title='radiant_rs::Renderer'>Renderer</a>, blendmode: <a class='struct' href='../radiant_rs/struct.BlendMode.html' title='radiant_rs::BlendMode'>BlendMode</a>);
+
+    fn <a href='#method.process' class='fnname'>process</a>(self: &amp;mut Self, renderer: &amp;<a class='struct' href='../radiant_rs/struct.Renderer.html' title='radiant_rs::Renderer'>Renderer</a>) { ... }
 }</pre><div class='docblock'><p>A custom postprocessor.</p>
 
 <p>Postprocessing happens in three steps:</p>
@@ -68,13 +69,17 @@ to the current target.</li>
 </div>
             <h2 id='required-methods'>Required Methods</h2>
             <div class='methods'>
-        <h3 id='tymethod.target' class='method stab '><span id='target.v' class='invisible'><code>fn <a href='#tymethod.target' class='fnname'>target</a>(self: &amp;mut Self) -&gt; &amp;<a class='struct' href='../radiant_rs/struct.Texture.html' title='radiant_rs::Texture'>Texture</a></code></span></h3><div class='docblock'><p>Returns a texture. This texture will contain the input data during <code>process()</code>.</p>
-</div><h3 id='tymethod.process' class='method stab '><span id='process.v' class='invisible'><code>fn <a href='#tymethod.process' class='fnname'>process</a>(self: &amp;mut Self, renderer: &amp;<a class='struct' href='../radiant_rs/struct.Renderer.html' title='radiant_rs::Renderer'>Renderer</a>)</code></span></h3><div class='docblock'><p>Processes input data.</p>
-</div><h3 id='tymethod.draw' class='method stab '><span id='draw.v' class='invisible'><code>fn <a href='#tymethod.draw' class='fnname'>draw</a>(self: &amp;mut Self, renderer: &amp;<a class='struct' href='../radiant_rs/struct.Renderer.html' title='radiant_rs::Renderer'>Renderer</a>)</code></span></h3><div class='docblock'><p>Draws final result to current target.</p>
+        <h3 id='tymethod.target' class='method stab '><span id='target.v' class='invisible'><code>fn <a href='#tymethod.target' class='fnname'>target</a>(self: &amp;mut Self) -&gt; &amp;<a class='struct' href='../radiant_rs/struct.Texture.html' title='radiant_rs::Texture'>Texture</a></code></span></h3><div class='docblock'><p>Expected to return a texture to draw to.</p>
+</div><h3 id='tymethod.draw' class='method stab '><span id='draw.v' class='invisible'><code>fn <a href='#tymethod.draw' class='fnname'>draw</a>(self: &amp;mut Self, renderer: &amp;<a class='struct' href='../radiant_rs/struct.Renderer.html' title='radiant_rs::Renderer'>Renderer</a>, blendmode: <a class='struct' href='../radiant_rs/struct.BlendMode.html' title='radiant_rs::BlendMode'>BlendMode</a>)</code></span></h3><div class='docblock'><p>Expected to draw final result to current target using given blendmode.</p>
+</div></div>
+            <h2 id='provided-methods'>Provided Methods</h2>
+            <div class='methods'>
+        <h3 id='method.process' class='method stab '><span id='process.v' class='invisible'><code>fn <a href='#method.process' class='fnname'>process</a>(self: &amp;mut Self, renderer: &amp;<a class='struct' href='../radiant_rs/struct.Renderer.html' title='radiant_rs::Renderer'>Renderer</a>)</code></span></h3><div class='docblock'><p>Expected to processes input data. Simple postprocessors may not need to implement this.</p>
 </div></div>
         <h2 id='implementors'>Implementors</h2>
         <ul class='item-list' id='implementors-list'>
-    </ul><script type="text/javascript" async
+    <li><code>impl Postprocessor for <a class='struct' href='../radiant_rs/postprocessors/struct.Basic.html' title='radiant_rs::postprocessors::Basic'>Basic</a></code></li>
+</ul><script type="text/javascript" async
                          src="../implementors/radiant_rs/trait.Postprocessor.js">
                  </script></section>
     <section id='search' class="content hidden"></section>

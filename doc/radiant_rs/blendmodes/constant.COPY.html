@@ -4,10 +4,10 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="generator" content="rustdoc">
-    <meta name="description" content="API documentation for the Rust `ALPHA` constant in crate `radiant_rs`.">
-    <meta name="keywords" content="rust, rustlang, rust-lang, ALPHA">
+    <meta name="description" content="API documentation for the Rust `COPY` constant in crate `radiant_rs`.">
+    <meta name="keywords" content="rust, rustlang, rust-lang, COPY">
 
-    <title>radiant_rs::blendmodes::ALPHA - Rust</title>
+    <title>radiant_rs::blendmodes::COPY - Rust</title>
 
     <link rel="stylesheet" type="text/css" href="../../rustdoc.css">
     <link rel="stylesheet" type="text/css" href="../../main.css">
@@ -28,7 +28,7 @@
 
     <nav class="sidebar">
         <a href='../../radiant_rs/index.html'><img src='https://sinesc.github.io/images/radiant-logo.png' alt='logo' width='100'></a>
-        <p class='location'><a href='../index.html'>radiant_rs</a>::<wbr><a href='index.html'>blendmodes</a></p><script>window.sidebarCurrent = {name: 'ALPHA', ty: 'constant', relpath: ''};</script><script defer src="sidebar-items.js"></script>
+        <p class='location'><a href='../index.html'>radiant_rs</a>::<wbr><a href='index.html'>blendmodes</a></p><script>window.sidebarCurrent = {name: 'COPY', ty: 'constant', relpath: ''};</script><script defer src="sidebar-items.js"></script>
     </nav>
 
     <nav class="sub">
@@ -43,22 +43,14 @@
     </nav>
 
     <section id='main' class="content constant">
-<h1 class='fqn'><span class='in-band'>Constant <a href='../index.html'>radiant_rs</a>::<wbr><a href='index.html'>blendmodes</a>::<wbr><a class='constant' href=''>ALPHA</a></span><span class='out-of-band'><span id='render-detail'>
+<h1 class='fqn'><span class='in-band'>Constant <a href='../index.html'>radiant_rs</a>::<wbr><a href='index.html'>blendmodes</a>::<wbr><a class='constant' href=''>COPY</a></span><span class='out-of-band'><span id='render-detail'>
                    <a id="toggle-all-docs" href="javascript:void(0)" title="collapse all docs">
                        [<span class='inner'>&#x2212;</span>]
                    </a>
-               </span><a class='srclink' href='../../src/radiant_rs/core/blendmode/blendmodes.rs.html#17-27' title='goto source code'>[src]</a></span></h1>
-<pre class='rust const'>pub const ALPHA: <a class='struct' href='../../radiant_rs/struct.BlendMode.html' title='radiant_rs::BlendMode'>BlendMode</a><code> = </code><code>BlendMode(Blend{color:
-                    BlendingFunction::Addition{source:
-                                                   LinearBlendingFactor::One,
-                                               destination:
-                                                   LinearBlendingFactor::OneMinusSourceAlpha,},
-                alpha:
-                    BlendingFunction::Addition{source:
-                                                   LinearBlendingFactor::One,
-                                               destination:
-                                                   LinearBlendingFactor::OneMinusSourceAlpha,},
-                constant_value: (0.0, 0.0, 0.0, 0.0),})</code></pre><div class='docblock'><p>Alpha-blends source into destination.</p>
+               </span><a class='srclink' href='../../src/radiant_rs/core/blendmode/blendmodes.rs.html#10-14' title='goto source code'>[src]</a></span></h1>
+<pre class='rust const'>pub const COPY: <a class='struct' href='../../radiant_rs/struct.BlendMode.html' title='radiant_rs::BlendMode'>BlendMode</a><code> = </code><code>BlendMode(Blend{color: BlendingFunction::AlwaysReplace,
+                alpha: BlendingFunction::AlwaysReplace,
+                constant_value: (0.0, 0.0, 0.0, 0.0),})</code></pre><div class='docblock'><p>Replaces source into destination, overwriting color and alpha values.</p>
 </div></section>
     <section id='search' class="content hidden"></section>
 

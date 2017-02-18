@@ -4,13 +4,13 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="generator" content="rustdoc">
-    <meta name="description" content="API documentation for the Rust `ALPHA` constant in crate `radiant_rs`.">
-    <meta name="keywords" content="rust, rustlang, rust-lang, ALPHA">
+    <meta name="description" content="API documentation for the Rust `Result` type in crate `radiant_rs`.">
+    <meta name="keywords" content="rust, rustlang, rust-lang, Result">
 
-    <title>radiant_rs::blendmodes::ALPHA - Rust</title>
+    <title>radiant_rs::Result - Rust</title>
 
-    <link rel="stylesheet" type="text/css" href="../../rustdoc.css">
-    <link rel="stylesheet" type="text/css" href="../../main.css">
+    <link rel="stylesheet" type="text/css" href="../rustdoc.css">
+    <link rel="stylesheet" type="text/css" href="../main.css">
     
 
     <link rel="shortcut icon" href="https://sinesc.github.io/images/radiant-favicon.png">
@@ -27,8 +27,8 @@
     
 
     <nav class="sidebar">
-        <a href='../../radiant_rs/index.html'><img src='https://sinesc.github.io/images/radiant-logo.png' alt='logo' width='100'></a>
-        <p class='location'><a href='../index.html'>radiant_rs</a>::<wbr><a href='index.html'>blendmodes</a></p><script>window.sidebarCurrent = {name: 'ALPHA', ty: 'constant', relpath: ''};</script><script defer src="sidebar-items.js"></script>
+        <a href='../radiant_rs/index.html'><img src='https://sinesc.github.io/images/radiant-logo.png' alt='logo' width='100'></a>
+        <p class='location'><a href='index.html'>radiant_rs</a></p><script>window.sidebarCurrent = {name: 'Result', ty: 'type', relpath: ''};</script><script defer src="sidebar-items.js"></script>
     </nav>
 
     <nav class="sub">
@@ -42,23 +42,13 @@
         </form>
     </nav>
 
-    <section id='main' class="content constant">
-<h1 class='fqn'><span class='in-band'>Constant <a href='../index.html'>radiant_rs</a>::<wbr><a href='index.html'>blendmodes</a>::<wbr><a class='constant' href=''>ALPHA</a></span><span class='out-of-band'><span id='render-detail'>
+    <section id='main' class="content type">
+<h1 class='fqn'><span class='in-band'>Type Definition <a href='index.html'>radiant_rs</a>::<wbr><a class='type' href=''>Result</a></span><span class='out-of-band'><span id='render-detail'>
                    <a id="toggle-all-docs" href="javascript:void(0)" title="collapse all docs">
                        [<span class='inner'>&#x2212;</span>]
                    </a>
-               </span><a class='srclink' href='../../src/radiant_rs/core/blendmode/blendmodes.rs.html#17-27' title='goto source code'>[src]</a></span></h1>
-<pre class='rust const'>pub const ALPHA: <a class='struct' href='../../radiant_rs/struct.BlendMode.html' title='radiant_rs::BlendMode'>BlendMode</a><code> = </code><code>BlendMode(Blend{color:
-                    BlendingFunction::Addition{source:
-                                                   LinearBlendingFactor::One,
-                                               destination:
-                                                   LinearBlendingFactor::OneMinusSourceAlpha,},
-                alpha:
-                    BlendingFunction::Addition{source:
-                                                   LinearBlendingFactor::One,
-                                               destination:
-                                                   LinearBlendingFactor::OneMinusSourceAlpha,},
-                constant_value: (0.0, 0.0, 0.0, 0.0),})</code></pre><div class='docblock'><p>Alpha-blends source into destination.</p>
+               </span><a class='srclink' href='../src/radiant_rs/core/mod.rs.html#115' title='goto source code'>[src]</a></span></h1>
+<pre class='rust typedef'>type Result&lt;T&gt; = <a class='enum' href='https://doc.rust-lang.org/nightly/core/result/enum.Result.html' title='core::result::Result'>Result</a>&lt;T, <a class='enum' href='../radiant_rs/enum.Error.html' title='radiant_rs::Error'>Error</a>&gt;;</pre><div class='docblock'><p>Radiant result.</p>
 </div></section>
     <section id='search' class="content hidden"></section>
 
@@ -113,11 +103,11 @@
     
 
     <script>
-        window.rootPath = "../../";
+        window.rootPath = "../";
         window.currentCrate = "radiant_rs";
     </script>
-    <script src="../../jquery.js"></script>
-    <script src="../../main.js"></script>
-    <script defer src="../../search-index.js"></script>
+    <script src="../jquery.js"></script>
+    <script src="../main.js"></script>
+    <script defer src="../search-index.js"></script>
 </body>
 </html>
