@@ -47,7 +47,7 @@
                    <a id="toggle-all-docs" href="javascript:void(0)" title="collapse all docs">
                        [<span class='inner'>&#x2212;</span>]
                    </a>
-               </span><a class='srclink' href='../src/radiant_rs/lib.rs.html#1-107' title='goto source code'>[src]</a></span></h1>
+               </span><a class='srclink' href='../src/radiant_rs/lib.rs.html#1-132' title='goto source code'>[src]</a></span></h1>
 <div class='docblock'><p>Thread-safe Rust sprite rendering engine with a friendly API and custom shader support.</p>
 
 <p>To view the reference, scroll down or collapse this block using the [-] to the left.</p>
@@ -72,6 +72,29 @@
 <li>Make the frame visible via <code>Display::swap_frame()</code>.</li>
 <li>Consider clearing the layer and goto 6. Or maybe simply change some layer properties and redraw it starting a step 7.</li>
 </ol>
+
+<h1 id='draw-to-texturepostprocess' class='section-header'><a href='#draw-to-texturepostprocess'>Draw to texture/postprocess</a></h1>
+<p>Postprocessors are custom effects that may be as simple as a single shader program or combine multiple shaders and textures into a single
+output.</p>
+
+<p>The renderer has a method <a href="struct.Renderer.html#method.render_to"><code>Renderer::render_to()</code></a> that accepts a texture and a closure. Anything
+drawn within the closure will be rendered to the texture.</p>
+
+<p>Likewise, use <a href="struct.Renderer.html#method.postprocess"><code>Renderer::postprocess()</code></a> to render using a postprocessor.</p>
+
+<p>These methods can be combined/nested as shown here:</p>
+
+<pre class='rust rust-example-rendered'>
+<span class='ident'>renderer</span>.<span class='ident'>render_to</span>(<span class='kw-2'>&amp;</span><span class='ident'>surface</span>, <span class='op'>||</span> {
+    <span class='ident'>renderer</span>.<span class='ident'>postprocess</span>(<span class='kw-2'>&amp;</span><span class='ident'>effect1</span>, <span class='kw-2'>&amp;</span><span class='ident'>effect1_arguments</span>, <span class='op'>||</span> {
+        <span class='ident'>renderer</span>.<span class='ident'>postprocess</span>(<span class='kw-2'>&amp;</span><span class='ident'>effect2</span>, <span class='kw-2'>&amp;</span><span class='ident'>effect2_arguments</span>, <span class='op'>||</span> {
+            <span class='comment'>//...</span>
+            <span class='ident'>renderer</span>.<span class='ident'>draw_layer</span>(<span class='kw-2'>&amp;</span><span class='ident'>layer</span>);
+        });
+        <span class='comment'>//... maybe draw here with only effect 1? ...</span>
+    });
+    <span class='comment'>//... or here without any postprocessor? ...</span>
+});</pre>
 
 <h1 id='drawing-from-multiple-threads' class='section-header'><a href='#drawing-from-multiple-threads'>Drawing from multiple threads</a></h1>
 <ol>
@@ -173,7 +196,7 @@ It is possible to add custom uniforms, including textures, to your shader. The p
                            <td><a class='struct' href='struct.BlendMode.html'
                                   title='radiant_rs::BlendMode'>BlendMode</a></td>
                            <td class='docblock-short'>
-                                <p>A blendmode for use with <code>Layer::set_blendmode()</code>.
+                                <p>A blendmode for use with <a href="struct.Layer.html#method.set_blendmode"><code>Layer::set_blendmode()</code></a>.
 See <a href="blendmodes/index.html">blendmodes</a> for a list of predefined modes.</p>
                            </td>
                        </tr>
@@ -247,7 +270,7 @@ via <a href="struct.Font.html#method.from_info"><code>Font::from_info()</code></
                            <td><a class='struct' href='struct.Layer.html'
                                   title='radiant_rs::Layer'>Layer</a></td>
                            <td class='docblock-short'>
-                                <p>A non-blocking, thread-safe drawing target.</p>
+                                <p>A non-blocking, thread-safe drawing surface.</p>
                            </td>
                        </tr>
                        <tr class=' module-item'>
@@ -304,7 +327,14 @@ via <a href="struct.Font.html#method.from_info"><code>Font::from_info()</code></
                            <td><a class='struct' href='struct.Texture.html'
                                   title='radiant_rs::Texture'>Texture</a></td>
                            <td class='docblock-short'>
-                                <p>A texture.</p>
+                                <p>A texture to draw or draw to.</p>
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='struct' href='struct.TextureInfo.html'
+                                  title='radiant_rs::TextureInfo'>TextureInfo</a></td>
+                           <td class='docblock-short'>
+                                <p>A struct used to describe a <a href="struct.Texture.html"><code>Texture</code></a> to be created via <a href="struct.Texture.html#method.from_info"><code>Texture::from_info()</code></a>.</p>
                            </td>
                        </tr>
                        <tr class=' module-item'>
@@ -355,6 +385,15 @@ via <a href="struct.Font.html#method.from_info"><code>Font::from_info()</code></
                                   title='radiant_rs::TextureFilter'>TextureFilter</a></td>
                            <td class='docblock-short'>
                                 <p>Texture minify- or magnify filtering function.</p>
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='enum' href='enum.TextureFormat.html'
+                                  title='radiant_rs::TextureFormat'>TextureFormat</a></td>
+                           <td class='docblock-short'>
+                                <p>Internal texture format. Note that the shader will always see a floating
+point representation. U[n]* will have their minimum value mapped to 0.0 and
+their maximum to 1.0.</p>
                            </td>
                        </tr>
                        <tr class=' module-item'>

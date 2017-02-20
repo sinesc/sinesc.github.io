@@ -47,12 +47,13 @@
                    <a id="toggle-all-docs" href="javascript:void(0)" title="collapse all docs">
                        [<span class='inner'>&#x2212;</span>]
                    </a>
-               </span><a class='srclink' href='../src/radiant_rs/core/postprocessor/mod.rs.html#14-22' title='goto source code'>[src]</a></span></h1>
+               </span><a class='srclink' href='../src/radiant_rs/core/postprocessor/mod.rs.html#16-29' title='goto source code'>[src]</a></span></h1>
 <pre class='rust trait'>pub trait Postprocessor {
-    fn <a href='#tymethod.target' class='fnname'>target</a>(self: &amp;mut Self) -&gt; &amp;<a class='struct' href='../radiant_rs/struct.Texture.html' title='radiant_rs::Texture'>Texture</a>;
-    fn <a href='#tymethod.draw' class='fnname'>draw</a>(self: &amp;mut Self, renderer: &amp;<a class='struct' href='../radiant_rs/struct.Renderer.html' title='radiant_rs::Renderer'>Renderer</a>, blendmode: <a class='struct' href='../radiant_rs/struct.BlendMode.html' title='radiant_rs::BlendMode'>BlendMode</a>);
+    type <a href='#associatedtype.T' class='type'>T</a>;
+    fn <a href='#tymethod.target' class='fnname'>target</a>(self: &amp;Self) -&gt; &amp;<a class='struct' href='../radiant_rs/struct.Texture.html' title='radiant_rs::Texture'>Texture</a>;
+    fn <a href='#tymethod.draw' class='fnname'>draw</a>(self: &amp;Self, renderer: &amp;<a class='struct' href='../radiant_rs/struct.Renderer.html' title='radiant_rs::Renderer'>Renderer</a>, args: &amp;Self::<a class='trait' href='../radiant_rs/trait.Postprocessor.html' title='radiant_rs::Postprocessor'>T</a>);
 
-    fn <a href='#method.process' class='fnname'>process</a>(self: &amp;mut Self, renderer: &amp;<a class='struct' href='../radiant_rs/struct.Renderer.html' title='radiant_rs::Renderer'>Renderer</a>) { ... }
+    fn <a href='#method.process' class='fnname'>process</a>(self: &amp;Self, renderer: &amp;<a class='struct' href='../radiant_rs/struct.Renderer.html' title='radiant_rs::Renderer'>Renderer</a>, args: &amp;Self::<a class='trait' href='../radiant_rs/trait.Postprocessor.html' title='radiant_rs::Postprocessor'>T</a>) { ... }
 }</pre><div class='docblock'><p>A custom postprocessor.</p>
 
 <p>Postprocessing happens in three steps:</p>
@@ -63,18 +64,27 @@ where the postprocessor intends to read input data).</li>
 <li><code>process()</code> is invoked and expected to perform the neccessary processing
 <strong>excluding</strong> the final draw operation.</li>
 <li><code>draw()</code> is invoked. At this point the renderer has already restored the drawing
-target so that this method is only required to draw the postprocessing result
-to the current target.</li>
+target so that this method is only required to draw the postprocessing result.</li>
 </ul>
+
+<p>While you could combine processing and drawing within <code>draw()</code>, it is recommended
+to separate these as future versions might expand on this functionality.</p>
 </div>
+            <h2 id='associated-types'>Associated Types</h2>
+            <div class='methods'>
+        <h3 id='associatedtype.T' class='method stab '><span id='T.t' class='invisible'><code>type <a href='#associatedtype.T' class='type'>T</a></code></span></h3><div class='docblock'><p>Custom type for the args parameter supplied to <code>process()</code> and <code>draw()</code>.</p>
+</div></div>
             <h2 id='required-methods'>Required Methods</h2>
             <div class='methods'>
-        <h3 id='tymethod.target' class='method stab '><span id='target.v' class='invisible'><code>fn <a href='#tymethod.target' class='fnname'>target</a>(self: &amp;mut Self) -&gt; &amp;<a class='struct' href='../radiant_rs/struct.Texture.html' title='radiant_rs::Texture'>Texture</a></code></span></h3><div class='docblock'><p>Expected to return a texture to draw to.</p>
-</div><h3 id='tymethod.draw' class='method stab '><span id='draw.v' class='invisible'><code>fn <a href='#tymethod.draw' class='fnname'>draw</a>(self: &amp;mut Self, renderer: &amp;<a class='struct' href='../radiant_rs/struct.Renderer.html' title='radiant_rs::Renderer'>Renderer</a>, blendmode: <a class='struct' href='../radiant_rs/struct.BlendMode.html' title='radiant_rs::BlendMode'>BlendMode</a>)</code></span></h3><div class='docblock'><p>Expected to draw final result to current target using given blendmode.</p>
+        <h3 id='tymethod.target' class='method stab '><span id='target.v' class='invisible'><code>fn <a href='#tymethod.target' class='fnname'>target</a>(self: &amp;Self) -&gt; &amp;<a class='struct' href='../radiant_rs/struct.Texture.html' title='radiant_rs::Texture'>Texture</a></code></span></h3><div class='docblock'><p>Expected to return a texture to draw to.</p>
+</div><h3 id='tymethod.draw' class='method stab '><span id='draw.v' class='invisible'><code>fn <a href='#tymethod.draw' class='fnname'>draw</a>(self: &amp;Self, renderer: &amp;<a class='struct' href='../radiant_rs/struct.Renderer.html' title='radiant_rs::Renderer'>Renderer</a>, args: &amp;Self::<a class='trait' href='../radiant_rs/trait.Postprocessor.html' title='radiant_rs::Postprocessor'>T</a>)</code></span></h3><div class='docblock'><p>Expected to draw final result. Draws issued within this function will
+target the rendertarget that the postprocessor is supposed to render to.</p>
 </div></div>
             <h2 id='provided-methods'>Provided Methods</h2>
             <div class='methods'>
-        <h3 id='method.process' class='method stab '><span id='process.v' class='invisible'><code>fn <a href='#method.process' class='fnname'>process</a>(self: &amp;mut Self, renderer: &amp;<a class='struct' href='../radiant_rs/struct.Renderer.html' title='radiant_rs::Renderer'>Renderer</a>)</code></span></h3><div class='docblock'><p>Expected to processes input data. Simple postprocessors may not need to implement this.</p>
+        <h3 id='method.process' class='method stab '><span id='process.v' class='invisible'><code>fn <a href='#method.process' class='fnname'>process</a>(self: &amp;Self, renderer: &amp;<a class='struct' href='../radiant_rs/struct.Renderer.html' title='radiant_rs::Renderer'>Renderer</a>, args: &amp;Self::<a class='trait' href='../radiant_rs/trait.Postprocessor.html' title='radiant_rs::Postprocessor'>T</a>)</code></span></h3><div class='docblock'><p>Expected to processes input data. Draws issued within this function will
+target the texure returned by <code>target()</code> unless overridden via <code>Renderer::render_to()</code>.
+This function is provided as you could also do this in <code>draw()</code>.</p>
 </div></div>
         <h2 id='implementors'>Implementors</h2>
         <ul class='item-list' id='implementors-list'>
