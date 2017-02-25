@@ -4,13 +4,13 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="generator" content="rustdoc">
-    <meta name="description" content="API documentation for the Rust `InputUpIterator` struct in crate `radiant_rs`.">
-    <meta name="keywords" content="rust, rustlang, rust-lang, InputUpIterator">
+    <meta name="description" content="API documentation for the Rust `InputIterator` struct in crate `radiant_rs`.">
+    <meta name="keywords" content="rust, rustlang, rust-lang, InputIterator">
 
-    <title>radiant_rs::InputUpIterator - Rust</title>
+    <title>radiant_rs::support::InputIterator - Rust</title>
 
-    <link rel="stylesheet" type="text/css" href="../rustdoc.css">
-    <link rel="stylesheet" type="text/css" href="../main.css">
+    <link rel="stylesheet" type="text/css" href="../../rustdoc.css">
+    <link rel="stylesheet" type="text/css" href="../../main.css">
     
 
     <link rel="shortcut icon" href="https://sinesc.github.io/images/radiant-favicon.png">
@@ -27,8 +27,8 @@
     
 
     <nav class="sidebar">
-        <a href='../radiant_rs/index.html'><img src='https://sinesc.github.io/images/radiant-logo.png' alt='logo' width='100'></a>
-        <p class='location'><a href='index.html'>radiant_rs</a></p><script>window.sidebarCurrent = {name: 'InputUpIterator', ty: 'struct', relpath: ''};</script><script defer src="sidebar-items.js"></script>
+        <a href='../../radiant_rs/index.html'><img src='https://sinesc.github.io/images/radiant-logo.png' alt='logo' width='100'></a>
+        <p class='location'><a href='../index.html'>radiant_rs</a>::<wbr><a href='index.html'>support</a></p><script>window.sidebarCurrent = {name: 'InputIterator', ty: 'struct', relpath: ''};</script><script defer src="sidebar-items.js"></script>
     </nav>
 
     <nav class="sub">
@@ -43,16 +43,21 @@
     </nav>
 
     <section id='main' class="content struct">
-<h1 class='fqn'><span class='in-band'>Struct <a href='index.html'>radiant_rs</a>::<wbr><a class='struct' href=''>InputUpIterator</a></span><span class='out-of-band'><span id='render-detail'>
+<h1 class='fqn'><span class='in-band'>Struct <a href='../index.html'>radiant_rs</a>::<wbr><a href='index.html'>support</a>::<wbr><a class='struct' href=''>InputIterator</a></span><span class='out-of-band'><span id='render-detail'>
                    <a id="toggle-all-docs" href="javascript:void(0)" title="collapse all docs">
                        [<span class='inner'>&#x2212;</span>]
                    </a>
-               </span><a class='srclink' href='../src/radiant_rs/core/input.rs.html#450' title='goto source code'>[src]</a></span></h1>
-<pre class='rust struct'>pub struct InputUpIterator&lt;'a&gt;(_);</pre><div class='docblock'><p>An iterator over all keys all buttons currently not pressed.</p>
-</div><h2 id='implementations'>Trait Implementations</h2><h3 class='impl'><span class='in-band'><code>impl&lt;'a&gt; <a class='trait' href='https://doc.rust-lang.org/nightly/core/iter/iterator/trait.Iterator.html' title='core::iter::iterator::Iterator'>Iterator</a> for <a class='struct' href='../radiant_rs/struct.InputUpIterator.html' title='radiant_rs::InputUpIterator'>InputUpIterator</a>&lt;'a&gt;</code></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../src/radiant_rs/core/input.rs.html#452-464' title='goto source code'>[src]</a></span></h3>
-<div class='impl-items'><h4 id='associatedtype.Item' class='type'><span id='Item.t' class='invisible'><code>type <a href='https://doc.rust-lang.org/nightly/core/iter/iterator/trait.Iterator.html#associatedtype.Item' class='type'>Item</a> = <a class='enum' href='../radiant_rs/enum.InputId.html' title='radiant_rs::InputId'>InputId</a></code></span></h4>
+               </span><a class='srclink' href='../../src/radiant_rs/core/input.rs.html#398-401' title='goto source code'>[src]</a></span></h1>
+<pre class='rust struct'>pub struct InputIterator&lt;'a&gt; { /* fields omitted */ }</pre><div class='docblock'><p>An iterator over all keys and buttons.</p>
+</div><h2 id='methods'>Methods</h2><h3 class='impl'><span class='in-band'><code>impl&lt;'a&gt; <a class='struct' href='../../radiant_rs/support/struct.InputIterator.html' title='radiant_rs::support::InputIterator'>InputIterator</a>&lt;'a&gt;</code></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../../src/radiant_rs/core/input.rs.html#403-412' title='goto source code'>[src]</a></span></h3>
+<div class='impl-items'><h4 id='method.down' class='method'><span id='down.v' class='invisible'><code>fn <a href='#method.down' class='fnname'>down</a>(self: Self) -&gt; <a class='struct' href='../../radiant_rs/support/struct.InputDownIterator.html' title='radiant_rs::support::InputDownIterator'>InputDownIterator</a>&lt;'a&gt;</code></span></h4>
+<div class='docblock'><p>Returns an iterator over all keys currently pressed.</p>
+</div><h4 id='method.up' class='method'><span id='up.v' class='invisible'><code>fn <a href='#method.up' class='fnname'>up</a>(self: Self) -&gt; <a class='struct' href='../../radiant_rs/support/struct.InputUpIterator.html' title='radiant_rs::support::InputUpIterator'>InputUpIterator</a>&lt;'a&gt;</code></span></h4>
+<div class='docblock'><p>Returns an iterator over all keys not currently pressed.</p>
+</div></div><h2 id='implementations'>Trait Implementations</h2><h3 class='impl'><span class='in-band'><code>impl&lt;'a&gt; <a class='trait' href='https://doc.rust-lang.org/nightly/core/iter/iterator/trait.Iterator.html' title='core::iter::iterator::Iterator'>Iterator</a> for <a class='struct' href='../../radiant_rs/support/struct.InputIterator.html' title='radiant_rs::support::InputIterator'>InputIterator</a>&lt;'a&gt;</code></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../../src/radiant_rs/core/input.rs.html#414-430' title='goto source code'>[src]</a></span></h3>
+<div class='impl-items'><h4 id='associatedtype.Item' class='type'><span id='Item.t' class='invisible'><code>type <a href='https://doc.rust-lang.org/nightly/core/iter/iterator/trait.Iterator.html#associatedtype.Item' class='type'>Item</a> = <a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.tuple.html'>(</a><a class='enum' href='../../radiant_rs/enum.InputId.html' title='radiant_rs::InputId'>InputId</a>, <a class='enum' href='../../radiant_rs/enum.InputState.html' title='radiant_rs::InputState'>InputState</a><a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.tuple.html'>)</a></code></span></h4>
 <div class='docblock'><p>The type of the elements being iterated over.</p>
-</div><h4 id='method.next' class='method'><span id='next.v' class='invisible'><code>fn <a href='https://doc.rust-lang.org/nightly/core/iter/iterator/trait.Iterator.html#tymethod.next' class='fnname'>next</a>(self: &amp;mut Self) -&gt; <a class='enum' href='https://doc.rust-lang.org/nightly/core/option/enum.Option.html' title='core::option::Option'>Option</a>&lt;<a class='enum' href='../radiant_rs/enum.InputId.html' title='radiant_rs::InputId'>InputId</a>&gt;</code></span></h4>
+</div><h4 id='method.next' class='method'><span id='next.v' class='invisible'><code>fn <a href='https://doc.rust-lang.org/nightly/core/iter/iterator/trait.Iterator.html#tymethod.next' class='fnname'>next</a>(self: &amp;mut Self) -&gt; <a class='enum' href='https://doc.rust-lang.org/nightly/core/option/enum.Option.html' title='core::option::Option'>Option</a>&lt;<a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.tuple.html'>(</a><a class='enum' href='../../radiant_rs/enum.InputId.html' title='radiant_rs::InputId'>InputId</a>, <a class='enum' href='../../radiant_rs/enum.InputState.html' title='radiant_rs::InputState'>InputState</a><a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.tuple.html'>)</a>&gt;</code></span></h4>
 <div class='docblock'><p>Advances the iterator and returns the next value. <a href="https://doc.rust-lang.org/nightly/core/iter/iterator/trait.Iterator.html#tymethod.next">Read more</a></p>
 </div><h4 id='method.size_hint' class='method'><span id='size_hint.v' class='invisible'><code>fn <a href='https://doc.rust-lang.org/nightly/core/iter/iterator/trait.Iterator.html#method.size_hint' class='fnname'>size_hint</a>(&amp;self) -&gt; <a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.tuple.html'>(</a><a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.usize.html'>usize</a>, <a class='enum' href='https://doc.rust-lang.org/nightly/core/option/enum.Option.html' title='core::option::Option'>Option</a>&lt;<a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.usize.html'>usize</a>&gt;<a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.tuple.html'>)</a></code><div class='since' title='Stable since Rust version 1.0.0'>1.0.0</div></span></h4>
 <div class='docblock'><p>Returns the bounds on the remaining length of the iterator. <a href="https://doc.rust-lang.org/nightly/core/iter/iterator/trait.Iterator.html#method.size_hint">Read more</a></p>
@@ -204,11 +209,11 @@
     
 
     <script>
-        window.rootPath = "../";
+        window.rootPath = "../../";
         window.currentCrate = "radiant_rs";
     </script>
-    <script src="../jquery.js"></script>
-    <script src="../main.js"></script>
-    <script defer src="../search-index.js"></script>
+    <script src="../../jquery.js"></script>
+    <script src="../../main.js"></script>
+    <script defer src="../../search-index.js"></script>
 </body>
 </html>

@@ -47,7 +47,7 @@
                    <a id="toggle-all-docs" href="javascript:void(0)" title="collapse all docs">
                        [<span class='inner'>&#x2212;</span>]
                    </a>
-               </span><a class='srclink' href='../src/radiant_rs/lib.rs.html#1-132' title='goto source code'>[src]</a></span></h1>
+               </span><a class='srclink' href='../src/radiant_rs/lib.rs.html#1-134' title='goto source code'>[src]</a></span></h1>
 <div class='docblock'><p>Thread-safe Rust sprite rendering engine with a friendly API and custom shader support.</p>
 
 <p>To view the reference, scroll down or collapse this block using the [-] to the left.</p>
@@ -57,11 +57,11 @@
 <h1 id='examples' class='section-header'><a href='#examples'>Examples</a></h1>
 <p>The examples folder contains multiple small examples. They can be run via <code>cargo run --example &lt;example name&gt;</code>, e.g.</p>
 
-<p><code>cargo run --example demo_blobs</code> to run demo_blobs.rs</p>
+<p><code>cargo run --release --example demo_blobs</code> to run demo_blobs.rs</p>
 
 <h1 id='basic-rendering' class='section-header'><a href='#basic-rendering'>Basic rendering</a></h1>
 <ol>
-<li>Create a <a href="struct.Display.html">display</a> with <code>Display::new()</code>. This represents the window/screen.</li>
+<li>Create a <a href="struct.Display.html">display</a> with <code>Display::builder()</code>. This represents the window/screen.</li>
 <li>Create a <a href="struct.Renderer.html">renderer</a> with <code>Renderer::new()</code>. It is used to draw to rendertargets like the display.</li>
 <li>Grab a context from the renderer using the <code>context()</code> method. It is required for resource loading.</li>
 <li>Load <a href="struct.Sprite.html">sprites</a> or <a href="struct.Font.html">fonts</a> using e.g. <code>Font::from_file()</code> or <code>Sprite::from_file()</code>.</li>
@@ -118,11 +118,11 @@ row:</p>
 <p><img src="https://sinesc.github.io/images/spritesheet.png" alt="Spritesheet" title="Spritesheet"></p>
 
 <h1 id='custom-shaders' class='section-header'><a href='#custom-shaders'>Custom shaders</a></h1>
-<p>Radiant supports the use of custom fragment shaders. When you create a program, a tiny wrapper is injected into the source to
-make it compatible with the different internal shader programs used by the library. Instead of <code>texture()</code> you would then use <code>sheet()</code> to
-retrieve data from the current texture, etc. (This is required as the texture might come from a sampler or sampler array.)
-It is possible to add custom uniforms, including textures, to your shader. The postprocessing example uses a shader that takes
-5 samplers and combines them.</p>
+<p>Radiant supports the use of custom fragment shaders. These are normal glsl shaders. To simplify access to the default
+sampler (which might be a sampler2DArray or sampler2D, depending on what is drawn) a tiny wrapper is injected into the
+source. The wrapper provides <code>sheet*()</code> functions similar to glsl&#39;s <code>texture*()</code> functions.
+This only applies to the default sampler. It is possible to add custom uniforms, including samplers, to your shader
+that would be sampled using the <code>texture*()</code> functions.</p>
 
 <p>Available default inputs:</p>
 
@@ -133,12 +133,14 @@ It is possible to add custom uniforms, including textures, to your shader. The p
 <li><code>in vec4 v_color</code> Color multiplier. For layers this is sprite color * layer color.</li>
 </ul>
 
-<p>Wrappers:</p>
+<p>To access the default sampler, the following wrappers are provided:</p>
 
 <ul>
-<li><code>vec2 sheetSize()</code> Retrieves the dimensions of the texture. Replaces <code>textureSize()</code>.</li>
-<li><code>vec4 sheet(in vec2 texture_coords)</code> Retrieves texels from the texture. Replaces <code>texture()</code></li>
-<li>!todo add other texture*.</li>
+<li><code>vec2 sheetSize()</code> Retrieves the dimensions of the texture.</li>
+<li><code>vec4 sheet(in vec2 texture_coords)</code> Retrieves texels from the texture.</li>
+<li><code>vec4 sheetComponent(in vec2 texture_coords, in uint component)</code> Samples a specific sprite
+component instead of the default one set by <code>Renderer::draw_layer()</code>.</li>
+<li><code>vec4 sheetOffset(in vec2 texture_coords, in ivec2 offset)</code> Like textureOffset().</li>
 </ul>
 
 <p>Example: (This is the default shader used by radiant.)</p>
@@ -175,6 +177,13 @@ It is possible to add custom uniforms, including textures, to your shader. The p
                                   title='radiant_rs::scene'>scene</a></td>
                            <td class='docblock-short'>
                                [<em class='stab deprecated'>Deprecated</em>] <p>Optional scene abstraction.</p>
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='mod' href='support/index.html'
+                                  title='radiant_rs::support'>support</a></td>
+                           <td class='docblock-short'>
+                                <p>Support structures returned by various methods. Usually not required to be created manually.</p>
                            </td>
                        </tr>
                        <tr class=' module-item'>
@@ -216,26 +225,10 @@ and alpha.</p>
                            </td>
                        </tr>
                        <tr class=' module-item'>
-                           <td><a class='struct' href='struct.DisplayInfo.html'
-                                  title='radiant_rs::DisplayInfo'>DisplayInfo</a></td>
-                           <td class='docblock-short'>
-                                <p>A struct describing a <a href="struct.Display.html"><code>Display</code></a> to be created.</p>
-                           </td>
-                       </tr>
-                       <tr class=' module-item'>
                            <td><a class='struct' href='struct.Font.html'
                                   title='radiant_rs::Font'>Font</a></td>
                            <td class='docblock-short'>
                                 <p>A font used for writing on a <a href="struct.Layer.html"><code>Layer</code></a>.</p>
-                           </td>
-                       </tr>
-                       <tr class=' module-item'>
-                           <td><a class='struct' href='struct.FontInfo.html'
-                                  title='radiant_rs::FontInfo'>FontInfo</a></td>
-                           <td class='docblock-short'>
-                                <p>A struct used to filter the result of <a href="struct.Font.html#method.query_specific"><code>Font::query_specific()</code></a>
-or to describe a <a href="struct.Font.html"><code>Font</code></a> to be created from a system font
-via <a href="struct.Font.html#method.from_info"><code>Font::from_info()</code></a>.</p>
                            </td>
                        </tr>
                        <tr class=' module-item'>
@@ -246,31 +239,10 @@ via <a href="struct.Font.html#method.from_info"><code>Font::from_info()</code></
                            </td>
                        </tr>
                        <tr class=' module-item'>
-                           <td><a class='struct' href='struct.InputDownIterator.html'
-                                  title='radiant_rs::InputDownIterator'>InputDownIterator</a></td>
-                           <td class='docblock-short'>
-                                <p>An iterator over all keys all buttons currently pressed.</p>
-                           </td>
-                       </tr>
-                       <tr class=' module-item'>
-                           <td><a class='struct' href='struct.InputIterator.html'
-                                  title='radiant_rs::InputIterator'>InputIterator</a></td>
-                           <td class='docblock-short'>
-                                <p>An iterator over all keys and buttons.</p>
-                           </td>
-                       </tr>
-                       <tr class=' module-item'>
-                           <td><a class='struct' href='struct.InputUpIterator.html'
-                                  title='radiant_rs::InputUpIterator'>InputUpIterator</a></td>
-                           <td class='docblock-short'>
-                                <p>An iterator over all keys all buttons currently not pressed.</p>
-                           </td>
-                       </tr>
-                       <tr class=' module-item'>
                            <td><a class='struct' href='struct.Layer.html'
                                   title='radiant_rs::Layer'>Layer</a></td>
                            <td class='docblock-short'>
-                                <p>A non-blocking, thread-safe drawing surface.</p>
+                                <p>A drawing surface for text and sprites that implements send+sync and is wait-free for drawing operations.</p>
                            </td>
                        </tr>
                        <tr class=' module-item'>
@@ -285,6 +257,13 @@ via <a href="struct.Font.html#method.from_info"><code>Font::from_info()</code></
                                   title='radiant_rs::Monitor'>Monitor</a></td>
                            <td class='docblock-short'>
                                 <p>An individual monitor, returned from <a href="struct.Display.html#method.monitors"><code>Display::monitors()</code></a>.</p>
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='struct' href='struct.Point2.html'
+                                  title='radiant_rs::Point2'>Point2</a></td>
+                           <td class='docblock-short'>
+                                <p>A 2-dimensional point.</p>
                            </td>
                        </tr>
                        <tr class=' module-item'>
@@ -312,7 +291,7 @@ via <a href="struct.Font.html#method.from_info"><code>Font::from_info()</code></
                            <td><a class='struct' href='struct.Renderer.html'
                                   title='radiant_rs::Renderer'>Renderer</a></td>
                            <td class='docblock-short'>
-                                <p>A renderer is used to render <a href="struct.Layer.html"><code>Layer</code></a>s or <a href="scene/struct.Scene.html"><code>Scene</code></a>s to the
+                                <p>A renderer is used to render <a href="struct.Layer.html"><code>Layers</code></a> or <a href="struct.Texture.html"><code>Textures</code></a> to the
 <a href="struct.Display.html"><code>Display</code></a>.</p>
                            </td>
                        </tr>
@@ -328,13 +307,6 @@ via <a href="struct.Font.html#method.from_info"><code>Font::from_info()</code></
                                   title='radiant_rs::Texture'>Texture</a></td>
                            <td class='docblock-short'>
                                 <p>A texture to draw or draw to.</p>
-                           </td>
-                       </tr>
-                       <tr class=' module-item'>
-                           <td><a class='struct' href='struct.TextureInfo.html'
-                                  title='radiant_rs::TextureInfo'>TextureInfo</a></td>
-                           <td class='docblock-short'>
-                                <p>A struct used to describe a <a href="struct.Texture.html"><code>Texture</code></a> to be created via <a href="struct.Texture.html#method.from_info"><code>Texture::from_info()</code></a>.</p>
                            </td>
                        </tr>
                        <tr class=' module-item'>
@@ -412,6 +384,13 @@ their maximum to 1.0.</p>
                        </tr></table><h2 id='traits' class='section-header'><a href="#traits">Traits</a></h2>
 <table>
                        <tr class=' module-item'>
+                           <td><a class='trait' href='trait.AsRenderTarget.html'
+                                  title='radiant_rs::AsRenderTarget'>AsRenderTarget</a></td>
+                           <td class='docblock-short'>
+                                <p>A target for rendering.</p>
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
                            <td><a class='trait' href='trait.AsUniform.html'
                                   title='radiant_rs::AsUniform'>AsUniform</a></td>
                            <td class='docblock-short'>
@@ -433,20 +412,6 @@ their maximum to 1.0.</p>
                            </td>
                        </tr></table><h2 id='types' class='section-header'><a href="#types">Type Definitions</a></h2>
 <table>
-                       <tr class=' module-item'>
-                           <td><a class='type' href='type.Point2.html'
-                                  title='radiant_rs::Point2'>Point2</a></td>
-                           <td class='docblock-short'>
-                                <p>A 2-dimensional point.</p>
-                           </td>
-                       </tr>
-                       <tr class=' module-item'>
-                           <td><a class='type' href='type.Point3.html'
-                                  title='radiant_rs::Point3'>Point3</a></td>
-                           <td class='docblock-short'>
-                                <p>A 3-dimensional point.</p>
-                           </td>
-                       </tr>
                        <tr class=' module-item'>
                            <td><a class='type' href='type.Result.html'
                                   title='radiant_rs::Result'>Result</a></td>

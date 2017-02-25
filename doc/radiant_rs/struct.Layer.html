@@ -47,30 +47,34 @@
                    <a id="toggle-all-docs" href="javascript:void(0)" title="collapse all docs">
                        [<span class='inner'>&#x2212;</span>]
                    </a>
-               </span><a class='srclink' href='../src/radiant_rs/core/layer.rs.html#29-39' title='goto source code'>[src]</a></span></h1>
-<pre class='rust struct'>pub struct Layer { /* fields omitted */ }</pre><div class='docblock'><p>A non-blocking, thread-safe drawing surface.</p>
+               </span><a class='srclink' href='../src/radiant_rs/core/layer.rs.html#21-28' title='goto source code'>[src]</a></span></h1>
+<pre class='rust struct'>pub struct Layer { /* fields omitted */ }</pre><div class='docblock'><p>A drawing surface for text and sprites that implements send+sync and is wait-free for drawing operations.</p>
 
 <p>In radiant_rs, sprite drawing happens on layers. Layers provide transformation capabilities in
 the form of model- and view-matrices and the layer&#39;s blendmode and color determine
-how sprites are rendered onto the display. Layers can be rendered multiple times using
+how sprites are rendered to the drawing target. Layers can be rendered multiple times using
 different matrices, blendmodes or colors without having to redraw their contents first.</p>
 
-<p>Multiple threads can draw onto the same layer without blocking. However, manipulating layer
-properties may block other threads from manipulating the same property.</p>
-</div><h2 id='methods'>Methods</h2><h3 class='impl'><span class='in-band'><code>impl <a class='struct' href='../radiant_rs/struct.Layer.html' title='radiant_rs::Layer'>Layer</a></code></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../src/radiant_rs/core/layer.rs.html#43-157' title='goto source code'>[src]</a></span></h3>
-<div class='impl-items'><h4 id='method.new' class='method'><span id='new.v' class='invisible'><code>fn <a href='#method.new' class='fnname'>new</a>&lt;T&gt;(dimensions: T, channel_id: <a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.u32.html'>u32</a>) -&gt; Self <span class='where'>where <a class='struct' href='../radiant_rs/struct.Vec2.html' title='radiant_rs::Vec2'>Vec2</a>&lt;<a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.f32.html'>f32</a>&gt;: <a class='trait' href='https://doc.rust-lang.org/nightly/core/convert/trait.From.html' title='core::convert::From'>From</a>&lt;T&gt;</span></code></span></h4>
-<div class='docblock'><p>Creates a new layer with given dimensions. The channel determines
-which sprite channel is drawn. All sprites support at least channel 0.
-Nothing will be drawn if the sprite does not contain given channel.</p>
-</div><h4 id='method.new_with_program' class='method'><span id='new_with_program.v' class='invisible'><code>fn <a href='#method.new_with_program' class='fnname'>new_with_program</a>&lt;T&gt;(dimensions: T, channel_id: <a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.u32.html'>u32</a>, program: <a class='struct' href='../radiant_rs/struct.Program.html' title='radiant_rs::Program'>Program</a>) -&gt; Self <span class='where'>where <a class='struct' href='../radiant_rs/struct.Vec2.html' title='radiant_rs::Vec2'>Vec2</a>&lt;<a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.f32.html'>f32</a>&gt;: <a class='trait' href='https://doc.rust-lang.org/nightly/core/convert/trait.From.html' title='core::convert::From'>From</a>&lt;T&gt;</span></code></span></h4>
-<div class='docblock'><p>Creates a new layer with given dimensions and fragment program. The channel determines
-which sprite channel is drawn. All sprites support at least channel 0.
-Nothing will be drawn if the sprite does not contain given channel.</p>
+<p>For convenience, layers are created with a view-matrix that maps the given dimensions to the
+entirety of the drawing target. The layer itself is infinite though, and can be transformed at any
+time before rendering.</p>
+
+<p>Drawing to a layer is a wait-free atomic operation that can be safely performed from multiple threads at
+the same time. Modifying layer properties like the matrices may cause other threads to wait.</p>
+</div><h2 id='methods'>Methods</h2><h3 class='impl'><span class='in-band'><code>impl <a class='struct' href='../radiant_rs/struct.Layer.html' title='radiant_rs::Layer'>Layer</a></code></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../src/radiant_rs/core/layer.rs.html#38-168' title='goto source code'>[src]</a></span></h3>
+<div class='impl-items'><h4 id='method.new' class='method'><span id='new.v' class='invisible'><code>fn <a href='#method.new' class='fnname'>new</a>&lt;T&gt;(dimensions: T) -&gt; Self <span class='where'>where <a class='struct' href='../radiant_rs/struct.Vec2.html' title='radiant_rs::Vec2'>Vec2</a>&lt;<a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.f32.html'>f32</a>&gt;: <a class='trait' href='https://doc.rust-lang.org/nightly/core/convert/trait.From.html' title='core::convert::From'>From</a>&lt;T&gt;</span></code></span></h4>
+<div class='docblock'><p>Creates a new layer with given dimensions, meaning that is is created with
+a view matrix that maps the given dimensions to the entirety of the drawing target.</p>
+</div><h4 id='method.with_program' class='method'><span id='with_program.v' class='invisible'><code>fn <a href='#method.with_program' class='fnname'>with_program</a>&lt;T&gt;(dimensions: T, program: <a class='struct' href='../radiant_rs/struct.Program.html' title='radiant_rs::Program'>Program</a>) -&gt; Self <span class='where'>where <a class='struct' href='../radiant_rs/struct.Vec2.html' title='radiant_rs::Vec2'>Vec2</a>&lt;<a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.f32.html'>f32</a>&gt;: <a class='trait' href='https://doc.rust-lang.org/nightly/core/convert/trait.From.html' title='core::convert::From'>From</a>&lt;T&gt;</span></code></span></h4>
+<div class='docblock'><p>Creates a new layer with given dimensions and fragment program.</p>
+</div><h4 id='method.clone_with_program' class='method'><span id='clone_with_program.v' class='invisible'><code>fn <a href='#method.clone_with_program' class='fnname'>clone_with_program</a>(self: &amp;Self, program: <a class='struct' href='../radiant_rs/struct.Program.html' title='radiant_rs::Program'>Program</a>) -&gt; Self</code></span></h4>
+<div class='docblock'><p>Creates a new layer that references the contents of this layer but has its own
+color, blendmode, program and set of matrices.</p>
 </div><h4 id='method.set_color' class='method'><span id='set_color.v' class='invisible'><code>fn <a href='#method.set_color' class='fnname'>set_color</a>(self: &amp;Self, color: <a class='struct' href='../radiant_rs/struct.Color.html' title='radiant_rs::Color'>Color</a>) -&gt; &amp;Self</code></span></h4>
 <div class='docblock'><p>Sets a global color multiplicator. Setting this to white means that the layer contents
 are renderered in their original colors.</p>
 
-<p>Note that <a href="struct.Color.html"><code>Color</code></a>s contain
+<p>Note that <a href="struct.Color.html"><code>Colors</code></a> contain
 alpha information and are not clamped to any range, so it is possible to use an overbright
 color to brighten the result or use the alpha channel to apply global transparency.</p>
 </div><h4 id='method.color' class='method'><span id='color.v' class='invisible'><code>fn <a href='#method.color' class='fnname'>color</a>(self: &amp;Self) -&gt; <a class='struct' href='https://doc.rust-lang.org/nightly/std/sync/mutex/struct.MutexGuard.html' title='std::sync::mutex::MutexGuard'>MutexGuard</a>&lt;<a class='struct' href='../radiant_rs/struct.Color.html' title='radiant_rs::Color'>Color</a>&gt;</code></span></h4>
@@ -106,9 +110,15 @@ been rendered.</p>
 </div><h4 id='method.len' class='method'><span id='len.v' class='invisible'><code>fn <a href='#method.len' class='fnname'>len</a>(self: &amp;Self) -&gt; <a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.usize.html'>usize</a></code></span></h4>
 <div class='docblock'><p>Returns the number of sprites currently stored the layer.</p>
 </div><h4 id='method.arc' class='method'><span id='arc.v' class='invisible'><code>fn <a href='#method.arc' class='fnname'>arc</a>(self: Self) -&gt; <a class='struct' href='https://doc.rust-lang.org/nightly/alloc/arc/struct.Arc.html' title='alloc::arc::Arc'>Arc</a>&lt;Self&gt;</code></span></h4>
-<div class='docblock'><p>Returns the layer wrapped in an std::Arc</p>
-</div></div><h2 id='implementations'>Trait Implementations</h2><h3 class='impl'><span class='in-band'><code>impl <a class='trait' href='https://doc.rust-lang.org/nightly/core/marker/trait.Send.html' title='core::marker::Send'>Send</a> for <a class='struct' href='../radiant_rs/struct.Layer.html' title='radiant_rs::Layer'>Layer</a></code></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../src/radiant_rs/core/layer.rs.html#40' title='goto source code'>[src]</a></span></h3>
-<div class='impl-items'></div><h3 class='impl'><span class='in-band'><code>impl <a class='trait' href='https://doc.rust-lang.org/nightly/core/marker/trait.Sync.html' title='core::marker::Sync'>Sync</a> for <a class='struct' href='../radiant_rs/struct.Layer.html' title='radiant_rs::Layer'>Layer</a></code></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../src/radiant_rs/core/layer.rs.html#41' title='goto source code'>[src]</a></span></h3>
+<div class='docblock'><p>Returns the layer wrapped in an std::Arc.</p>
+</div></div><h2 id='implementations'>Trait Implementations</h2><h3 class='impl'><span class='in-band'><code>impl <a class='trait' href='https://doc.rust-lang.org/nightly/core/clone/trait.Clone.html' title='core::clone::Clone'>Clone</a> for <a class='struct' href='../radiant_rs/struct.Layer.html' title='radiant_rs::Layer'>Layer</a></code></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../src/radiant_rs/core/layer.rs.html#30-36' title='goto source code'>[src]</a></span></h3>
+<div class='impl-items'><h4 id='method.clone' class='method'><span id='clone.v' class='invisible'><code>fn <a href='https://doc.rust-lang.org/nightly/core/clone/trait.Clone.html#tymethod.clone' class='fnname'>clone</a>(self: &amp;Self) -&gt; Self</code></span></h4>
+<div class='docblock'><p>Creates a new layer that references the contents of this layer but has its own
+color, blendmode and set of matrices.</p>
+</div><h4 id='method.clone_from' class='method'><span id='clone_from.v' class='invisible'><code>fn <a href='https://doc.rust-lang.org/nightly/core/clone/trait.Clone.html#method.clone_from' class='fnname'>clone_from</a>(&amp;mut self, source: &amp;Self)</code><div class='since' title='Stable since Rust version 1.0.0'>1.0.0</div></span></h4>
+<div class='docblock'><p>Performs copy-assignment from <code>source</code>. <a href="https://doc.rust-lang.org/nightly/core/clone/trait.Clone.html#method.clone_from">Read more</a></p>
+</div></div><h3 class='impl'><span class='in-band'><code>impl <a class='trait' href='https://doc.rust-lang.org/nightly/core/marker/trait.Send.html' title='core::marker::Send'>Send</a> for <a class='struct' href='../radiant_rs/struct.Layer.html' title='radiant_rs::Layer'>Layer</a></code></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../src/radiant_rs/core/layer.rs.html#278' title='goto source code'>[src]</a></span></h3>
+<div class='impl-items'></div><h3 class='impl'><span class='in-band'><code>impl <a class='trait' href='https://doc.rust-lang.org/nightly/core/marker/trait.Sync.html' title='core::marker::Sync'>Sync</a> for <a class='struct' href='../radiant_rs/struct.Layer.html' title='radiant_rs::Layer'>Layer</a></code></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../src/radiant_rs/core/layer.rs.html#279' title='goto source code'>[src]</a></span></h3>
 <div class='impl-items'></div></section>
     <section id='search' class="content hidden"></section>
 
