@@ -9,6 +9,7 @@
 
     <title>radiant_rs::Program - Rust</title>
 
+    <link rel="stylesheet" type="text/css" href="../normalize.css">
     <link rel="stylesheet" type="text/css" href="../rustdoc.css">
     <link rel="stylesheet" type="text/css" href="../main.css">
     
@@ -57,9 +58,9 @@ of the source program but using its own copy of the uniforms.</p>
 <div class='docblock'><p>Creates a program from a fragment shader file.</p>
 </div><h4 id='method.from_string' class='method'><span id='from_string.v' class='invisible'><code>fn <a href='#method.from_string' class='fnname'>from_string</a>(context: &amp;<a class='struct' href='../radiant_rs/struct.RenderContext.html' title='radiant_rs::RenderContext'>RenderContext</a>, source: &amp;<a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.str.html'>str</a>) -&gt; <a class='type' href='../radiant_rs/type.Result.html' title='radiant_rs::Result'>Result</a>&lt;Self&gt;</code></span></h4>
 <div class='docblock'><p>Creates a program from a fragment shader string.</p>
-</div><h4 id='method.set_uniform' class='method'><span id='set_uniform.v' class='invisible'><code>fn <a href='#method.set_uniform' class='fnname'>set_uniform</a>&lt;T&gt;(self: &amp;mut Self, name: &amp;<a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.str.html'>str</a>, value: &amp;T) <span class='where'>where T: <a class='trait' href='../radiant_rs/trait.AsUniform.html' title='radiant_rs::AsUniform'>AsUniform</a></span></code></span></h4>
+</div><h4 id='method.set_uniform' class='method'><span id='set_uniform.v' class='invisible'><code>fn <a href='#method.set_uniform' class='fnname'>set_uniform</a>&lt;T&gt;(&amp;mut self, name: &amp;<a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.str.html'>str</a>, value: &amp;T) <span class='where fmt-newline'>where T: <a class='trait' href='../radiant_rs/trait.AsUniform.html' title='radiant_rs::AsUniform'>AsUniform</a></span></code></span></h4>
 <div class='docblock'><p>Sets a uniform value by name.</p>
-</div><h4 id='method.remove_uniform' class='method'><span id='remove_uniform.v' class='invisible'><code>fn <a href='#method.remove_uniform' class='fnname'>remove_uniform</a>&lt;T&gt;(self: &amp;mut Self, name: &amp;<a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.str.html'>str</a>) -&gt; <a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.bool.html'>bool</a></code></span></h4>
+</div><h4 id='method.remove_uniform' class='method'><span id='remove_uniform.v' class='invisible'><code>fn <a href='#method.remove_uniform' class='fnname'>remove_uniform</a>&lt;T&gt;(&amp;mut self, name: &amp;<a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.str.html'>str</a>) -&gt; <a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.bool.html'>bool</a></code></span></h4>
 <div class='docblock'><p>Removes a uniform value by name.</p>
 </div></div><h2 id='implementations'>Trait Implementations</h2><h3 class='impl'><span class='in-band'><code>impl <a class='trait' href='https://doc.rust-lang.org/nightly/core/clone/trait.Clone.html' title='core::clone::Clone'>Clone</a> for <a class='struct' href='../radiant_rs/struct.Program.html' title='radiant_rs::Program'>Program</a></code></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../src/radiant_rs/core/program.rs.html#15' title='goto source code'>[src]</a></span></h3>
 <div class='impl-items'><h4 id='method.clone' class='method'><span id='clone.v' class='invisible'><code>fn <a href='https://doc.rust-lang.org/nightly/core/clone/trait.Clone.html#tymethod.clone' class='fnname'>clone</a>(&amp;self) -&gt; <a class='struct' href='../radiant_rs/struct.Program.html' title='radiant_rs::Program'>Program</a></code></span></h4>

@@ -9,6 +9,7 @@
 
     <title>radiant_rs::support::DisplayBuilder - Rust</title>
 
+    <link rel="stylesheet" type="text/css" href="../../normalize.css">
     <link rel="stylesheet" type="text/css" href="../../rustdoc.css">
     <link rel="stylesheet" type="text/css" href="../../main.css">
     
@@ -47,32 +48,35 @@
                    <a id="toggle-all-docs" href="javascript:void(0)" title="collapse all docs">
                        [<span class='inner'>&#x2212;</span>]
                    </a>
-               </span><a class='srclink' href='../../src/radiant_rs/core/builder/displaybuilder.rs.html#12-14' title='goto source code'>[src]</a></span></h1>
+               </span><a class='srclink' href='../../src/radiant_rs/core/builder/displaybuilder.rs.html#15-17' title='goto source code'>[src]</a></span></h1>
 <pre class='rust struct'><div class="docblock attributes">#[must_use]
 </div>pub struct DisplayBuilder { /* fields omitted */ }</pre><div class='docblock'><p>A display builder.</p>
 
 <p>Obtained from <a href="../struct.Display.html#method.builder"><code>Display::builder()</code></a>.</p>
 
+<h1 id='examples' class='section-header'><a href='#examples'>Examples</a></h1>
 <pre class='rust rust-example-rendered'>
 <span class='kw'>let</span> <span class='ident'>display</span> <span class='op'>=</span> <span class='ident'>Display</span>::<span class='ident'>builder</span>().<span class='ident'>dimensions</span>((<span class='number'>640</span>, <span class='number'>480</span>)).<span class='ident'>vsync</span>().<span class='ident'>title</span>(<span class='string'>&quot;Window!&quot;</span>).<span class='ident'>build</span>();</pre>
-</div><h2 id='methods'>Methods</h2><h3 class='impl'><span class='in-band'><code>impl <a class='struct' href='../../radiant_rs/support/struct.DisplayBuilder.html' title='radiant_rs::support::DisplayBuilder'>DisplayBuilder</a></code></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../../src/radiant_rs/core/builder/displaybuilder.rs.html#22-69' title='goto source code'>[src]</a></span></h3>
-<div class='impl-items'><h4 id='method.width' class='method'><span id='width.v' class='invisible'><code>fn <a href='#method.width' class='fnname'>width</a>(self: Self, width: <a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.u32.html'>u32</a>) -&gt; Self</code></span></h4>
+</div><h2 id='methods'>Methods</h2><h3 class='impl'><span class='in-band'><code>impl <a class='struct' href='../../radiant_rs/support/struct.DisplayBuilder.html' title='radiant_rs::support::DisplayBuilder'>DisplayBuilder</a></code></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../../src/radiant_rs/core/builder/displaybuilder.rs.html#25-77' title='goto source code'>[src]</a></span></h3>
+<div class='impl-items'><h4 id='method.width' class='method'><span id='width.v' class='invisible'><code>fn <a href='#method.width' class='fnname'>width</a>(self, width: <a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.u32.html'>u32</a>) -&gt; Self</code></span></h4>
 <div class='docblock'><p>Sets a width for the display.</p>
-</div><h4 id='method.height' class='method'><span id='height.v' class='invisible'><code>fn <a href='#method.height' class='fnname'>height</a>(self: Self, height: <a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.u32.html'>u32</a>) -&gt; Self</code></span></h4>
+</div><h4 id='method.height' class='method'><span id='height.v' class='invisible'><code>fn <a href='#method.height' class='fnname'>height</a>(self, height: <a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.u32.html'>u32</a>) -&gt; Self</code></span></h4>
 <div class='docblock'><p>Sets a height for the display.</p>
-</div><h4 id='method.dimensions' class='method'><span id='dimensions.v' class='invisible'><code>fn <a href='#method.dimensions' class='fnname'>dimensions</a>&lt;T&gt;(self: Self, dimensions: T) -&gt; Self <span class='where'>where <a class='struct' href='../../radiant_rs/struct.Point2.html' title='radiant_rs::Point2'>Point2</a>&lt;<a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.u32.html'>u32</a>&gt;: <a class='trait' href='https://doc.rust-lang.org/nightly/core/convert/trait.From.html' title='core::convert::From'>From</a>&lt;T&gt;</span></code></span></h4>
+</div><h4 id='method.dimensions' class='method'><span id='dimensions.v' class='invisible'><code>fn <a href='#method.dimensions' class='fnname'>dimensions</a>&lt;T&gt;(self, dimensions: T) -&gt; Self <span class='where fmt-newline'>where <a class='struct' href='../../radiant_rs/struct.Point2.html' title='radiant_rs::Point2'>Point2</a>&lt;<a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.u32.html'>u32</a>&gt;: <a class='trait' href='https://doc.rust-lang.org/nightly/core/convert/trait.From.html' title='core::convert::From'>From</a>&lt;T&gt;</span></code></span></h4>
 <div class='docblock'><p>Sets dimensions for the display.</p>
-</div><h4 id='method.title' class='method'><span id='title.v' class='invisible'><code>fn <a href='#method.title' class='fnname'>title</a>(self: Self, title: &amp;<a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.str.html'>str</a>) -&gt; Self</code></span></h4>
+</div><h4 id='method.title' class='method'><span id='title.v' class='invisible'><code>fn <a href='#method.title' class='fnname'>title</a>(self, title: &amp;<a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.str.html'>str</a>) -&gt; Self</code></span></h4>
 <div class='docblock'><p>Sets a title for the display.</p>
-</div><h4 id='method.transparent' class='method'><span id='transparent.v' class='invisible'><code>fn <a href='#method.transparent' class='fnname'>transparent</a>(self: Self) -&gt; Self</code></span></h4>
+</div><h4 id='method.transparent' class='method'><span id='transparent.v' class='invisible'><code>fn <a href='#method.transparent' class='fnname'>transparent</a>(self) -&gt; Self</code></span></h4>
 <div class='docblock'><p>Flags the display to be transparent.</p>
-</div><h4 id='method.borderless' class='method'><span id='borderless.v' class='invisible'><code>fn <a href='#method.borderless' class='fnname'>borderless</a>(self: Self) -&gt; Self</code></span></h4>
+</div><h4 id='method.borderless' class='method'><span id='borderless.v' class='invisible'><code>fn <a href='#method.borderless' class='fnname'>borderless</a>(self) -&gt; Self</code></span></h4>
 <div class='docblock'><p>Flags the display to be borderless.</p>
-</div><h4 id='method.monitor' class='method'><span id='monitor.v' class='invisible'><code>fn <a href='#method.monitor' class='fnname'>monitor</a>(self: Self, id: <a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.i32.html'>i32</a>) -&gt; Self</code></span></h4>
+</div><h4 id='method.monitor' class='method'><span id='monitor.v' class='invisible'><code>fn <a href='#method.monitor' class='fnname'>monitor</a>(self, id: <a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.i32.html'>i32</a>) -&gt; Self</code></span></h4>
 <div class='docblock'><p>Sets the monitor to create the display on.</p>
-</div><h4 id='method.vsync' class='method'><span id='vsync.v' class='invisible'><code>fn <a href='#method.vsync' class='fnname'>vsync</a>(self: Self) -&gt; Self</code></span></h4>
+</div><h4 id='method.vsync' class='method'><span id='vsync.v' class='invisible'><code>fn <a href='#method.vsync' class='fnname'>vsync</a>(self) -&gt; Self</code></span></h4>
 <div class='docblock'><p>Flags the display to use vsync.</p>
-</div><h4 id='method.build' class='method'><span id='build.v' class='invisible'><code>fn <a href='#method.build' class='fnname'>build</a>(self: Self) -&gt; <a class='struct' href='../../radiant_rs/struct.Display.html' title='radiant_rs::Display'>Display</a></code></span></h4>
+</div><h4 id='method.hidden' class='method'><span id='hidden.v' class='invisible'><code>fn <a href='#method.hidden' class='fnname'>hidden</a>(self) -&gt; Self</code></span></h4>
+<div class='docblock'><p>Flags the display to be initialially hidden.</p>
+</div><h4 id='method.build' class='method'><span id='build.v' class='invisible'><code>fn <a href='#method.build' class='fnname'>build</a>(self) -&gt; <a class='struct' href='../../radiant_rs/struct.Display.html' title='radiant_rs::Display'>Display</a></code></span></h4>
 <div class='docblock'><p>Returns the constructed display instance.</p>
 </div></div></section>
     <section id='search' class="content hidden"></section>

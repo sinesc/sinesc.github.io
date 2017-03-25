@@ -9,6 +9,7 @@
 
     <title>radiant_rs::support::DrawBuilder - Rust</title>
 
+    <link rel="stylesheet" type="text/css" href="../../normalize.css">
     <link rel="stylesheet" type="text/css" href="../../rustdoc.css">
     <link rel="stylesheet" type="text/css" href="../../main.css">
     
@@ -56,34 +57,34 @@ or <a href="../struct.Renderer.html#method.fill"><code>Renderer::fill()</code></
 </div><h2 id='methods'>Methods</h2><h3 class='impl'><span class='in-band'><code>impl&lt;'a, T&gt; <a class='struct' href='../../radiant_rs/support/struct.DrawBuilder.html' title='radiant_rs::support::DrawBuilder'>DrawBuilder</a>&lt;'a, T&gt;</code></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../../src/radiant_rs/core/builder/drawbuilder.rs.html#53-85' title='goto source code'>[src]</a></span></h3>
 <div class='docblock'><p>The following implementations are available when drawing with <a href="../struct.Renderer.html#method.rect"><code>Renderer::rect()</code></a>
 or <a href="../struct.Renderer.html#method.fill"><code>Renderer::fill()</code></a>.</p>
-</div><div class='impl-items'><h4 id='method.color' class='method'><span id='color.v' class='invisible'><code>fn <a href='#method.color' class='fnname'>color</a>(self: Self, color: <a class='struct' href='../../radiant_rs/struct.Color.html' title='radiant_rs::Color'>Color</a>) -&gt; Self</code></span></h4>
+</div><div class='impl-items'><h4 id='method.color' class='method'><span id='color.v' class='invisible'><code>fn <a href='#method.color' class='fnname'>color</a>(self, color: <a class='struct' href='../../radiant_rs/struct.Color.html' title='radiant_rs::Color'>Color</a>) -&gt; Self</code></span></h4>
 <div class='docblock'><p>Sets a color for drawing. Defaults to white. If a texture is supplied in
 addtion to the color, each fragment will be computed from texel color * color.</p>
-</div><h4 id='method.texture' class='method'><span id='texture.v' class='invisible'><code>fn <a href='#method.texture' class='fnname'>texture</a>(self: Self, texture: &amp;'a <a class='struct' href='../../radiant_rs/struct.Texture.html' title='radiant_rs::Texture'>Texture</a>) -&gt; Self</code></span></h4>
+</div><h4 id='method.texture' class='method'><span id='texture.v' class='invisible'><code>fn <a href='#method.texture' class='fnname'>texture</a>(self, texture: &amp;'a <a class='struct' href='../../radiant_rs/struct.Texture.html' title='radiant_rs::Texture'>Texture</a>) -&gt; Self</code></span></h4>
 <div class='docblock'><p>Sets the texture for drawing. If a color is supplied in
 addtion to the texture, each fragment will be computed from texel color * color.</p>
-</div><h4 id='method.blendmode' class='method'><span id='blendmode.v' class='invisible'><code>fn <a href='#method.blendmode' class='fnname'>blendmode</a>(self: Self, blendmode: <a class='struct' href='../../radiant_rs/struct.BlendMode.html' title='radiant_rs::BlendMode'>BlendMode</a>) -&gt; Self</code></span></h4>
+</div><h4 id='method.blendmode' class='method'><span id='blendmode.v' class='invisible'><code>fn <a href='#method.blendmode' class='fnname'>blendmode</a>(self, blendmode: <a class='struct' href='../../radiant_rs/struct.BlendMode.html' title='radiant_rs::BlendMode'>BlendMode</a>) -&gt; Self</code></span></h4>
 <div class='docblock'><p>Sets the blendmode used to blend the source with the target.</p>
-</div><h4 id='method.program' class='method'><span id='program.v' class='invisible'><code>fn <a href='#method.program' class='fnname'>program</a>(self: Self, program: &amp;'a <a class='struct' href='../../radiant_rs/struct.Program.html' title='radiant_rs::Program'>Program</a>) -&gt; Self</code></span></h4>
+</div><h4 id='method.program' class='method'><span id='program.v' class='invisible'><code>fn <a href='#method.program' class='fnname'>program</a>(self, program: &amp;'a <a class='struct' href='../../radiant_rs/struct.Program.html' title='radiant_rs::Program'>Program</a>) -&gt; Self</code></span></h4>
 <div class='docblock'><p>Sets the fragment shader program used to draw.</p>
-</div><h4 id='method.model_matrix' class='method'><span id='model_matrix.v' class='invisible'><code>fn <a href='#method.model_matrix' class='fnname'>model_matrix</a>(self: Self, model_matrix: <a class='struct' href='../../radiant_rs/struct.Mat4.html' title='radiant_rs::Mat4'>Mat4</a>) -&gt; Self</code></span></h4>
+</div><h4 id='method.model_matrix' class='method'><span id='model_matrix.v' class='invisible'><code>fn <a href='#method.model_matrix' class='fnname'>model_matrix</a>(self, model_matrix: <a class='struct' href='../../radiant_rs/math/struct.Mat4.html' title='radiant_rs::math::Mat4'>Mat4</a>) -&gt; Self</code></span></h4>
 <div class='docblock'><p>Sets a model matrix for drawing.</p>
-</div><h4 id='method.draw' class='method'><span id='draw.v' class='invisible'><code>fn <a href='#method.draw' class='fnname'>draw</a>(self: Self)</code></span></h4>
+</div><h4 id='method.draw' class='method'><span id='draw.v' class='invisible'><code>fn <a href='#method.draw' class='fnname'>draw</a>(self)</code></span></h4>
 <div class='docblock'><p>Draws the rectangle.</p>
 </div></div><h3 class='impl'><span class='in-band'><code>impl&lt;'a&gt; <a class='struct' href='../../radiant_rs/support/struct.DrawBuilder.html' title='radiant_rs::support::DrawBuilder'>DrawBuilder</a>&lt;'a, DrawBuilderRect&gt;</code></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../../src/radiant_rs/core/builder/drawbuilder.rs.html#88-117' title='goto source code'>[src]</a></span></h3>
 <div class='docblock'><p>The following implementations are only available when drawing with <a href="../struct.Renderer.html#method.rect"><code>Renderer::rect()</code></a></p>
-</div><div class='impl-items'><h4 id='method.view_matrix' class='method'><span id='view_matrix.v' class='invisible'><code>fn <a href='#method.view_matrix' class='fnname'>view_matrix</a>(self: Self, view_matrix: <a class='struct' href='../../radiant_rs/struct.Mat4.html' title='radiant_rs::Mat4'>Mat4</a>) -&gt; Self</code></span></h4>
+</div><div class='impl-items'><h4 id='method.view_matrix' class='method'><span id='view_matrix.v' class='invisible'><code>fn <a href='#method.view_matrix' class='fnname'>view_matrix</a>(self, view_matrix: <a class='struct' href='../../radiant_rs/math/struct.Mat4.html' title='radiant_rs::math::Mat4'>Mat4</a>) -&gt; Self</code></span></h4>
 <div class='docblock'><p>Sets a view matrix for drawing.</p>
-</div><h4 id='method.view_target' class='method'><span id='view_target.v' class='invisible'><code>fn <a href='#method.view_target' class='fnname'>view_target</a>(self: Self) -&gt; Self</code></span></h4>
+</div><h4 id='method.view_target' class='method'><span id='view_target.v' class='invisible'><code>fn <a href='#method.view_target' class='fnname'>view_target</a>(self) -&gt; Self</code></span></h4>
 <div class='docblock'><p>Uses a view matrix that maps the dimensions of the target to the pixel-size of the target.</p>
 
 <p>This is the default setting. It means that a point, e.g. (12., 34.) is mapped to the pixel
 (12, 34) on the target.</p>
-</div><h4 id='method.view_display' class='method'><span id='view_display.v' class='invisible'><code>fn <a href='#method.view_display' class='fnname'>view_display</a>(self: Self) -&gt; Self</code></span></h4>
+</div><h4 id='method.view_display' class='method'><span id='view_display.v' class='invisible'><code>fn <a href='#method.view_display' class='fnname'>view_display</a>(self) -&gt; Self</code></span></h4>
 <div class='docblock'><p>Uses a view matrix that maps the dimensions of the display to the pixel-size of the target.</p>
-</div><h4 id='method.view_source' class='method'><span id='view_source.v' class='invisible'><code>fn <a href='#method.view_source' class='fnname'>view_source</a>(self: Self) -&gt; Self</code></span></h4>
+</div><h4 id='method.view_source' class='method'><span id='view_source.v' class='invisible'><code>fn <a href='#method.view_source' class='fnname'>view_source</a>(self) -&gt; Self</code></span></h4>
 <div class='docblock'><p>Uses a view matrix that maps the dimensions of the source to the pixel-size of the target.</p>
-</div><h4 id='method.view_one' class='method'><span id='view_one.v' class='invisible'><code>fn <a href='#method.view_one' class='fnname'>view_one</a>(self: Self) -&gt; Self</code></span></h4>
+</div><h4 id='method.view_one' class='method'><span id='view_one.v' class='invisible'><code>fn <a href='#method.view_one' class='fnname'>view_one</a>(self) -&gt; Self</code></span></h4>
 <div class='docblock'><p>Uses a matrix that maps the entire target to a rectangle of (0., 0., 1., 1.)</p>
 </div></div></section>
     <section id='search' class="content hidden"></section>

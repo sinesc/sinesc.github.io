@@ -9,6 +9,7 @@
 
     <title>radiant_rs::support::TextureBuilder - Rust</title>
 
+    <link rel="stylesheet" type="text/css" href="../../normalize.css">
     <link rel="stylesheet" type="text/css" href="../../rustdoc.css">
     <link rel="stylesheet" type="text/css" href="../../main.css">
     
@@ -51,21 +52,21 @@
 <pre class='rust struct'><div class="docblock attributes">#[must_use]
 </div>pub struct TextureBuilder&lt;'a&gt; { /* fields omitted */ }</pre><div class='docblock'><p>A Texture builder.</p>
 </div><h2 id='methods'>Methods</h2><h3 class='impl'><span class='in-band'><code>impl&lt;'a&gt; <a class='struct' href='../../radiant_rs/support/struct.TextureBuilder.html' title='radiant_rs::support::TextureBuilder'>TextureBuilder</a>&lt;'a&gt;</code></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../../src/radiant_rs/core/builder/texturebuilder.rs.html#20-66' title='goto source code'>[src]</a></span></h3>
-<div class='impl-items'><h4 id='method.width' class='method'><span id='width.v' class='invisible'><code>fn <a href='#method.width' class='fnname'>width</a>(self: Self, width: <a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.u32.html'>u32</a>) -&gt; Self</code></span></h4>
+<div class='impl-items'><h4 id='method.width' class='method'><span id='width.v' class='invisible'><code>fn <a href='#method.width' class='fnname'>width</a>(self, width: <a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.u32.html'>u32</a>) -&gt; Self</code></span></h4>
 <div class='docblock'><p>Sets a width for the texture.</p>
-</div><h4 id='method.height' class='method'><span id='height.v' class='invisible'><code>fn <a href='#method.height' class='fnname'>height</a>(self: Self, height: <a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.u32.html'>u32</a>) -&gt; Self</code></span></h4>
+</div><h4 id='method.height' class='method'><span id='height.v' class='invisible'><code>fn <a href='#method.height' class='fnname'>height</a>(self, height: <a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.u32.html'>u32</a>) -&gt; Self</code></span></h4>
 <div class='docblock'><p>Sets a height for the texture.</p>
-</div><h4 id='method.dimensions' class='method'><span id='dimensions.v' class='invisible'><code>fn <a href='#method.dimensions' class='fnname'>dimensions</a>&lt;T&gt;(self: Self, dimensions: T) -&gt; Self <span class='where'>where <a class='struct' href='../../radiant_rs/struct.Point2.html' title='radiant_rs::Point2'>Point2</a>&lt;<a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.u32.html'>u32</a>&gt;: <a class='trait' href='https://doc.rust-lang.org/nightly/core/convert/trait.From.html' title='core::convert::From'>From</a>&lt;T&gt;</span></code></span></h4>
+</div><h4 id='method.dimensions' class='method'><span id='dimensions.v' class='invisible'><code>fn <a href='#method.dimensions' class='fnname'>dimensions</a>&lt;T&gt;(self, dimensions: T) -&gt; Self <span class='where fmt-newline'>where <a class='struct' href='../../radiant_rs/struct.Point2.html' title='radiant_rs::Point2'>Point2</a>&lt;<a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.u32.html'>u32</a>&gt;: <a class='trait' href='https://doc.rust-lang.org/nightly/core/convert/trait.From.html' title='core::convert::From'>From</a>&lt;T&gt;</span></code></span></h4>
 <div class='docblock'><p>Sets dimensions for the texture.</p>
-</div><h4 id='method.minify' class='method'><span id='minify.v' class='invisible'><code>fn <a href='#method.minify' class='fnname'>minify</a>(self: Self, minify: <a class='enum' href='../../radiant_rs/enum.TextureFilter.html' title='radiant_rs::TextureFilter'>TextureFilter</a>) -&gt; Self</code></span></h4>
+</div><h4 id='method.minify' class='method'><span id='minify.v' class='invisible'><code>fn <a href='#method.minify' class='fnname'>minify</a>(self, minify: <a class='enum' href='../../radiant_rs/enum.TextureFilter.html' title='radiant_rs::TextureFilter'>TextureFilter</a>) -&gt; Self</code></span></h4>
 <div class='docblock'><p>Sets a minification filter for the texture.</p>
-</div><h4 id='method.magnify' class='method'><span id='magnify.v' class='invisible'><code>fn <a href='#method.magnify' class='fnname'>magnify</a>(self: Self, magnify: <a class='enum' href='../../radiant_rs/enum.TextureFilter.html' title='radiant_rs::TextureFilter'>TextureFilter</a>) -&gt; Self</code></span></h4>
+</div><h4 id='method.magnify' class='method'><span id='magnify.v' class='invisible'><code>fn <a href='#method.magnify' class='fnname'>magnify</a>(self, magnify: <a class='enum' href='../../radiant_rs/enum.TextureFilter.html' title='radiant_rs::TextureFilter'>TextureFilter</a>) -&gt; Self</code></span></h4>
 <div class='docblock'><p>Sets a magnification filter for the texture.</p>
-</div><h4 id='method.wrap' class='method'><span id='wrap.v' class='invisible'><code>fn <a href='#method.wrap' class='fnname'>wrap</a>(self: Self, wrap: <a class='enum' href='../../radiant_rs/enum.TextureWrap.html' title='radiant_rs::TextureWrap'>TextureWrap</a>) -&gt; Self</code></span></h4>
+</div><h4 id='method.wrap' class='method'><span id='wrap.v' class='invisible'><code>fn <a href='#method.wrap' class='fnname'>wrap</a>(self, wrap: <a class='enum' href='../../radiant_rs/enum.TextureWrap.html' title='radiant_rs::TextureWrap'>TextureWrap</a>) -&gt; Self</code></span></h4>
 <div class='docblock'><p>Sets a wrapping type for the texture.</p>
-</div><h4 id='method.format' class='method'><span id='format.v' class='invisible'><code>fn <a href='#method.format' class='fnname'>format</a>(self: Self, format: <a class='enum' href='../../radiant_rs/enum.TextureFormat.html' title='radiant_rs::TextureFormat'>TextureFormat</a>) -&gt; Self</code></span></h4>
+</div><h4 id='method.format' class='method'><span id='format.v' class='invisible'><code>fn <a href='#method.format' class='fnname'>format</a>(self, format: <a class='enum' href='../../radiant_rs/enum.TextureFormat.html' title='radiant_rs::TextureFormat'>TextureFormat</a>) -&gt; Self</code></span></h4>
 <div class='docblock'><p>Sets an internal format for the texture.</p>
-</div><h4 id='method.build' class='method'><span id='build.v' class='invisible'><code>fn <a href='#method.build' class='fnname'>build</a>(self: Self) -&gt; <a class='type' href='../../radiant_rs/type.Result.html' title='radiant_rs::Result'>Result</a>&lt;<a class='struct' href='../../radiant_rs/struct.Texture.html' title='radiant_rs::Texture'>Texture</a>&gt;</code></span></h4>
+</div><h4 id='method.build' class='method'><span id='build.v' class='invisible'><code>fn <a href='#method.build' class='fnname'>build</a>(self) -&gt; <a class='type' href='../../radiant_rs/type.Result.html' title='radiant_rs::Result'>Result</a>&lt;<a class='struct' href='../../radiant_rs/struct.Texture.html' title='radiant_rs::Texture'>Texture</a>&gt;</code></span></h4>
 <div class='docblock'><p>Returns the constructed Texture instance.</p>
 </div></div></section>
     <section id='search' class="content hidden"></section>
