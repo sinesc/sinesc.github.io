@@ -1,1 +1,0 @@
-initSidebarItems({"struct":[["Basic","A basic postprocessor that applies a Program to the given input once."]]});

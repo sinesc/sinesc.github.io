@@ -1,1 +1,0 @@
-initSidebarItems({"struct":[["Angle","An Angle between -PI and PI."],["Mat4","A 4x4 matrix."],["Vec2","A 2-dimensional vector."],["Vec3","A 3-dimensional vector."]],"trait":[["VecType","Trait for values that can be converted to a vector."]]});
